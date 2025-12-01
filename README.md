@@ -1,39 +1,84 @@
-<h1 align="center">Hi 👋, I'm Rajesh Kumar Sarkar</h1>
-<h3 align="center">Passionate Full Stack Developer, proficient in front-end and back-end technologies. Committed to crafting applications and staying at the forefront of innovation. I am committed to delivering exceptional user experiences, while continuously refining my knowledge at the forefront of technologies</h3>
-
-<p align="left"> <img src="https://komarev.com/ghpvc/?username=rajesh36sarkar&label=Profile%20views&color=0e75b6&style=flat" alt="rajesh36sarkar" /> </p>
-
-<p align="left"> <a href="https://github.com/ryo-ma/github-profile-trophy"><img src="https://github-profile-trophy.vercel.app/?username=rajesh36sarkar" alt="rajesh36sarkar" /></a> </p>
-
-- 🔭 I’m currently working on [YouTube Clone (Full-Stack MERN Capstone)](https://github.com/rajesh36sarkar/capston-project---youtube-clone.git)
-
-- 🌱 I’m currently learning **Three.js**
-
-- 👯 I’m looking to collaborate on [Motiongraph: Your Story in Motion.](https://github.com/rajesh36sarkar/motiongraph.git)
-
-- 👨‍💻 All of my projects are available at [https://rajesh36sarkar.netlify.app/](https://rajesh36sarkar.netlify.app/)
-
-- 📝 I regularly write articles on [https://www.linkedin.com/in/rajesh36sarkar/](https://www.linkedin.com/in/rajesh36sarkar/)
-
-- 💬 Ask me about **JavaScript, React, Java, Backend, GSAP, Three.JS**
-
-- 📫 How to reach me **rajeshkumarsarkar36@gmail.com**
-
-- Resume to showcase my experience [https://1drv.ms/w/c/2dc0f42ca563c813/EducG-NK13ZNgQ29q-6NewoBJ8NBd2HeiwHJb4UFeqMABQ?e=pss0cx](https://1drv.ms/w/c/2dc0f42ca563c813/EducG-NK13ZNgQ29q-6NewoBJ8NBd2HeiwHJb4UFeqMABQ?e=pss0cx)
-
-<h3 align="left">Connect with me:</h3>
-<p align="left">
-<a href="https://linkedin.com/in/rajesh36sarkar" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="rajesh36sarkar" height="30" width="40" /></a>
-<a href="https://www.hackerrank.com/rajeshsarkar01" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/hackerrank.svg" alt="rajeshsarkar01" height="30" width="40" /></a>
-<a href="https://www.leetcode.com/rajeshsarkar01" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/leet-code.svg" alt="rajeshsarkar01" height="30" width="40" /></a>
-<a href="https://auth.geeksforgeeks.org/user/rajeshsarkar01" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/geeks-for-geeks.svg" alt="rajeshsarkar01" height="30" width="40" /></a>
+<p align="center">
+  <img src="https://i.ibb.co/2d7c4sC/Neon-Purple-Developer-Banner.png" width="100%" alt="banner"/>
 </p>
 
-<h3 align="left">Languages and Tools:</h3>
-<p align="left"> <a href="https://aws.amazon.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="aws" width="40" height="40"/> </a> <a href="https://www.w3schools.com/css/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="css3" width="40" height="40"/> </a> <a href="https://expressjs.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original-wordmark.svg" alt="express" width="40" height="40"/> </a> <a href="https://www.figma.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/figma/figma-icon.svg" alt="figma" width="40" height="40"/> </a> <a href="https://git-scm.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="40" height="40"/> </a> <a href="https://www.java.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="java" width="40" height="40"/> </a> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" width="40" height="40"/> </a> <a href="https://jestjs.io" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/jestjsio/jestjsio-icon.svg" alt="jest" width="40" height="40"/> </a> <a href="https://www.linux.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg" alt="linux" width="40" height="40"/> </a> <a href="https://www.mongodb.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original-wordmark.svg" alt="mongodb" width="40" height="40"/> </a> <a href="https://www.mysql.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="mysql" width="40" height="40"/> </a> <a href="https://nodejs.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="nodejs" width="40" height="40"/> </a> <a href="https://www.photoshop.com/en" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/photoshop/photoshop-line.svg" alt="photoshop" width="40" height="40"/> </a> <a href="https://postman.com" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" alt="postman" width="40" height="40"/> </a> <a href="https://reactjs.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="react" width="40" height="40"/> </a> <a href="https://redux.js.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/redux/redux-original.svg" alt="redux" width="40" height="40"/> </a> <a href="https://sass-lang.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/sass/sass-original.svg" alt="sass" width="40" height="40"/> </a> <a href="https://tailwindcss.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg" alt="tailwind" width="40" height="40"/> </a> </p>
+<h1 align="center">🚀 Rajesh Kumar Sarkar</h1>
+<h3 align="center">Full Stack Developer | MERN | Java | UI/UX Enthusiast</h3>
 
-<p><img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=rajesh36sarkar&show_icons=true&locale=en&layout=compact" alt="rajesh36sarkar" /></p>
+<p align="center">
+  <img src="https://komarev.com/ghpvc/?username=rajesh36sarkar&label=Profile%20Views&color=7b2cbf&style=flat" />
+</p>
 
-<p>&nbsp;<img align="center" src="https://github-readme-stats.vercel.app/api?username=rajesh36sarkar&show_icons=true&locale=en" alt="rajesh36sarkar" /></p>
+---
 
-<p><img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=rajesh36sarkar&" alt="rajesh36sarkar" /></p>
+## 🎯 **About Me**
+- 🔭 Working on: **YouTube Clone (MERN Capstone)**  
+- 🌱 Learning **Three.js**  
+- 🤝 Collaborating on **Motiongraph: Your Story in Motion**  
+- 🌐 Portfolio: **https://rajesh36sarkar.netlify.app**  
+- 📝 Writing articles on **LinkedIn**  
+- 💬 Ask me about **JavaScript, React, Backend, GSAP, Three.js, Java**  
+- 📧 Email: **rajeshkumarsarkar36@gmail.com**  
+- 📄 Resume:  
+  https://1drv.ms/w/c/2dc0f42ca563c813/EducG-NK13ZNgQ29q-6NewoBJ8NBd2HeiwHJb4UFeqMABQ?e=pss0cx
+
+---
+
+## 🌐 **Connect With Me**
+<p align="left">
+  <a href="https://linkedin.com/in/rajesh36sarkar">
+    <img src="https://skillicons.dev/icons?i=linkedin" width="45"/>
+  </a>
+  <a href="https://www.hackerrank.com/rajeshsarkar01">
+    <img src="https://skillicons.dev/icons?i=hackerrank" width="45"/>
+  </a>
+  <a href="https://leetcode.com/rajeshsarkar01">
+    <img src="https://skillicons.dev/icons?i=leetcode" width="45"/>
+  </a>
+  <a href="https://auth.geeksforgeeks.org/user/rajeshsarkar01">
+    <img src="https://i.ibb.co/hgF30sX/gfg.png" width="45"/>
+  </a>
+</p>
+
+---
+
+# 🛠️ **Tech Stack**
+
+### 💻 Languages & Frameworks
+<p align="left">
+  <img src="https://skillicons.dev/icons?i=js,java,html,css,sass,react,redux,nodejs,express,mongodb,mysql" />
+</p>
+
+### 🧰 Tools & Platforms
+<p align="left">
+  <img src="https://skillicons.dev/icons?i=git,github,figma,ps,postman,linux,aws" />
+</p>
+
+---
+
+# 📊 **GitHub Analytics**
+
+<p align="left">
+  <img src="https://github-readme-stats.vercel.app/api/top-langs?username=rajesh36sarkar&layout=compact&theme=tokyonight" height="170"/>
+</p>
+
+<p align="left">
+  <img src="https://github-readme-stats.vercel.app/api?username=rajesh36sarkar&show_icons=true&theme=tokyonight" height="170"/>
+</p>
+
+<p align="center">
+  <img src="https://github-readme-streak-stats.herokuapp.com?user=rajesh36sarkar&theme=tokyonight" height="200"/>
+</p>
+
+---
+
+# 🏆 **GitHub Trophies**
+<p align="center">
+  <img src="https://github-profile-trophy.vercel.app/?username=rajesh36sarkar&theme=onestar&margin-w=10&row=1&no-bg=true"/>
+</p>
+
+---
+
+# 🚀 **Thanks for Visiting!**
+⭐ If you like my work, consider starring a repo — it helps a lot!
+
