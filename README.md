@@ -1,114 +1,36 @@
-<p align="center">
-  <img src="https://img.freepik.com/free-vector/v873-bb-1_53876-166692.jpg?t=st=1764627553~exp=1764631153~hmac=1ee25ef561156d7ab1cfba2e1065eb50bfb79d93fe88bd86c7218dc88baecffc&w=740" alt="banner"/>
-</p>
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-<h1 align="center">🚀 Rajesh Kumar Sarkar</h1>
-<h3 align="center">Full Stack Developer • MERN Specialist • Passionate Problem Solver</h3>
+## Getting Started
 
-<p align="center">
-  <img src="https://komarev.com/ghpvc/?username=rajesh36sarkar&label=Profile%20Views&color=7b2cbf&style=flat" />
-</p>
+First, run the development server:
 
----
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-## 🎯 **Who I Am**
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-I’m a **Full Stack Developer** with a passion for building modern, user-centric applications.  
-I enjoy transforming ideas into functional, scalable products using clean code, thoughtful architecture, and delightful interfaces.
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-I constantly explore new technologies, refine my skills, and create impactful digital experiences.
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
----
+## Learn More
 
-## 🚀 **What I'm Working On**
-- Building a **Full-Stack YouTube Clone (MERN Capstone Project)**  
-- Exploring advanced **Three.js** animations and interactive 3D web experiences  
-- Collaborating on **Motiongraph – Your Story in Motion**  
-- Expanding my portfolio with real-world, scalable, production-grade apps  
+To learn more about Next.js, take a look at the following resources:
 
----
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-## 🌐 **My Digital Presence**
-- 💼 Portfolio: **https://rajesh36sarkar.netlify.app**  
-- 📝 Articles & Insights: **LinkedIn**  
-- 📧 Email: **rajeshkumarsarkar36@gmail.com**  
-- 📄 Download Resume: *(Updated & Professional)*  
-  https://1drv.ms/w/c/2dc0f42ca563c813/EducG-NK13ZNgQ29q-6NewoBJ8NBd2HeiwHJb4UFeqMABQ?e=pss0cx
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
----
+## Deploy on Vercel
 
-## 🌎 **Connect With Me**
-<p align="left">
-  <a href="https://linkedin.com/in/rajesh36sarkar">
-    <img src="https://skillicons.dev/icons?i=linkedin" width="45"/>
-  </a>
-  <a href="https://www.hackerrank.com/rajeshsarkar01">
-    <img src="https://skillicons.dev/icons?i=hackerrank" width="45"/>
-  </a>
-  <a href="https://leetcode.com/rajeshsarkar01">
-    <img src="https://skillicons.dev/icons?i=leetcode" width="45"/>
-  </a>
-  <a href="https://auth.geeksforgeeks.org/user/rajeshsarkar01">
-    <img src="https://i.ibb.co/hgF30sX/gfg.png" width="45"/>
-  </a>
-</p>
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
----
-
-# 🛠️ **Tech Stack**
-
-### 💻 Core Languages & Frameworks
-<p align="left">
-  <img src="https://skillicons.dev/icons?i=js,java,html,css,sass,react,redux,nodejs,express,mongodb,mysql" />
-</p>
-
-### 🧰 Tools, Cloud & Platforms
-<p align="left">
-  <img src="https://skillicons.dev/icons?i=git,github,figma,ps,postman,linux,aws" />
-</p>
-
----
-
-# 📊 **GitHub Performance**
-
-### 📌 Languages I Use the Most
-<p>
-  <img src="https://github-readme-stats.vercel.app/api/top-langs?username=rajesh36sarkar&layout=compact&theme=tokyonight" height="170"/>
-</p>
-
-### 📌 My Contribution Analytics
-<p>
-  <img src="https://github-readme-stats.vercel.app/api?username=rajesh36sarkar&show_icons=true&theme=tokyonight" height="170"/>
-</p>
-
-### 📌 Streak & Consistency
-<p align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com?user=rajesh36sarkar&theme=tokyonight" height="200"/>
-</p>
-
----
-
-# 🏆 **Achievements**
-<p align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=rajesh36sarkar&theme=onestar&margin-w=10&row=1&no-bg=true"/>
-</p>
-
----
-
-# 🌟 **A Little About My Work Philosophy**
-
-I believe great products come from:  
-✔ Strong fundamentals  
-✔ Clean and maintainable code  
-✔ Seamless UI/UX  
-✔ Performance-driven backend  
-✔ Continuous learning  
-✔ Thinking like a user, building like an engineer  
-
-I’m always excited to learn, build, and innovate.
-
----
-
-# 🙌 **Thank You for Visiting!**
-If you find my work interesting, feel free to **star my repositories** or **connect with me**.  
-Your support motivates me to create even more awesome projects! 😊
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
