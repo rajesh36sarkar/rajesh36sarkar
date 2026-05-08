@@ -33,25 +33,23 @@ function App() {
     return () => { isMounted = false; };
   }, []);
 
- 
+
 
   return (
     <Router>
       <AuthProvider>
-        
+        <ThreeBackground />
         <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin/dashboard" element={
-            <AdminRoute>
-              <AdminDashboard />
-            </AdminRoute>
-          } />
-        </Routes>
+        <div className="main-content">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+          </Routes>
+        </div>
         <Footer />
       </AuthProvider>
     </Router>

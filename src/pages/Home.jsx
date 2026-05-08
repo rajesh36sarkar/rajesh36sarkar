@@ -29,14 +29,19 @@ const Home = () => {
     fetchData();
   }, []);
 
-  if (loading) return <div className="text-center py-5">Loading...</div>;
+  if (loading) return (
+    <div className="loader-wrapper">
+      <div className="spinner"></div>
+      <p className="loader-text">Loading your experience...</p>
+    </div>
+  );
 
   // Use siteInfo if available, otherwise use your real info
   const heroName = siteInfo?.hero?.name || 'Rajesh Kumar Sarkar';
-  const heroTitles = siteInfo?.hero?.title 
-    ? [siteInfo.hero.title] 
+  const heroTitles = siteInfo?.hero?.title
+    ? [siteInfo.hero.title]
     : ['Full Stack Developer', 'MERN Stack Expert', 'Problem Solver'];
-  const heroBio = siteInfo?.hero?.bio || 
+  const heroBio = siteInfo?.hero?.bio ||
     'Building scalable web applications with MERN stack, Next.js, and modern frontend technologies. Passionate about clean code and great user experiences.';
 
   return (
@@ -90,7 +95,7 @@ const Home = () => {
                     style={{ width: '300px', height: '300px', objectFit: 'cover', border: '4px solid white' }}
                   />
                 ) : (
-                  <div 
+                  <div
                     className="rounded-circle bg-gradient d-flex align-items-center justify-content-center mx-auto"
                     style={{ width: '300px', height: '300px', border: '4px solid white' }}
                   >

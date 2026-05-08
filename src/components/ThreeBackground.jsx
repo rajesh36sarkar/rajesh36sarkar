@@ -1,16 +1,13 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Sphere, Box, OrbitControls, Stars } from '@react-three/drei';
-import * as THREE from 'three';
 
 const RotatingCube = () => {
   const meshRef = useRef();
-  
   useFrame(() => {
     meshRef.current.rotation.x += 0.005;
     meshRef.current.rotation.y += 0.01;
   });
-  
   return (
     <Box ref={meshRef} args={[1, 1, 1]} position={[-2, 0, 0]}>
       <meshStandardMaterial color="#667eea" wireframe />
@@ -20,11 +17,9 @@ const RotatingCube = () => {
 
 const RotatingSphere = () => {
   const sphereRef = useRef();
-  
   useFrame(() => {
     sphereRef.current.rotation.y += 0.005;
   });
-  
   return (
     <Sphere ref={sphereRef} args={[0.8, 32, 32]} position={[2, -0.5, -1]}>
       <meshStandardMaterial color="#764ba2" roughness={0.3} metalness={0.7} />
@@ -35,14 +30,12 @@ const RotatingSphere = () => {
 const FloatingTorus = () => {
   const torusRef = useRef();
   let time = 0;
-  
   useFrame(() => {
     time += 0.01;
     torusRef.current.rotation.x = Math.sin(time) * 0.5;
     torusRef.current.rotation.y = Math.cos(time) * 0.5;
     torusRef.current.position.y = Math.sin(time) * 0.3;
   });
-  
   return (
     <mesh ref={torusRef} position={[0, 1, -2]}>
       <torusGeometry args={[0.8, 0.2, 16, 100]} />
@@ -52,6 +45,17 @@ const FloatingTorus = () => {
 };
 
 const ThreeBackground = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
     <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1 }}>
       <Canvas camera={{ position: [0, 0, 5] }}>
@@ -61,7 +65,10 @@ const ThreeBackground = () => {
         <RotatingCube />
         <RotatingSphere />
         <FloatingTorus />
-        <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.5} />
+        {/* Only show OrbitControls on desktop */}
+        {!isMobile && (
+          <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.5} />
+        )}
       </Canvas>
     </div>
   );
