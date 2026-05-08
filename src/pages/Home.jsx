@@ -31,6 +31,14 @@ const Home = () => {
 
   if (loading) return <div className="text-center py-5">Loading...</div>;
 
+  // Use siteInfo if available, otherwise use your real info
+  const heroName = siteInfo?.hero?.name || 'Rajesh Kumar Sarkar';
+  const heroTitles = siteInfo?.hero?.title 
+    ? [siteInfo.hero.title] 
+    : ['Full Stack Developer', 'MERN Stack Expert', 'Problem Solver'];
+  const heroBio = siteInfo?.hero?.bio || 
+    'Building scalable web applications with MERN stack, Next.js, and modern frontend technologies. Passionate about clean code and great user experiences.';
+
   return (
     <>
       {/* Hero Section */}
@@ -44,19 +52,19 @@ const Home = () => {
                 transition={{ duration: 0.8 }}
               >
                 <h1 className="display-3 fw-bold mb-3">
-                  Hi, I'm {siteInfo?.hero?.name || 'Developer'}
+                  Hi, I'm {heroName}
                 </h1>
                 <h2 className="display-5 mb-4" style={{ minHeight: '80px' }}>
                   <Typewriter
                     options={{
-                      strings: siteInfo?.hero?.title || ['Full Stack Developer', 'UI/UX Enthusiast', 'Problem Solver'],
+                      strings: heroTitles,
                       autoStart: true,
                       loop: true,
                     }}
                   />
                 </h2>
                 <p className="lead mb-4 text-white-50">
-                  {siteInfo?.hero?.bio || 'Passionate developer creating amazing web experiences'}
+                  {heroBio}
                 </p>
                 <div className="d-flex gap-3 justify-content-center justify-content-lg-start">
                   <Button as={Link} to="/projects" className="btn-gradient">
@@ -74,13 +82,20 @@ const Home = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8 }}
               >
-                {siteInfo?.hero?.profileImage && (
+                {siteInfo?.hero?.profileImage ? (
                   <img
                     src={siteInfo.hero.profileImage}
                     alt="Profile"
                     className="rounded-circle img-fluid"
                     style={{ width: '300px', height: '300px', objectFit: 'cover', border: '4px solid white' }}
                   />
+                ) : (
+                  <div 
+                    className="rounded-circle bg-gradient d-flex align-items-center justify-content-center mx-auto"
+                    style={{ width: '300px', height: '300px', border: '4px solid white' }}
+                  >
+                    <span className="display-1">👨‍💻</span>
+                  </div>
                 )}
               </motion.div>
             </Col>
@@ -93,11 +108,20 @@ const Home = () => {
         <Container>
           <h2 className="section-title">Featured Projects</h2>
           <Row>
-            {projects.map((project) => (
-              <Col lg={4} md={6} key={project._id} className="mb-4">
-                <ProjectCard project={project} />
+            {projects.length > 0 ? (
+              projects.map((project) => (
+                <Col lg={4} md={6} key={project._id} className="mb-4">
+                  <ProjectCard project={project} />
+                </Col>
+              ))
+            ) : (
+              <Col>
+                <div className="text-center glass-card p-5">
+                  <h4>No projects yet</h4>
+                  <p>Add your projects from the admin panel.</p>
+                </div>
               </Col>
-            ))}
+            )}
           </Row>
           <div className="text-center mt-4">
             <Button as={Link} to="/projects" variant="outline-light" size="lg">

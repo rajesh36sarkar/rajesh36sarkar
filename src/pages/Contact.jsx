@@ -27,9 +27,9 @@ const Contact = () => {
   };
 
   const contactInfo = [
-    { icon: <FaEnvelope size={24} />, title: 'Email', value: 'contact@example.com', link: 'mailto:contact@example.com' },
-    { icon: <FaPhone size={24} />, title: 'Phone', value: '+1 (555) 123-4567', link: 'tel:+15551234567' },
-    { icon: <FaMapMarkerAlt size={24} />, title: 'Location', value: 'San Francisco, CA', link: null },
+    { icon: <FaEnvelope size={24} />, title: 'Email', value: 'rajesh36.sarkar@gmail.com', link: 'mailto:rajesh36.sarkar@gmail.com' },
+    { icon: <FaPhone size={24} />, title: 'Phone', value: '+91 (736) 392-0402', link: 'tel:+917363920402' },
+    { icon: <FaMapMarkerAlt size={24} />, title: 'Location', value: 'Kolkata, India', link: null },
     { icon: <FaClock size={24} />, title: 'Response Time', value: 'Within 24 hours', link: null },
   ];
 
@@ -122,4 +122,4 @@ const Contact = () => {
   );
 };
 
-export default Contact; 
+export default Contact;
