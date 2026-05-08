@@ -16,6 +16,7 @@ const AdminDashboard = () => {
   const [showProjectModal, setShowProjectModal] = useState(false);
   const [editingProject, setEditingProject] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [uploadingGallery, setUploadingGallery] = useState(false);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState({ text: '', variant: '' });
   const [showMessageModal, setShowMessageModal] = useState(false);
@@ -23,7 +24,7 @@ const AdminDashboard = () => {
   const [profileImageFile, setProfileImageFile] = useState(null);
   const [resumeFile, setResumeFile] = useState(null);
 
-  const { register, handleSubmit, reset, setValue } = useForm();
+  const { register, handleSubmit, reset, setValue, watch } = useForm();
 
   const fetchData = async () => {
     setLoading(true);
@@ -54,7 +55,7 @@ const AdminDashboard = () => {
     try {
       const res = await uploadImage(file);
       setValue('imageUrl', res.data.url);
-      setMessage({ text: 'Image uploaded', variant: 'success' });
+      setMessage({ text: 'Thumbnail uploaded', variant: 'success' });
     } catch (error) {
       setMessage({ text: 'Upload failed', variant: 'danger' });
     } finally {
@@ -62,10 +63,31 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleGalleryUpload = async (e) => {
+    const files = Array.from(e.target.files);
+    if (files.length === 0) return;
+    setUploadingGallery(true);
+    const formData = new FormData();
+    files.forEach(file => formData.append('images', file));
+    try {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/upload/multiple`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${localStorage.getItem('token')}` }
+      });
+      const currentGallery = watch('galleryImages') || [];
+      setValue('galleryImages', [...currentGallery, ...res.data.urls]);
+      setMessage({ text: `${res.data.urls.length} gallery images uploaded`, variant: 'success' });
+    } catch (error) {
+      setMessage({ text: 'Gallery upload failed', variant: 'danger' });
+    } finally {
+      setUploadingGallery(false);
+    }
+  };
+
   const onSubmitProject = async (data) => {
     try {
       const techArray = data.technologies.split(',').map(t => t.trim());
-      const projectData = { ...data, technologies: techArray };
+      const galleryArray = data.galleryImages || [];
+      const projectData = { ...data, technologies: techArray, galleryImages: galleryArray };
       if (editingProject) {
         await updateProject(editingProject._id, projectData);
         setMessage({ text: 'Project updated', variant: 'success' });
@@ -94,6 +116,7 @@ const AdminDashboard = () => {
     setValue('description', project.description);
     setValue('technologies', project.technologies.join(', '));
     setValue('imageUrl', project.imageUrl);
+    setValue('galleryImages', project.galleryImages || []);
     setValue('liveUrl', project.liveUrl || '');
     setValue('githubUrl', project.githubUrl || '');
     setValue('featured', project.featured);
@@ -106,7 +129,6 @@ const AdminDashboard = () => {
     reset();
   };
 
-  // Only used for profile image and resume (hero fields)
   const updateHeroPhotoAndResume = async (updates) => {
     try {
       const updated = { ...siteInfo, hero: { ...siteInfo.hero, ...updates } };
@@ -163,7 +185,6 @@ const AdminDashboard = () => {
     }
   };
 
-  // Profile photo upload
   const handleProfilePhotoUpload = async () => {
     if (!profileImageFile) {
       setMessage({ text: 'Select an image first', variant: 'warning' });
@@ -182,7 +203,6 @@ const AdminDashboard = () => {
     }
   };
 
-  // Resume upload
   const handleResumeUpload = async () => {
     if (!resumeFile) {
       setMessage({ text: 'Select a PDF file first', variant: 'warning' });
@@ -233,7 +253,6 @@ const AdminDashboard = () => {
         {message.text && <Alert variant={message.variant} dismissible onClose={() => setMessage({ text: '', variant: '' })}>{message.text}</Alert>}
 
         <Tabs defaultActiveKey="projects" className="mb-4" fill variant="tabs">
-          {/* Projects Tab */}
           <Tab eventKey="projects" title="Projects">
             <Card className="glass-card p-3">
               <div className="d-flex justify-content-between mb-3">
@@ -262,7 +281,6 @@ const AdminDashboard = () => {
             </Card>
           </Tab>
 
-          {/* Hero & Profile Tab – Only photo & resume, no name/title/bio */}
           <Tab eventKey="hero" title="Hero & Profile">
             <Row>
               <Col md={6}>
@@ -300,26 +318,19 @@ const AdminDashboard = () => {
             </Row>
           </Tab>
 
-          {/* About Tab */}
           <Tab eventKey="about" title="About & Stats">
             <Card className="glass-card p-4">
               <h3>About Section</h3>
               <Form onSubmit={handleSubmit(updateAbout)}>
-                <Form.Group className="mb-3">
-                  <Form.Label>Description</Form.Label>
-                  <Form.Control as="textarea" rows={5} defaultValue={siteInfo?.about?.description || ''} name="description" />
-                </Form.Group>
-                <Row>
-                  <Col><Form.Label>Experience (years)</Form.Label><Form.Control type="number" name="experience" defaultValue={siteInfo?.about?.experience || 1} /></Col>
-                  <Col><Form.Label>Projects Count</Form.Label><Form.Control type="number" name="projects" defaultValue={siteInfo?.about?.projects || 10} /></Col>
-                  <Col><Form.Label>Clients Count</Form.Label><Form.Control type="number" name="clients" defaultValue={siteInfo?.about?.clients || 5} /></Col>
-                </Row>
+                <Form.Group className="mb-3"><Form.Label>Description</Form.Label><Form.Control as="textarea" rows={5} defaultValue={siteInfo?.about?.description || ''} name="description" /></Form.Group>
+                <Row><Col><Form.Label>Experience (years)</Form.Label><Form.Control type="number" name="experience" defaultValue={siteInfo?.about?.experience || 1} /></Col>
+                <Col><Form.Label>Projects Count</Form.Label><Form.Control type="number" name="projects" defaultValue={siteInfo?.about?.projects || 10} /></Col>
+                <Col><Form.Label>Clients Count</Form.Label><Form.Control type="number" name="clients" defaultValue={siteInfo?.about?.clients || 5} /></Col></Row>
                 <Button type="submit" className="btn-gradient mt-3">Update About</Button>
               </Form>
             </Card>
           </Tab>
 
-          {/* Skills Tab */}
           <Tab eventKey="skills" title="Skills">
             <Row>
               <Col md={5}>
@@ -348,7 +359,6 @@ const AdminDashboard = () => {
             </Row>
           </Tab>
 
-          {/* Social Links Tab */}
           <Tab eventKey="social" title="Social Links">
             <Card className="glass-card p-4">
               <h3>Social Media Links</h3>
@@ -362,7 +372,6 @@ const AdminDashboard = () => {
             </Card>
           </Tab>
 
-          {/* Messages Tab */}
           <Tab eventKey="messages" title={`Messages (${messages.filter(m => !m.read).length})`}>
             <Card className="glass-card p-3">
               <div className="table-responsive-stack">
@@ -378,7 +387,7 @@ const AdminDashboard = () => {
                         <td>{msg.read ? <Badge bg="success">Read</Badge> : <Badge bg="warning">Unread</Badge>}</td>
                         <td><Button variant="info" size="sm" onClick={() => viewMessage(msg)} className="me-2"><FaEye /></Button>
                         <Button variant="danger" size="sm" onClick={() => deleteMessage(msg._id)}><FaTrash /></Button></td>
-                      </tr>
+                      <tr>
                     ))}
                   </tbody>
                 </Table>
@@ -387,7 +396,7 @@ const AdminDashboard = () => {
           </Tab>
         </Tabs>
 
-        {/* Add/Edit Project Modal */}
+        {/* Add/Edit Project Modal with Gallery */}
         <Modal show={showProjectModal} onHide={handleCloseProjectModal} size="lg" centered>
           <Modal.Header closeButton className="bg-dark text-white">
             <Modal.Title>{editingProject ? '✏️ Edit Project' : '➕ Add New Project'}</Modal.Title>
@@ -397,7 +406,8 @@ const AdminDashboard = () => {
               <Form.Group className="mb-3"><Form.Label>📌 Title *</Form.Label><Form.Control {...register('title')} required /></Form.Group>
               <Form.Group className="mb-3"><Form.Label>📝 Description *</Form.Label><Form.Control as="textarea" rows={4} {...register('description')} required /></Form.Group>
               <Form.Group className="mb-3"><Form.Label>⚙️ Technologies (comma separated)</Form.Label><Form.Control {...register('technologies')} required /></Form.Group>
-              <Form.Group className="mb-3"><Form.Label>🖼️ Image URL</Form.Label><Form.Control {...register('imageUrl')} /><Form.Control type="file" onChange={handleImageUpload} className="mt-2" /></Form.Group>
+              <Form.Group className="mb-3"><Form.Label>🖼️ Thumbnail Image *</Form.Label><Form.Control {...register('imageUrl')} placeholder="Image URL" /><Form.Control type="file" onChange={handleImageUpload} className="mt-2" accept="image/*" /></Form.Group>
+              <Form.Group className="mb-3"><Form.Label>🖼️ Gallery Images (optional, up to 10)</Form.Label><Form.Control type="file" multiple accept="image/*" onChange={handleGalleryUpload} disabled={uploadingGallery} />{uploadingGallery && <Spinner animation="border" size="sm" className="mt-2" />}</Form.Group>
               <Form.Group className="mb-3"><Form.Label>🌐 Live URL</Form.Label><Form.Control {...register('liveUrl')} /></Form.Group>
               <Form.Group className="mb-3"><Form.Label>💻 GitHub URL</Form.Label><Form.Control {...register('githubUrl')} /></Form.Group>
               <Form.Group className="mb-3"><Form.Check type="checkbox" label="⭐ Featured" {...register('featured')} /></Form.Group>
@@ -406,15 +416,9 @@ const AdminDashboard = () => {
           </Modal.Body>
         </Modal>
 
-        {/* Message Detail Modal */}
         <Modal show={showMessageModal} onHide={() => setShowMessageModal(false)}>
           <Modal.Header closeButton><Modal.Title>Message from {selectedMessage?.name}</Modal.Title></Modal.Header>
-          <Modal.Body>
-            <p><strong>Email:</strong> {selectedMessage?.email}</p>
-            <p><strong>Subject:</strong> {selectedMessage?.subject}</p>
-            <p><strong>Message:</strong><br/>{selectedMessage?.message}</p>
-            <small>Received: {new Date(selectedMessage?.createdAt).toLocaleString()}</small>
-          </Modal.Body>
+          <Modal.Body><p><strong>Email:</strong> {selectedMessage?.email}</p><p><strong>Subject:</strong> {selectedMessage?.subject}</p><p><strong>Message:</strong><br/>{selectedMessage?.message}</p><small>Received: {new Date(selectedMessage?.createdAt).toLocaleString()}</small></Modal.Body>
           <Modal.Footer><Button variant="secondary" onClick={() => setShowMessageModal(false)}>Close</Button></Modal.Footer>
         </Modal>
       </motion.div>

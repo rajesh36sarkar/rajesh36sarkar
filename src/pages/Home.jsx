@@ -30,24 +30,27 @@ const Home = () => {
     fetchData();
   }, []);
 
-  if (loading) return (
-    <div className="loader-wrapper">
-      <div className="spinner"></div>
-      <p className="loader-text">Loading your experience...</p>
-    </div>
-  );
+  if (loading) {
+    return (
+      <div className="loader-wrapper">
+        <div className="spinner"></div>
+        <p className="loader-text">Loading your experience...</p>
+      </div>
+    );
+  }
 
- 
-  const heroName = siteInfo?.hero?.name || 'Rajesh Kumar Sarkar';
-  const heroTitles = siteInfo?.hero?.title 
-    ? [siteInfo.hero.title] 
-    : ['Full Stack Developer', 'MERN Stack Expert', 'Problem Solver'];
-  const heroBio = siteInfo?.hero?.bio || 
+  // ★ FORCE YOUR PERMANENT HERO CONTENT (NO “John Doe” EVER)
+  const heroName = 'Rajesh Kumar Sarkar';
+  const heroTitles = ['Full Stack Developer', 'MERN Stack Expert', 'Problem Solver'];
+  const heroBio =
     'Building scalable web applications with MERN stack, Next.js, and modern frontend technologies. Passionate about clean code and great user experiences.';
+
+  // Use uploaded profile image from DB if available, otherwise use local default
   const profileImage = siteInfo?.hero?.profileImage || defaultProfileImage;
 
   return (
     <>
+      {/* Hero Section */}
       <section className="section-padding">
         <Container>
           <Row className="align-items-center min-vh-100">
@@ -57,9 +60,7 @@ const Home = () => {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8 }}
               >
-                <h1 className="display-3 fw-bold mb-3">
-                  Hi, I'm {heroName}
-                </h1>
+                <h1 className="display-3 fw-bold mb-3">Hi, I'm {heroName}</h1>
                 <h2 className="display-5 mb-4" style={{ minHeight: '80px' }}>
                   <Typewriter
                     options={{
@@ -86,27 +87,24 @@ const Home = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8 }}
               >
-                {profileImage ? (
-                  <img
-                    src={profileImage}
-                    alt="Profile"
-                    className="rounded-circle img-fluid"
-                    style={{ width: '300px', height: '300px', objectFit: 'cover', border: '4px solid white' }}
-                  />
-                ) : (
-                  <div 
-                    className="rounded-circle bg-gradient d-flex align-items-center justify-content-center mx-auto"
-                    style={{ width: '300px', height: '300px', border: '4px solid white' }}
-                  >
-                    <span className="display-1">👨‍💻</span>
-                  </div>
-                )}
+                <img
+                  src={profileImage}
+                  alt="Profile"
+                  className="rounded-circle img-fluid"
+                  style={{
+                    width: '300px',
+                    height: '300px',
+                    objectFit: 'cover',
+                    border: '4px solid white',
+                  }}
+                />
               </motion.div>
             </Col>
           </Row>
         </Container>
       </section>
 
+      {/* Featured Projects */}
       <section className="section-padding">
         <Container>
           <h2 className="section-title">Featured Projects</h2>

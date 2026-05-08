@@ -12,7 +12,7 @@ html, body, #root {
   margin: 0;
   padding: 0;
   position: relative;
-  overflow-x: hidden;
+  overflow-x: hidden !important;
   font-family: 'Inter', sans-serif;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: #fff;
@@ -29,7 +29,7 @@ html, body, #root {
   flex: 1;
 }
 
-/* ===== LOADER (Home page initial loading) ===== */
+/* ----- LOADER (Home page initial loading) ----- */
 .loader-wrapper {
   display: flex;
   flex-direction: column;
@@ -65,12 +65,12 @@ html, body, #root {
   backdrop-filter: blur(4px);
 }
 
-/* ===== SECTION PADDING ===== */
+/* ----- SECTION PADDING ----- */
 .section-padding {
   padding: 100px 0;
 }
 
-/* ===== GLASS CARD ===== */
+/* ----- GLASS CARD ----- */
 .glass-card {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
@@ -84,7 +84,7 @@ html, body, #root {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
-/* ===== BUTTON GRADIENT ===== */
+/* ----- BUTTON GRADIENT ----- */
 .btn-gradient {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border: none;
@@ -101,7 +101,7 @@ html, body, #root {
   color: white;
 }
 
-/* ===== SECTION TITLE ===== */
+/* ----- SECTION TITLE ----- */
 .section-title {
   font-size: 2.5rem;
   font-weight: 700;
@@ -122,7 +122,7 @@ html, body, #root {
   border-radius: 3px;
 }
 
-/* ===== SCROLLBAR ===== */
+/* ----- SCROLLBAR ----- */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -134,7 +134,7 @@ html, body, #root {
   border-radius: 10px;
 }
 
-/* ===== PROJECT MODAL STYLES ===== */
+/* ----- PROJECT MODAL STYLES ----- */
 .project-modal .modal-content {
   background: rgba(15, 12, 41, 0.95);
   backdrop-filter: blur(10px);
@@ -146,7 +146,7 @@ html, body, #root {
   border-color: rgba(255,255,255,0.1);
 }
 
-/* ===== MOBILE RESPONSIVE ===== */
+/* ----- MOBILE RESPONSIVE ----- */
 @media (max-width: 768px) {
   .section-padding {
     padding: 60px 0;
@@ -174,6 +174,7 @@ html, body, #root {
   .loader-text {
     font-size: 1rem;
   }
+  /* Table responsive for admin panel */
   .table-responsive-stack {
     display: block;
     width: 100%;
@@ -181,9 +182,9 @@ html, body, #root {
   }
 }
 
-/* ===== PREVENT HORIZONTAL SCROLL (slider removal) ===== */
+/* ----- PREVENT HORIZONTAL SCROLL (slider removal) ----- */
 html, body {
-  overflow-x: hidden;
+  overflow-x: hidden !important;
   width: 100%;
   position: relative;
 }
@@ -191,9 +192,9 @@ img, .card, .row {
   max-width: 100%;
 }
 
-/* Additional canvas safety for Three.js background */
+/* ----- Three.js canvas safety (no interaction, no overflow) ----- */
 canvas {
   display: block;
   vertical-align: bottom;
-  pointer-events: none; /* ensures canvas doesn't interfere with clicks */
+  pointer-events: none;   /* prevents accidental dragging/selection */
 }
