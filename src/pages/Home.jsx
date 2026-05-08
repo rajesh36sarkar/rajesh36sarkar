@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { getProjects, getSiteInfo } from '../services/api';
 import ProjectCard from '../components/ProjectCard';
 import Typewriter from 'typewriter-effect';
+import defaultProfileImage from '/dp-rajesh.png';
 
 const Home = () => {
   const [projects, setProjects] = useState([]);
@@ -36,17 +37,17 @@ const Home = () => {
     </div>
   );
 
-  // Use siteInfo if available, otherwise use your real info
+ 
   const heroName = siteInfo?.hero?.name || 'Rajesh Kumar Sarkar';
-  const heroTitles = siteInfo?.hero?.title
-    ? [siteInfo.hero.title]
+  const heroTitles = siteInfo?.hero?.title 
+    ? [siteInfo.hero.title] 
     : ['Full Stack Developer', 'MERN Stack Expert', 'Problem Solver'];
-  const heroBio = siteInfo?.hero?.bio ||
+  const heroBio = siteInfo?.hero?.bio || 
     'Building scalable web applications with MERN stack, Next.js, and modern frontend technologies. Passionate about clean code and great user experiences.';
+  const profileImage = siteInfo?.hero?.profileImage || defaultProfileImage;
 
   return (
     <>
-      {/* Hero Section */}
       <section className="section-padding">
         <Container>
           <Row className="align-items-center min-vh-100">
@@ -68,9 +69,7 @@ const Home = () => {
                     }}
                   />
                 </h2>
-                <p className="lead mb-4 text-white-50">
-                  {heroBio}
-                </p>
+                <p className="lead mb-4 text-white-50">{heroBio}</p>
                 <div className="d-flex gap-3 justify-content-center justify-content-lg-start">
                   <Button as={Link} to="/projects" className="btn-gradient">
                     View Projects
@@ -87,15 +86,15 @@ const Home = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8 }}
               >
-                {siteInfo?.hero?.profileImage ? (
+                {profileImage ? (
                   <img
-                    src={siteInfo.hero.profileImage}
+                    src={profileImage}
                     alt="Profile"
                     className="rounded-circle img-fluid"
                     style={{ width: '300px', height: '300px', objectFit: 'cover', border: '4px solid white' }}
                   />
                 ) : (
-                  <div
+                  <div 
                     className="rounded-circle bg-gradient d-flex align-items-center justify-content-center mx-auto"
                     style={{ width: '300px', height: '300px', border: '4px solid white' }}
                   >
@@ -108,7 +107,6 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* Featured Projects */}
       <section className="section-padding">
         <Container>
           <h2 className="section-title">Featured Projects</h2>

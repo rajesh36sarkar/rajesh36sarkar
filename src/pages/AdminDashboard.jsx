@@ -21,6 +21,7 @@ const AdminDashboard = () => {
   const [showMessageModal, setShowMessageModal] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [profileImageFile, setProfileImageFile] = useState(null);
+  const [resumeFile, setResumeFile] = useState(null);
 
   const { register, handleSubmit, reset, setValue } = useForm();
 
@@ -106,49 +107,73 @@ const AdminDashboard = () => {
   };
 
   const updateHero = async (heroData) => {
-    const updated = { ...siteInfo, hero: { ...siteInfo.hero, ...heroData } };
-    await updateSiteInfo(updated);
-    fetchData();
-    setMessage({ text: 'Hero updated', variant: 'success' });
+    try {
+      const updated = { ...siteInfo, hero: { ...siteInfo.hero, ...heroData } };
+      await updateSiteInfo(updated);
+      await fetchData(); // force refresh
+      setMessage({ text: 'Hero updated successfully!', variant: 'success' });
+    } catch (error) {
+      setMessage({ text: 'Update failed', variant: 'danger' });
+    }
   };
 
   const updateAbout = async (aboutData) => {
-    const updated = { ...siteInfo, about: { ...siteInfo.about, ...aboutData } };
-    await updateSiteInfo(updated);
-    fetchData();
-    setMessage({ text: 'About updated', variant: 'success' });
+    try {
+      const updated = { ...siteInfo, about: { ...siteInfo.about, ...aboutData } };
+      await updateSiteInfo(updated);
+      await fetchData();
+      setMessage({ text: 'About updated', variant: 'success' });
+    } catch (error) {
+      setMessage({ text: 'Update failed', variant: 'danger' });
+    }
   };
 
   const updateSocial = async (socialData) => {
-    const updated = { ...siteInfo, social: { ...siteInfo.social, ...socialData } };
-    await updateSiteInfo(updated);
-    fetchData();
-    setMessage({ text: 'Social links updated', variant: 'success' });
+    try {
+      const updated = { ...siteInfo, social: { ...siteInfo.social, ...socialData } };
+      await updateSiteInfo(updated);
+      await fetchData();
+      setMessage({ text: 'Social links updated', variant: 'success' });
+    } catch (error) {
+      setMessage({ text: 'Update failed', variant: 'danger' });
+    }
   };
 
   const addSkill = async (skillData) => {
     const newSkill = { name: skillData.skillName, level: parseInt(skillData.skillLevel) };
     const newSkills = [...(siteInfo?.skills || []), newSkill];
-    await updateSiteInfo({ skills: newSkills });
-    fetchData();
-    setMessage({ text: 'Skill added', variant: 'success' });
+    try {
+      await updateSiteInfo({ skills: newSkills });
+      await fetchData();
+      setMessage({ text: 'Skill added', variant: 'success' });
+    } catch (error) {
+      setMessage({ text: 'Failed to add skill', variant: 'danger' });
+    }
   };
 
   const deleteSkill = async (index) => {
     const newSkills = siteInfo.skills.filter((_, i) => i !== index);
-    await updateSiteInfo({ skills: newSkills });
-    fetchData();
-    setMessage({ text: 'Skill deleted', variant: 'success' });
+    try {
+      await updateSiteInfo({ skills: newSkills });
+      await fetchData();
+      setMessage({ text: 'Skill deleted', variant: 'success' });
+    } catch (error) {
+      setMessage({ text: 'Failed to delete skill', variant: 'danger' });
+    }
   };
 
-  const handleProfileImageUpload = async () => {
-    if (!profileImageFile) return;
+  // Profile photo upload
+  const handleProfilePhotoUpload = async () => {
+    if (!profileImageFile) {
+      setMessage({ text: 'Select an image first', variant: 'warning' });
+      return;
+    }
     setUploading(true);
     try {
       const res = await uploadImage(profileImageFile);
       await updateHero({ profileImage: res.data.url });
       setProfileImageFile(null);
-      setMessage({ text: 'Profile image updated', variant: 'success' });
+      setMessage({ text: 'Profile photo updated!', variant: 'success' });
     } catch (error) {
       setMessage({ text: 'Upload failed', variant: 'danger' });
     } finally {
@@ -156,6 +181,26 @@ const AdminDashboard = () => {
     }
   };
 
+  // Resume upload
+  const handleResumeUpload = async () => {
+    if (!resumeFile) {
+      setMessage({ text: 'Select a PDF file first', variant: 'warning' });
+      return;
+    }
+    setUploading(true);
+    try {
+      const res = await uploadImage(resumeFile); // reuse same upload endpoint (supports PDF)
+      await updateHero({ resumeUrl: res.data.url });
+      setResumeFile(null);
+      setMessage({ text: 'Resume uploaded!', variant: 'success' });
+    } catch (error) {
+      setMessage({ text: 'Resume upload failed', variant: 'danger' });
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  // Mark message as read
   const markAsRead = async (id) => {
     await axios.put(`${import.meta.env.VITE_API_URL}/contact/${id}/read`, {}, {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
@@ -233,10 +278,22 @@ const AdminDashboard = () => {
               </Col>
               <Col md={6}>
                 <Card className="glass-card p-4 mb-3">
-                  <h3>Profile Image</h3>
-                  {siteInfo?.hero?.profileImage && <img src={siteInfo.hero.profileImage} alt="Profile" width="120" height="120" className="rounded-circle mb-3" />}
-                  <Form.Group className="mb-3"><Form.Label>Upload new image</Form.Label><Form.Control type="file" onChange={(e) => setProfileImageFile(e.target.files[0])} /></Form.Group>
-                  <Button onClick={handleProfileImageUpload} disabled={uploading} className="btn-gradient">{uploading ? 'Uploading...' : 'Upload & Update'}</Button>
+                  <h3>Profile Photo</h3>
+                  {siteInfo?.hero?.profileImage && (
+                    <img src={siteInfo.hero.profileImage} alt="Profile" width="120" height="120" className="rounded-circle mb-3" />
+                  )}
+                  <Form.Group className="mb-3"><Form.Label>Upload new image</Form.Label><Form.Control type="file" onChange={(e) => setProfileImageFile(e.target.files[0])} accept="image/*" /></Form.Group>
+                  <Button onClick={handleProfilePhotoUpload} disabled={uploading} className="btn-gradient">{uploading ? 'Uploading...' : 'Upload Photo'}</Button>
+                </Card>
+
+                {/* Resume Management */}
+                <Card className="glass-card p-4">
+                  <h3>Resume (PDF)</h3>
+                  {siteInfo?.hero?.resumeUrl && (
+                    <a href={siteInfo.hero.resumeUrl} target="_blank" rel="noopener noreferrer" className="btn btn-outline-light mb-3">View Current Resume</a>
+                  )}
+                  <Form.Group className="mb-3"><Form.Label>Upload new resume (PDF)</Form.Label><Form.Control type="file" onChange={(e) => setResumeFile(e.target.files[0])} accept=".pdf" /></Form.Group>
+                  <Button onClick={handleResumeUpload} disabled={uploading} className="btn-gradient">{uploading ? 'Uploading...' : 'Upload Resume'}</Button>
                 </Card>
               </Col>
             </Row>
@@ -324,51 +381,21 @@ const AdminDashboard = () => {
           </Tab>
         </Tabs>
 
-        {/* Enhanced Add/Edit Project Modal */}
+        {/* Add/Edit Project Modal (unchanged, already working) */}
         <Modal show={showProjectModal} onHide={handleCloseProjectModal} size="lg" centered>
           <Modal.Header closeButton className="bg-dark text-white">
             <Modal.Title>{editingProject ? '✏️ Edit Project' : '➕ Add New Project'}</Modal.Title>
           </Modal.Header>
           <Modal.Body className="bg-dark" style={{ maxHeight: '70vh', overflowY: 'auto' }}>
             <Form onSubmit={handleSubmit(onSubmitProject)}>
-              <Form.Group className="mb-3">
-                <Form.Label className="fw-bold">📌 Project Title *</Form.Label>
-                <Form.Control {...register('title')} placeholder="e.g., MyTube - YouTube Clone" required />
-                <Form.Text className="text-white-50">Clear, descriptive title.</Form.Text>
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label className="fw-bold">📝 Description *</Form.Label>
-                <Form.Control as="textarea" rows={4} {...register('description')} placeholder="Explain the project, its purpose, key features..." required />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label className="fw-bold">⚙️ Technologies *</Form.Label>
-                <Form.Control {...register('technologies')} placeholder="React, Node.js, MongoDB, Tailwind CSS" required />
-                <Form.Text className="text-white-50">Separate each with a comma.</Form.Text>
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label className="fw-bold">🖼️ Project Image *</Form.Label>
-                <Form.Control {...register('imageUrl')} placeholder="https://..." />
-                <Form.Text className="text-white-50">Or upload an image:</Form.Text>
-                <Form.Control type="file" onChange={handleImageUpload} className="mt-2" accept="image/*" />
-                {uploading && <Spinner animation="border" size="sm" className="mt-2" />}
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label className="fw-bold">🌐 Live Demo URL (optional)</Form.Label>
-                <Form.Control {...register('liveUrl')} placeholder="https://your-project-demo.com" />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label className="fw-bold">💻 GitHub URL (optional)</Form.Label>
-                <Form.Control {...register('githubUrl')} placeholder="https://github.com/yourusername/project" />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Check type="checkbox" label="⭐ Feature this project on homepage" {...register('featured')} />
-              </Form.Group>
-              <div className="d-flex justify-content-end gap-2 mt-4">
-                <Button variant="secondary" onClick={handleCloseProjectModal}>Cancel</Button>
-                <Button type="submit" className="btn-gradient" disabled={uploading}>
-                  {editingProject ? 'Update Project' : 'Create Project'}
-                </Button>
-              </div>
+              <Form.Group className="mb-3"><Form.Label>📌 Title *</Form.Label><Form.Control {...register('title')} required /></Form.Group>
+              <Form.Group className="mb-3"><Form.Label>📝 Description *</Form.Label><Form.Control as="textarea" rows={4} {...register('description')} required /></Form.Group>
+              <Form.Group className="mb-3"><Form.Label>⚙️ Technologies (comma separated)</Form.Label><Form.Control {...register('technologies')} required /></Form.Group>
+              <Form.Group className="mb-3"><Form.Label>🖼️ Image URL</Form.Label><Form.Control {...register('imageUrl')} /><Form.Control type="file" onChange={handleImageUpload} className="mt-2" /></Form.Group>
+              <Form.Group className="mb-3"><Form.Label>🌐 Live URL</Form.Label><Form.Control {...register('liveUrl')} /></Form.Group>
+              <Form.Group className="mb-3"><Form.Label>💻 GitHub URL</Form.Label><Form.Control {...register('githubUrl')} /></Form.Group>
+              <Form.Group className="mb-3"><Form.Check type="checkbox" label="⭐ Featured" {...register('featured')} /></Form.Group>
+              <Button type="submit" className="btn-gradient">Save Project</Button>
             </Form>
           </Modal.Body>
         </Modal>

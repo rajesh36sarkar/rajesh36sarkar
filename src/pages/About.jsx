@@ -37,7 +37,7 @@ const About = () => {
   const skills = siteInfo?.skills?.length ? siteInfo.skills : defaultSkills;
 
   // Hardcoded about info
-  const aboutText = siteInfo?.about?.description || 
+  const aboutText = siteInfo?.about?.description ||
     "Detail-oriented Full Stack Developer with 1+ year of experience building scalable web applications using the MERN stack (MongoDB, Express.js, React.js, Node.js). Skilled in Next.js, Tailwind CSS, Bootstrap, and Material UI. Proven track record of delivering business-critical platforms, from eCommerce and digital services to creative portfolio websites. Passionate about writing clean code, optimizing performance, and integrating SEO best practices.";
 
   const experienceYears = siteInfo?.about?.experience || 1;
@@ -81,9 +81,9 @@ const About = () => {
                 </Col>
               </Row>
               <div className="text-center mt-4">
-                <Button 
-                  variant="outline-light" 
-                  href="/Rajesh_Kumar_Sarkar_Resume.pdf" 
+                <Button
+                  variant="outline-light"
+                  href={siteInfo?.hero?.resumeUrl || '/Rajesh_Kumar_Sarkar_Resume.pdf'}
                   download
                   className="btn-gradient"
                 >
@@ -101,9 +101,9 @@ const About = () => {
                     <span>{skill.name}</span>
                     <span>{skill.level}%</span>
                   </div>
-                  <ProgressBar 
-                    now={skill.level} 
-                    variant="info" 
+                  <ProgressBar
+                    now={skill.level}
+                    variant="info"
                     style={{ height: '8px', borderRadius: '4px' }}
                   />
                 </div>
