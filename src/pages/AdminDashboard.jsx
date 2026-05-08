@@ -253,6 +253,7 @@ const AdminDashboard = () => {
         {message.text && <Alert variant={message.variant} dismissible onClose={() => setMessage({ text: '', variant: '' })}>{message.text}</Alert>}
 
         <Tabs defaultActiveKey="projects" className="mb-4" fill variant="tabs">
+          {/* Projects Tab */}
           <Tab eventKey="projects" title="Projects">
             <Card className="glass-card p-3">
               <div className="d-flex justify-content-between mb-3">
@@ -261,7 +262,15 @@ const AdminDashboard = () => {
               </div>
               <div className="table-responsive-stack">
                 <Table striped bordered hover variant="dark" responsive>
-                  <thead><tr><th>Image</th><th>Title</th><th>Technologies</th><th>Featured</th><th>Actions</th></tr></thead>
+                  <thead>
+                    <tr>
+                      <th>Image</th>
+                      <th>Title</th>
+                      <th>Technologies</th>
+                      <th>Featured</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
                   <tbody>
                     {projects.map(project => (
                       <tr key={project._id}>
@@ -281,6 +290,7 @@ const AdminDashboard = () => {
             </Card>
           </Tab>
 
+          {/* Hero & Profile Tab */}
           <Tab eventKey="hero" title="Hero & Profile">
             <Row>
               <Col md={6}>
@@ -318,27 +328,40 @@ const AdminDashboard = () => {
             </Row>
           </Tab>
 
+          {/* About Tab */}
           <Tab eventKey="about" title="About & Stats">
             <Card className="glass-card p-4">
               <h3>About Section</h3>
               <Form onSubmit={handleSubmit(updateAbout)}>
-                <Form.Group className="mb-3"><Form.Label>Description</Form.Label><Form.Control as="textarea" rows={5} defaultValue={siteInfo?.about?.description || ''} name="description" /></Form.Group>
-                <Row><Col><Form.Label>Experience (years)</Form.Label><Form.Control type="number" name="experience" defaultValue={siteInfo?.about?.experience || 1} /></Col>
-                <Col><Form.Label>Projects Count</Form.Label><Form.Control type="number" name="projects" defaultValue={siteInfo?.about?.projects || 10} /></Col>
-                <Col><Form.Label>Clients Count</Form.Label><Form.Control type="number" name="clients" defaultValue={siteInfo?.about?.clients || 5} /></Col></Row>
+                <Form.Group className="mb-3">
+                  <Form.Label>Description</Form.Label>
+                  <Form.Control as="textarea" rows={5} defaultValue={siteInfo?.about?.description || ''} name="description" />
+                </Form.Group>
+                <Row>
+                  <Col><Form.Label>Experience (years)</Form.Label><Form.Control type="number" name="experience" defaultValue={siteInfo?.about?.experience || 1} /></Col>
+                  <Col><Form.Label>Projects Count</Form.Label><Form.Control type="number" name="projects" defaultValue={siteInfo?.about?.projects || 10} /></Col>
+                  <Col><Form.Label>Clients Count</Form.Label><Form.Control type="number" name="clients" defaultValue={siteInfo?.about?.clients || 5} /></Col>
+                </Row>
                 <Button type="submit" className="btn-gradient mt-3">Update About</Button>
               </Form>
             </Card>
           </Tab>
 
+          {/* Skills Tab */}
           <Tab eventKey="skills" title="Skills">
             <Row>
               <Col md={5}>
                 <Card className="glass-card p-4">
                   <h3>Add New Skill</h3>
                   <Form onSubmit={handleSubmit(addSkill)}>
-                    <Form.Group className="mb-3"><Form.Label>Skill Name</Form.Label><Form.Control name="skillName" required /></Form.Group>
-                    <Form.Group className="mb-3"><Form.Label>Level (1-100)</Form.Label><Form.Control type="number" name="skillLevel" min="1" max="100" required /></Form.Group>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Skill Name</Form.Label>
+                      <Form.Control name="skillName" required />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Level (1-100)</Form.Label>
+                      <Form.Control type="number" name="skillLevel" min="1" max="100" required />
+                    </Form.Group>
                     <Button type="submit" className="btn-gradient">Add Skill</Button>
                   </Form>
                 </Card>
@@ -359,6 +382,7 @@ const AdminDashboard = () => {
             </Row>
           </Tab>
 
+          {/* Social Links Tab */}
           <Tab eventKey="social" title="Social Links">
             <Card className="glass-card p-4">
               <h3>Social Media Links</h3>
@@ -372,11 +396,16 @@ const AdminDashboard = () => {
             </Card>
           </Tab>
 
+          {/* Messages Tab */}
           <Tab eventKey="messages" title={`Messages (${messages.filter(m => !m.read).length})`}>
             <Card className="glass-card p-3">
               <div className="table-responsive-stack">
                 <Table striped bordered hover variant="dark" responsive>
-                  <thead><tr><th>Date</th><th>Name</th><th>Email</th><th>Subject</th><th>Status</th><th>Actions</th></tr></thead>
+                  <thead>
+                    <tr>
+                      <th>Date</th><th>Name</th><th>Email</th><th>Subject</th><th>Status</th><th>Actions</th>
+                    </tr>
+                  </thead>
                   <tbody>
                     {messages.map(msg => (
                       <tr key={msg._id} className={!msg.read ? 'fw-bold' : ''}>
@@ -385,9 +414,11 @@ const AdminDashboard = () => {
                         <td>{msg.email}</td>
                         <td>{msg.subject}</td>
                         <td>{msg.read ? <Badge bg="success">Read</Badge> : <Badge bg="warning">Unread</Badge>}</td>
-                        <td><Button variant="info" size="sm" onClick={() => viewMessage(msg)} className="me-2"><FaEye /></Button>
-                        <Button variant="danger" size="sm" onClick={() => deleteMessage(msg._id)}><FaTrash /></Button></td>
-                      <tr>
+                        <td>
+                          <Button variant="info" size="sm" onClick={() => viewMessage(msg)} className="me-2"><FaEye /></Button>
+                          <Button variant="danger" size="sm" onClick={() => deleteMessage(msg._id)}><FaTrash /></Button>
+                        </td>
+                      </tr>
                     ))}
                   </tbody>
                 </Table>
@@ -396,7 +427,7 @@ const AdminDashboard = () => {
           </Tab>
         </Tabs>
 
-        {/* Add/Edit Project Modal with Gallery */}
+        {/* Project Modal */}
         <Modal show={showProjectModal} onHide={handleCloseProjectModal} size="lg" centered>
           <Modal.Header closeButton className="bg-dark text-white">
             <Modal.Title>{editingProject ? '✏️ Edit Project' : '➕ Add New Project'}</Modal.Title>
@@ -407,7 +438,9 @@ const AdminDashboard = () => {
               <Form.Group className="mb-3"><Form.Label>📝 Description *</Form.Label><Form.Control as="textarea" rows={4} {...register('description')} required /></Form.Group>
               <Form.Group className="mb-3"><Form.Label>⚙️ Technologies (comma separated)</Form.Label><Form.Control {...register('technologies')} required /></Form.Group>
               <Form.Group className="mb-3"><Form.Label>🖼️ Thumbnail Image *</Form.Label><Form.Control {...register('imageUrl')} placeholder="Image URL" /><Form.Control type="file" onChange={handleImageUpload} className="mt-2" accept="image/*" /></Form.Group>
-              <Form.Group className="mb-3"><Form.Label>🖼️ Gallery Images (optional, up to 10)</Form.Label><Form.Control type="file" multiple accept="image/*" onChange={handleGalleryUpload} disabled={uploadingGallery} />{uploadingGallery && <Spinner animation="border" size="sm" className="mt-2" />}</Form.Group>
+              <Form.Group className="mb-3"><Form.Label>🖼️ Gallery Images (optional, up to 10)</Form.Label><Form.Control type="file" multiple accept="image/*" onChange={handleGalleryUpload} disabled={uploadingGallery} />
+                {uploadingGallery && <Spinner animation="border" size="sm" className="mt-2" />}
+              </Form.Group>
               <Form.Group className="mb-3"><Form.Label>🌐 Live URL</Form.Label><Form.Control {...register('liveUrl')} /></Form.Group>
               <Form.Group className="mb-3"><Form.Label>💻 GitHub URL</Form.Label><Form.Control {...register('githubUrl')} /></Form.Group>
               <Form.Group className="mb-3"><Form.Check type="checkbox" label="⭐ Featured" {...register('featured')} /></Form.Group>
@@ -416,9 +449,15 @@ const AdminDashboard = () => {
           </Modal.Body>
         </Modal>
 
+        {/* Message Detail Modal */}
         <Modal show={showMessageModal} onHide={() => setShowMessageModal(false)}>
           <Modal.Header closeButton><Modal.Title>Message from {selectedMessage?.name}</Modal.Title></Modal.Header>
-          <Modal.Body><p><strong>Email:</strong> {selectedMessage?.email}</p><p><strong>Subject:</strong> {selectedMessage?.subject}</p><p><strong>Message:</strong><br/>{selectedMessage?.message}</p><small>Received: {new Date(selectedMessage?.createdAt).toLocaleString()}</small></Modal.Body>
+          <Modal.Body>
+            <p><strong>Email:</strong> {selectedMessage?.email}</p>
+            <p><strong>Subject:</strong> {selectedMessage?.subject}</p>
+            <p><strong>Message:</strong><br/>{selectedMessage?.message}</p>
+            <small>Received: {new Date(selectedMessage?.createdAt).toLocaleString()}</small>
+          </Modal.Body>
           <Modal.Footer><Button variant="secondary" onClick={() => setShowMessageModal(false)}>Close</Button></Modal.Footer>
         </Modal>
       </motion.div>

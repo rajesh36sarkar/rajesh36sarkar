@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, ProgressBar, Button } from 'react-bootstrap';
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { getSiteInfo } from '../services/api';
-import { FaCode, FaMobile, FaServer, FaCloud, FaDownload } from 'react-icons/fa';
+import { FaCode, FaMobile, FaServer, FaCloud, FaDownload, FaAward, FaGraduationCap, FaCertificate, FaBriefcase, FaLanguage } from 'react-icons/fa';
+import { HiOutlineLightBulb } from 'react-icons/hi';
 
 const About = () => {
   const [siteInfo, setSiteInfo] = useState(null);
@@ -22,61 +23,75 @@ const About = () => {
     fetchInfo();
   }, []);
 
-  // Hardcoded skills from resume (will be overridden by siteInfo if available)
+  // Default data
   const defaultSkills = [
-    { name: 'JavaScript (ES6+)', level: 85 },
-    { name: 'React.js / Next.js', level: 85 },
-    { name: 'Node.js / Express.js', level: 80 },
-    { name: 'MongoDB / Mongoose', level: 75 },
-    { name: 'Tailwind CSS / Bootstrap', level: 90 },
-    { name: 'RESTful APIs / JWT', level: 80 },
-    { name: 'Git / GitHub', level: 85 },
-    { name: 'SEO (React Helmet)', level: 75 },
+    { name: 'JavaScript (ES6+)', level: 88 },
+    { name: 'React.js / Next.js', level: 90 },
+    { name: 'Node.js / Express.js', level: 85 },
+    { name: 'MongoDB / Mongoose', level: 82 },
+    { name: 'Tailwind CSS / Bootstrap', level: 92 },
+    { name: 'RESTful APIs / JWT', level: 85 },
+    { name: 'Git / GitHub', level: 88 },
+    { name: 'SEO / Performance', level: 80 },
   ];
 
   const skills = siteInfo?.skills?.length ? siteInfo.skills : defaultSkills;
-
-  // Hardcoded about info
-  const aboutText = siteInfo?.about?.description ||
-    "Detail-oriented Full Stack Developer with 1+ year of experience building scalable web applications using the MERN stack (MongoDB, Express.js, React.js, Node.js). Skilled in Next.js, Tailwind CSS, Bootstrap, and Material UI. Proven track record of delivering business-critical platforms, from eCommerce and digital services to creative portfolio websites. Passionate about writing clean code, optimizing performance, and integrating SEO best practices.";
-
-  const experienceYears = siteInfo?.about?.experience || 1;
-  const projectsCount = siteInfo?.about?.projects || 10;
-  const clientsCount = siteInfo?.about?.clients || 5;
+  const aboutText = siteInfo?.about?.description || 
+    "Detail-oriented Full Stack Developer with 2+ years of experience building scalable web applications using the MERN stack, Next.js, and modern frontend technologies. I've successfully delivered eCommerce platforms, digital service portals, and creative portfolio websites. My passion lies in writing clean, maintainable code and creating seamless user experiences.";
+  const experienceYears = siteInfo?.about?.experience || 2;
+  const projectsCount = siteInfo?.about?.projects || 15;
+  const clientsCount = siteInfo?.about?.clients || 8;
 
   const services = [
-    { icon: <FaCode size={40} />, title: 'Frontend Dev', desc: 'React, Next.js, Tailwind, Bootstrap, Material UI' },
-    { icon: <FaServer size={40} />, title: 'Backend Dev', desc: 'Node.js, Express.js, REST APIs, JWT' },
-    { icon: <FaMobile size={40} />, title: 'Responsive Design', desc: 'Mobile-first, Cross-browser' },
-    { icon: <FaCloud size={40} />, title: 'DevOps & Tools', desc: 'Git, Vercel, Netlify, Postman' },
+    { icon: <FaCode size={36} />, title: 'Frontend Dev', desc: 'React, Next.js, Tailwind, Bootstrap, Framer Motion' },
+    { icon: <FaServer size={36} />, title: 'Backend Dev', desc: 'Node.js, Express.js, REST APIs, JWT, WebSockets' },
+    { icon: <FaMobile size={36} />, title: 'Responsive Design', desc: 'Mobile-first, cross-browser, PWA ready' },
+    { icon: <FaCloud size={36} />, title: 'DevOps & Tools', desc: 'Git, Docker, Vercel, Netlify, Render, Postman' },
   ];
 
-  if (loading) return <div className="text-center py-5">Loading...</div>;
+  if (loading) return <div className="loader-wrapper"><div className="spinner"></div><p>Loading...</p></div>;
 
   return (
     <Container className="py-5">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.6 }}
       >
-        <h1 className="section-title">About Me</h1>
-        <Row className="align-items-center">
-          <Col lg={6} className="mb-4">
-            <div className="glass-card p-4">
-              <h3 className="mb-3">Who Am I?</h3>
-              <p className="text-white-50">{aboutText}</p>
-              <Row className="mt-4 text-center">
+        {/* Hero About Section */}
+        <div className="text-center mb-5">
+          <h1 className="section-title-glow">About Me</h1>
+          <p className="lead text-white-50" style={{ maxWidth: '700px', margin: '0 auto' }}>
+            Get to know me, my journey, and what drives me to build exceptional digital experiences.
+          </p>
+        </div>
+
+        {/* Bio and Stats Row */}
+        <Row className="align-items-center g-5 mb-5">
+          <Col lg={7}>
+            <motion.div
+              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, x: -30 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="glass-card p-4 p-lg-5"
+            >
+              <h3 className="mb-4">👨‍💻 Who Am I?</h3>
+              <p className="text-white-50 lead" style={{ lineHeight: 1.7 }}>{aboutText}</p>
+              <Row className="mt-5 text-center">
                 <Col>
-                  <h2 className="text-primary">{experienceYears}+</h2>
+                  <div className="stat-icon-sm"><FaBriefcase /></div>
+                  <h3 className="gradient-number">{experienceYears}+</h3>
                   <p>Years Experience</p>
                 </Col>
                 <Col>
-                  <h2 className="text-primary">{projectsCount}+</h2>
+                  <div className="stat-icon-sm"><FaCode /></div>
+                  <h3 className="gradient-number">{projectsCount}+</h3>
                   <p>Projects Completed</p>
                 </Col>
                 <Col>
-                  <h2 className="text-primary">{clientsCount}+</h2>
+                  <div className="stat-icon-sm"><FaAward /></div>
+                  <h3 className="gradient-number">{clientsCount}+</h3>
                   <p>Happy Clients</p>
                 </Col>
               </Row>
@@ -90,71 +105,117 @@ const About = () => {
                   <FaDownload className="me-2" /> Download Resume
                 </Button>
               </div>
-            </div>
+            </motion.div>
           </Col>
-          <Col lg={6}>
-            <div className="glass-card p-4">
-              <h3 className="mb-4">Technical Skills</h3>
-              {skills.map((skill, idx) => (
+          <Col lg={5}>
+            <motion.div
+              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="glass-card p-4"
+            >
+              <h3 className="mb-4 text-center">⚡ Core Skills</h3>
+              {skills.slice(0, 6).map((skill, idx) => (
                 <div key={idx} className="mb-3">
-                  <div className="d-flex justify-content-between mb-2">
+                  <div className="d-flex justify-content-between mb-1">
                     <span>{skill.name}</span>
-                    <span>{skill.level}%</span>
+                    <span className="text-accent">{skill.level}%</span>
                   </div>
                   <ProgressBar
                     now={skill.level}
                     variant="info"
-                    style={{ height: '8px', borderRadius: '4px' }}
+                    className="skill-progress"
                   />
                 </div>
               ))}
-            </div>
+            </motion.div>
           </Col>
         </Row>
 
-        <h2 className="section-title mt-5">What I Do</h2>
-        <Row>
-          {services.map((service, idx) => (
-            <Col lg={3} md={6} key={idx} className="mb-4">
-              <div className="glass-card p-4 text-center h-100">
-                <div className="mb-3 text-primary">{service.icon}</div>
-                <h4>{service.title}</h4>
-                <p className="text-white-50 mt-2">{service.desc}</p>
+        {/* Services Section */}
+        <div className="mt-5">
+          <h2 className="section-title-glow">What I Do</h2>
+          <Row>
+            {services.map((service, idx) => (
+              <Col lg={3} md={6} key={idx} className="mb-4">
+                <motion.div
+                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, y: 30 }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  viewport={{ once: true }}
+                  className="service-card"
+                >
+                  <div className="service-icon">{service.icon}</div>
+                  <h4>{service.title}</h4>
+                  <p>{service.desc}</p>
+                </motion.div>
+              </Col>
+            ))}
+          </Row>
+        </div>
+
+        {/* Journey (Education + Certifications) */}
+        <Row className="mt-5">
+          <Col lg={6} className="mb-4">
+            <motion.div
+              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="glass-card p-4 h-100"
+            >
+              <h3><FaGraduationCap className="me-2" /> Education</h3>
+              <div className="timeline-item">
+                <div className="timeline-year">2017 - 2020</div>
+                <h5>Bachelor of Arts (B.A.)</h5>
+                <p className="text-white-50">Kalna College, University of Burdwan, West Bengal</p>
               </div>
-            </Col>
-          ))}
+            </motion.div>
+          </Col>
+          <Col lg={6} className="mb-4">
+            <motion.div
+              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="glass-card p-4 h-100"
+            >
+              <h3><FaCertificate className="me-2" /> Certifications</h3>
+              <div className="timeline-item">
+                <div className="timeline-year">2024 - 2025</div>
+                <h5>Full Stack Development Post Graduate Certification</h5>
+                <p className="text-white-50">Internshala | Specialized in MERN, Next.js, Tailwind</p>
+              </div>
+              <div className="timeline-item mt-3">
+                <div className="timeline-year">2023</div>
+                <h5>JavaScript & React Advanced</h5>
+                <p className="text-white-50">FreeCodeCamp / Udemy</p>
+              </div>
+            </motion.div>
+          </Col>
         </Row>
 
-        {/* Education & Certifications */}
-        <h2 className="section-title mt-5">Education & Certifications</h2>
-        <Row>
-          <Col md={6} className="mb-4">
-            <div className="glass-card p-4 h-100">
-              <h4>🎓 Education</h4>
-              <p className="mb-1"><strong>Bachelor of Arts (B.A.)</strong></p>
-              <p className="text-white-50">Kalna College, Kalna, West Bengal | 2017 - 2020</p>
-            </div>
-          </Col>
-          <Col md={6} className="mb-4">
-            <div className="glass-card p-4 h-100">
-              <h4>📜 Certification</h4>
-              <p className="mb-1"><strong>Full Stack Development Post Graduate Certification</strong></p>
-              <p className="text-white-50">Internshala | Expected: 2025</p>
-            </div>
-          </Col>
-        </Row>
-
-        {/* Languages */}
-        <h2 className="section-title mt-3">Languages</h2>
-        <Row className="justify-content-center">
+        {/* Languages & Hobbies */}
+        <Row className="justify-content-center mt-3">
           <Col md={8}>
-            <div className="glass-card p-4 text-center">
-              <div className="d-flex justify-content-around flex-wrap">
-                <span className="badge bg-primary fs-6 m-2">Bengali (Native)</span>
-                <span className="badge bg-primary fs-6 m-2">English (Professional)</span>
-                <span className="badge bg-primary fs-6 m-2">Hindi (Professional)</span>
+            <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="glass-card p-4 text-center"
+            >
+              <h3><FaLanguage className="me-2" /> Languages</h3>
+              <div className="d-flex flex-wrap justify-content-center gap-3 mt-3">
+                <span className="language-badge">🇧🇩 Bengali (Native)</span>
+                <span className="language-badge">🇬🇧 English (Professional)</span>
+                <span className="language-badge">🇮🇳 Hindi (Fluent)</span>
               </div>
-            </div>
+              <hr className="my-4" />
+              <h3><HiOutlineLightBulb className="me-2" /> Beyond Coding</h3>
+              <p className="text-white-50">Open Source contributor | Tech blogger | Chess enthusiast | Traveler</p>
+            </motion.div>
           </Col>
         </Row>
       </motion.div>

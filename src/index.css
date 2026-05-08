@@ -101,7 +101,23 @@ html, body, #root {
   color: white;
 }
 
-/* ----- SECTION TITLE ----- */
+/* ===== NEW GRADIENT GLOW BUTTON (for hero section) ===== */
+.btn-primary-glow {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: none;
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102,126,234,0.4);
+}
+.btn-primary-glow:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102,126,234,0.6);
+  background: linear-gradient(135deg, #764ba2, #667eea);
+}
+
+/* ----- SECTION TITLE (old) ----- */
 .section-title {
   font-size: 2.5rem;
   font-weight: 700;
@@ -109,7 +125,6 @@ html, body, #root {
   text-align: center;
   position: relative;
 }
-
 .section-title::after {
   content: '';
   position: absolute;
@@ -119,6 +134,29 @@ html, body, #root {
   width: 60px;
   height: 3px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 3px;
+}
+
+/* ===== NEW GLOW SECTION TITLE (for modern pages) ===== */
+.section-title-glow {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+  display: inline-block;
+  width: auto;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.section-title-glow::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 25%;
+  width: 50%;
+  height: 3px;
+  background: linear-gradient(90deg, #667eea, #f9ca24, #4ecdc4);
   border-radius: 3px;
 }
 
@@ -146,12 +184,334 @@ html, body, #root {
   border-color: rgba(255,255,255,0.1);
 }
 
-/* ----- MOBILE RESPONSIVE ----- */
+/* ----- PREVENT HORIZONTAL SCROLL / SLIDER REMOVAL ----- */
+html, body {
+  overflow-x: hidden !important;
+  width: 100%;
+  position: relative;
+}
+img, .card, .row {
+  max-width: 100%;
+}
+canvas {
+  display: block;
+  vertical-align: bottom;
+  pointer-events: none;   /* prevents accidental dragging/selection */
+}
+
+/* ===== HERO SECTION (modern) ===== */
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 20% 50%, rgba(102,126,234,0.2) 0%, rgba(118,75,162,0.1) 100%);
+  z-index: 0;
+}
+.hero-container {
+  position: relative;
+  z-index: 2;
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(4px);
+  padding: 6px 16px;
+  border-radius: 40px;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+.highlight {
+  background: linear-gradient(135deg, #f9ca24, #ff6b6b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero-typewriter {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #f9ca24;
+  min-height: 80px;
+}
+.hero-description {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+.hero-buttons {
+  margin-bottom: 2rem;
+}
+.hero-social {
+  display: flex;
+  gap: 1.2rem;
+}
+.hero-social a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(4px);
+  transition: all 0.3s ease;
+  color: white;
+  font-size: 1.2rem;
+}
+.hero-social a:hover {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  transform: translateY(-3px);
+}
+
+/* Profile Image with Glow */
+.profile-wrapper {
+  position: relative;
+  display: inline-block;
+}
+.profile-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(102,126,234,0.4), transparent);
+  border-radius: 50%;
+  filter: blur(20px);
+  z-index: 0;
+}
+.profile-image {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid rgba(255,255,255,0.8);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  z-index: 1;
+  transition: transform 0.3s ease;
+}
+.profile-image:hover {
+  transform: scale(1.02);
+}
+.floating-badge {
+  position: absolute;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(8px);
+  padding: 6px 14px;
+  border-radius: 40px;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 2;
+  white-space: nowrap;
+}
+.top-right {
+  top: 10%;
+  right: -10px;
+}
+.bottom-left {
+  bottom: 10%;
+  left: -10px;
+}
+
+/* Stats Section */
+.stats-section {
+  padding: 60px 0;
+  background: rgba(0,0,0,0.2);
+}
+.stat-card {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 30px 20px;
+  transition: all 0.3s ease;
+}
+.stat-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255,255,255,0.1);
+}
+.stat-icon {
+  font-size: 2.5rem;
+  color: #f9ca24;
+  margin-bottom: 1rem;
+}
+.stat-number {
+  font-size: 2.8rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #fff, #f9ca24);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Skills Section (Home) */
+.skills-section {
+  padding: 80px 0;
+}
+.skills-container {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 30px;
+  padding: 40px;
+}
+.skill-item {
+  margin-bottom: 25px;
+}
+.skill-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+.skill-progress {
+  height: 8px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.2);
+}
+.skill-progress .progress-bar {
+  background: linear-gradient(90deg, #667eea, #f9ca24);
+  border-radius: 10px;
+}
+
+/* Projects Section */
+.projects-section {
+  padding: 80px 0;
+}
+.btn-glow {
+  transition: all 0.3s ease;
+}
+.btn-glow:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* CTA Section */
+.cta-section {
+  padding: 80px 0;
+  background: rgba(0,0,0,0.3);
+}
+.cta-card {
+  background: linear-gradient(135deg, rgba(102,126,234,0.2), rgba(118,75,162,0.2));
+  backdrop-filter: blur(10px);
+  border-radius: 40px;
+  padding: 60px 40px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.cta-card h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.cta-card p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin-bottom: 2rem;
+}
+
+/* ===== ADDITIONAL STYLES FOR ABOUT, CONTACT, PROJECTS PAGES ===== */
+.gradient-number {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #fff, #f9ca24);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.stat-icon-sm {
+  font-size: 2rem;
+  color: #f9ca24;
+  margin-bottom: 0.5rem;
+}
+.service-card {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  height: 100%;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.service-card:hover {
+  transform: translateY(-8px);
+  background: rgba(255,255,255,0.1);
+  border-color: #f9ca24;
+}
+.service-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #f9ca24;
+}
+.timeline-item {
+  border-left: 2px solid #f9ca24;
+  padding-left: 1.2rem;
+  margin-top: 1rem;
+}
+.timeline-year {
+  font-size: 0.8rem;
+  color: #f9ca24;
+  font-weight: 600;
+}
+.language-badge {
+  background: rgba(255,255,255,0.15);
+  padding: 6px 18px;
+  border-radius: 40px;
+  font-size: 0.9rem;
+}
+.contact-method {
+  transition: all 0.2s ease;
+}
+.contact-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.2rem;
+}
+.custom-input {
+  background: rgba(255,255,255,0.1) !important;
+  border: 1px solid rgba(255,255,255,0.2) !important;
+  color: white !important;
+}
+.custom-input:focus {
+  background: rgba(255,255,255,0.15) !important;
+  border-color: #f9ca24 !important;
+  box-shadow: 0 0 0 0.2rem rgba(249,202,36,0.25);
+}
+.filter-bar {
+  background: rgba(0,0,0,0.3) !important;
+}
+
+/* ===== MOBILE RESPONSIVENESS (overrides) ===== */
 @media (max-width: 768px) {
   .section-padding {
     padding: 60px 0;
   }
-  .section-title {
+  .section-title, .section-title-glow {
     font-size: 2rem;
   }
   .glass-card {
@@ -163,7 +523,7 @@ html, body, #root {
   .display-5 {
     font-size: 1.5rem;
   }
-  .btn-gradient {
+  .btn-gradient, .btn-primary-glow {
     padding: 8px 20px;
     font-size: 0.9rem;
   }
@@ -174,6 +534,42 @@ html, body, #root {
   .loader-text {
     font-size: 1rem;
   }
+  .hero-title {
+    font-size: 2.2rem;
+  }
+  .hero-typewriter {
+    font-size: 1.3rem;
+    min-height: 60px;
+  }
+  .profile-image {
+    width: 220px;
+    height: 220px;
+  }
+  .profile-glow {
+    width: 240px;
+    height: 240px;
+  }
+  .floating-badge {
+    font-size: 0.7rem;
+    padding: 4px 10px;
+  }
+  .top-right { top: 5%; right: -5px; }
+  .bottom-left { bottom: 5%; left: -5px; }
+  .stat-number, .gradient-number {
+    font-size: 2rem;
+  }
+  .skills-container {
+    padding: 20px;
+  }
+  .cta-card {
+    padding: 40px 20px;
+  }
+  .cta-card h3 {
+    font-size: 1.5rem;
+  }
+  .service-card {
+    padding: 1.5rem 1rem;
+  }
   /* Table responsive for admin panel */
   .table-responsive-stack {
     display: block;
@@ -182,19 +578,22 @@ html, body, #root {
   }
 }
 
-/* ----- PREVENT HORIZONTAL SCROLL (slider removal) ----- */
-html, body {
-  overflow-x: hidden !important;
-  width: 100%;
-  position: relative;
-}
-img, .card, .row {
-  max-width: 100%;
+/* ===== FIX DROPDOWN (SELECT) BACKGROUND ON DARK THEME ===== */
+.form-select,
+.form-select option {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+  color: white !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
 }
 
-/* ----- Three.js canvas safety (no interaction, no overflow) ----- */
-canvas {
-  display: block;
-  vertical-align: bottom;
-  pointer-events: none;   /* prevents accidental dragging/selection */
+.form-select:focus {
+  box-shadow: 0 0 0 0.25rem rgba(249, 202, 36, 0.25);
+  border-color: #f9ca24;
+}
+
+/* Ensure input group text and select match */
+.input-group-text {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: white;
 }

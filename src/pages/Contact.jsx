@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
-import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock, FaWhatsapp, FaLinkedin } from 'react-icons/fa';
 import axios from 'axios';
 
 const Contact = () => {
@@ -15,22 +15,36 @@ const Contact = () => {
     setSubmitting(true);
     setError('');
     setSuccess('');
+
+    const apiUrl = import.meta.env.VITE_API_URL || 'https://rajesh36sarkar-backend.onrender.com/api';
+    
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/contact`, data);
-      setSuccess('Message sent successfully! I will get back to you soon.');
-      reset();
+      const response = await axios.post(`${apiUrl}/contact`, data);
+      if (response.status === 201) {
+        setSuccess('✅ Message sent! I will get back to you soon.');
+        reset();
+      } else {
+        setError('⚠️ Unexpected response from server. Please try again.');
+      }
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to send message. Please try again.');
+      console.error('Contact error:', err);
+      // Show a user-friendly message even on 500
+      setError('❌ Failed to send message. The server encountered an error. Please try again later or contact me directly via email.');
     } finally {
       setSubmitting(false);
+      // Auto-clear messages after 6 seconds
+      setTimeout(() => {
+        setSuccess('');
+        setError('');
+      }, 6000);
     }
   };
 
-  const contactInfo = [
-    { icon: <FaEnvelope size={24} />, title: 'Email', value: 'rajesh36.sarkar@gmail.com', link: 'mailto:rajesh36.sarkar@gmail.com' },
-    { icon: <FaPhone size={24} />, title: 'Phone', value: '+91 (736) 392-0402', link: 'tel:+917363920402' },
-    { icon: <FaMapMarkerAlt size={24} />, title: 'Location', value: 'Kolkata, India', link: null },
-    { icon: <FaClock size={24} />, title: 'Response Time', value: 'Within 24 hours', link: null },
+  const contactMethods = [
+    { icon: <FaEnvelope size={26} />, title: 'Email', value: 'rajesh36.sarkar@gmail.com', link: 'mailto:rajesh36.sarkar@gmail.com', color: '#ea4335' },
+    { icon: <FaPhone size={26} />, title: 'Phone', value: '+91 73639 20402', link: 'tel:+917363920402', color: '#34a853' },
+    { icon: <FaWhatsapp size={26} />, title: 'WhatsApp', value: '+91 73639 20402', link: 'https://wa.me/917363920402', color: '#25D366' },
+    { icon: <FaLinkedin size={26} />, title: 'LinkedIn', value: 'rajesh36sarkar', link: 'https://www.linkedin.com/in/rajesh36sarkar/', color: '#0077b5' },
   ];
 
   return (
@@ -40,81 +54,99 @@ const Contact = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <h1 className="section-title">Get In Touch</h1>
-        
+        <div className="text-center mb-5">
+          <h1 className="section-title-glow">Get In Touch</h1>
+          <p className="lead text-white-50">I'm always excited to collaborate or discuss new opportunities.</p>
+        </div>
+
         <Row>
           <Col lg={5} className="mb-4">
             <div className="glass-card p-4 h-100">
               <h3 className="mb-4">Let's Connect</h3>
               <p className="text-white-50 mb-4">
-                Have a project in mind or just want to say hello? I'd love to hear from you.
-                Fill out the form and I'll get back to you as soon as possible.
+                Have a project in mind, need a developer, or just want to say hello? Feel free to reach out through any of the channels below.
               </p>
-              
-              {contactInfo.map((info, idx) => (
-                <div key={idx} className="d-flex align-items-center mb-4">
-                  <div className="me-3 text-primary">{info.icon}</div>
-                  <div>
-                    <h6 className="mb-0">{info.title}</h6>
-                    {info.link ? (
-                      <a href={info.link} className="text-white-50 text-decoration-none">
-                        {info.value}
-                      </a>
-                    ) : (
-                      <span className="text-white-50">{info.value}</span>
-                    )}
+              {contactMethods.map((method, idx) => (
+                <motion.a
+                  key={idx}
+                  href={method.link}
+                  target={method.link.startsWith('http') ? '_blank' : '_self'}
+                  rel="noopener noreferrer"
+                  className="contact-method"
+                  whileHover={{ x: 5 }}
+                  style={{ display: 'flex', alignItems: 'center', marginBottom: '1.5rem', textDecoration: 'none', color: 'white' }}
+                >
+                  <div className="contact-icon" style={{ backgroundColor: method.color }}>{method.icon}</div>
+                  <div className="ms-3">
+                    <h6 className="mb-0">{method.title}</h6>
+                    <span className="text-white-50 small">{method.value}</span>
                   </div>
-                </div>
+                </motion.a>
               ))}
+              <hr className="my-4" />
+              <div className="d-flex align-items-center">
+                <FaMapMarkerAlt size={24} className="me-3 text-primary" />
+                <div>
+                  <h6 className="mb-0">Location</h6>
+                  <span className="text-white-50">Kolkata, India (Remote / On-site)</span>
+                </div>
+              </div>
+              <div className="d-flex align-items-center mt-3">
+                <FaClock size={24} className="me-3 text-primary" />
+                <div>
+                  <h6 className="mb-0">Response Time</h6>
+                  <span className="text-white-50">Within 24 hours (usually 2-4h)</span>
+                </div>
+              </div>
             </div>
           </Col>
-          
+
           <Col lg={7}>
-            <div className="glass-card p-4">
-              {success && <Alert variant="success">{success}</Alert>}
-              {error && <Alert variant="danger">{error}</Alert>}
-              
+            <motion.div
+              className="glass-card p-4"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+            >
+              <h3 className="mb-4">Send a Message</h3>
+              {success && (
+                <Alert variant="success" dismissible onClose={() => setSuccess('')}>
+                  {success}
+                </Alert>
+              )}
+              {error && (
+                <Alert variant="danger" dismissible onClose={() => setError('')}>
+                  {error}
+                </Alert>
+              )}
               <Form onSubmit={handleSubmit(onSubmit)}>
                 <Row>
                   <Col md={6} className="mb-3">
-                    <Form.Label>Name *</Form.Label>
-                    <Form.Control
-                      type="text"
-                      {...register('name', { required: true })}
-                      className="bg-transparent text-white border-light"
-                    />
+                    <Form.Label>Your Name *</Form.Label>
+                    <Form.Control type="text" {...register('name', { required: true })} className="custom-input" />
                   </Col>
                   <Col md={6} className="mb-3">
-                    <Form.Label>Email *</Form.Label>
-                    <Form.Control
-                      type="email"
-                      {...register('email', { required: true })}
-                      className="bg-transparent text-white border-light"
-                    />
+                    <Form.Label>Email Address *</Form.Label>
+                    <Form.Control type="email" {...register('email', { required: true })} className="custom-input" />
                   </Col>
                 </Row>
                 <Form.Group className="mb-3">
                   <Form.Label>Subject *</Form.Label>
-                  <Form.Control
-                    type="text"
-                    {...register('subject', { required: true })}
-                    className="bg-transparent text-white border-light"
-                  />
+                  <Form.Control type="text" {...register('subject', { required: true })} className="custom-input" />
                 </Form.Group>
                 <Form.Group className="mb-4">
                   <Form.Label>Message *</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    rows={5}
-                    {...register('message', { required: true })}
-                    className="bg-transparent text-white border-light"
-                  />
+                  <Form.Control as="textarea" rows={5} {...register('message', { required: true })} className="custom-input" />
                 </Form.Group>
-                <Button type="submit" className="btn-gradient" disabled={submitting}>
-                  {submitting ? 'Sending...' : 'Send Message'}
+                <Button type="submit" className="btn-primary-glow w-100" disabled={submitting}>
+                  {submitting ? (
+                    <>Sending <span className="spinner-border spinner-border-sm ms-2"></span></>
+                  ) : (
+                    <>Send Message <FaLinkedin className="ms-2" /></>
+                  )}
                 </Button>
               </Form>
-            </div>
+            </motion.div>
           </Col>
         </Row>
       </motion.div>
