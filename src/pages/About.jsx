@@ -83,7 +83,7 @@ const About = () => {
               <div className="text-center mt-4">
                 <Button
                   variant="outline-light"
-                  href={siteInfo?.hero?.resumeUrl || '/Rajesh_Kumar_Sarkar_Resume.pdf'}
+                  href={siteInfo?.hero?.resumeUrl || '/Rajesh36.sarkar_resume.pdf'}
                   download
                   className="btn-gradient"
                 >

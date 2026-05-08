@@ -106,12 +106,13 @@ const AdminDashboard = () => {
     reset();
   };
 
-  const updateHero = async (heroData) => {
+  // Only used for profile image and resume (hero fields)
+  const updateHeroPhotoAndResume = async (updates) => {
     try {
-      const updated = { ...siteInfo, hero: { ...siteInfo.hero, ...heroData } };
+      const updated = { ...siteInfo, hero: { ...siteInfo.hero, ...updates } };
       await updateSiteInfo(updated);
-      await fetchData(); // force refresh
-      setMessage({ text: 'Hero updated successfully!', variant: 'success' });
+      await fetchData();
+      setMessage({ text: 'Profile/Resume updated!', variant: 'success' });
     } catch (error) {
       setMessage({ text: 'Update failed', variant: 'danger' });
     }
@@ -171,7 +172,7 @@ const AdminDashboard = () => {
     setUploading(true);
     try {
       const res = await uploadImage(profileImageFile);
-      await updateHero({ profileImage: res.data.url });
+      await updateHeroPhotoAndResume({ profileImage: res.data.url });
       setProfileImageFile(null);
       setMessage({ text: 'Profile photo updated!', variant: 'success' });
     } catch (error) {
@@ -189,8 +190,8 @@ const AdminDashboard = () => {
     }
     setUploading(true);
     try {
-      const res = await uploadImage(resumeFile); // reuse same upload endpoint (supports PDF)
-      await updateHero({ resumeUrl: res.data.url });
+      const res = await uploadImage(resumeFile);
+      await updateHeroPhotoAndResume({ resumeUrl: res.data.url });
       setResumeFile(null);
       setMessage({ text: 'Resume uploaded!', variant: 'success' });
     } catch (error) {
@@ -200,7 +201,6 @@ const AdminDashboard = () => {
     }
   };
 
-  // Mark message as read
   const markAsRead = async (id) => {
     await axios.put(`${import.meta.env.VITE_API_URL}/contact/${id}/read`, {}, {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
@@ -262,38 +262,39 @@ const AdminDashboard = () => {
             </Card>
           </Tab>
 
-          {/* Hero & Profile Tab */}
+          {/* Hero & Profile Tab – Only photo & resume, no name/title/bio */}
           <Tab eventKey="hero" title="Hero & Profile">
             <Row>
-              <Col md={6}>
-                <Card className="glass-card p-4 mb-3">
-                  <h3>Hero Section</h3>
-                  <Form onSubmit={handleSubmit(updateHero)}>
-                    <Form.Group className="mb-3"><Form.Label>Name</Form.Label><Form.Control defaultValue={siteInfo?.hero?.name || ''} name="name" /></Form.Group>
-                    <Form.Group className="mb-3"><Form.Label>Title</Form.Label><Form.Control defaultValue={siteInfo?.hero?.title || ''} name="title" /></Form.Group>
-                    <Form.Group className="mb-3"><Form.Label>Bio</Form.Label><Form.Control as="textarea" rows={3} defaultValue={siteInfo?.hero?.bio || ''} name="bio" /></Form.Group>
-                    <Button type="submit" className="btn-gradient">Update Hero</Button>
-                  </Form>
-                </Card>
-              </Col>
               <Col md={6}>
                 <Card className="glass-card p-4 mb-3">
                   <h3>Profile Photo</h3>
                   {siteInfo?.hero?.profileImage && (
                     <img src={siteInfo.hero.profileImage} alt="Profile" width="120" height="120" className="rounded-circle mb-3" />
                   )}
-                  <Form.Group className="mb-3"><Form.Label>Upload new image</Form.Label><Form.Control type="file" onChange={(e) => setProfileImageFile(e.target.files[0])} accept="image/*" /></Form.Group>
-                  <Button onClick={handleProfilePhotoUpload} disabled={uploading} className="btn-gradient">{uploading ? 'Uploading...' : 'Upload Photo'}</Button>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Upload new image</Form.Label>
+                    <Form.Control type="file" onChange={(e) => setProfileImageFile(e.target.files[0])} accept="image/*" />
+                  </Form.Group>
+                  <Button onClick={handleProfilePhotoUpload} disabled={uploading} className="btn-gradient">
+                    {uploading ? 'Uploading...' : 'Upload Photo'}
+                  </Button>
                 </Card>
-
-                {/* Resume Management */}
+              </Col>
+              <Col md={6}>
                 <Card className="glass-card p-4">
                   <h3>Resume (PDF)</h3>
                   {siteInfo?.hero?.resumeUrl && (
-                    <a href={siteInfo.hero.resumeUrl} target="_blank" rel="noopener noreferrer" className="btn btn-outline-light mb-3">View Current Resume</a>
+                    <a href={siteInfo.hero.resumeUrl} target="_blank" rel="noopener noreferrer" className="btn btn-outline-light mb-3">
+                      View Current Resume
+                    </a>
                   )}
-                  <Form.Group className="mb-3"><Form.Label>Upload new resume (PDF)</Form.Label><Form.Control type="file" onChange={(e) => setResumeFile(e.target.files[0])} accept=".pdf" /></Form.Group>
-                  <Button onClick={handleResumeUpload} disabled={uploading} className="btn-gradient">{uploading ? 'Uploading...' : 'Upload Resume'}</Button>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Upload new resume (PDF)</Form.Label>
+                    <Form.Control type="file" onChange={(e) => setResumeFile(e.target.files[0])} accept=".pdf" />
+                  </Form.Group>
+                  <Button onClick={handleResumeUpload} disabled={uploading} className="btn-gradient">
+                    {uploading ? 'Uploading...' : 'Upload Resume'}
+                  </Button>
                 </Card>
               </Col>
             </Row>
@@ -304,10 +305,15 @@ const AdminDashboard = () => {
             <Card className="glass-card p-4">
               <h3>About Section</h3>
               <Form onSubmit={handleSubmit(updateAbout)}>
-                <Form.Group className="mb-3"><Form.Label>Description</Form.Label><Form.Control as="textarea" rows={5} defaultValue={siteInfo?.about?.description || ''} name="description" /></Form.Group>
-                <Row><Col><Form.Label>Experience (years)</Form.Label><Form.Control type="number" name="experience" defaultValue={siteInfo?.about?.experience || 1} /></Col>
-                <Col><Form.Label>Projects Count</Form.Label><Form.Control type="number" name="projects" defaultValue={siteInfo?.about?.projects || 10} /></Col>
-                <Col><Form.Label>Clients Count</Form.Label><Form.Control type="number" name="clients" defaultValue={siteInfo?.about?.clients || 5} /></Col></Row>
+                <Form.Group className="mb-3">
+                  <Form.Label>Description</Form.Label>
+                  <Form.Control as="textarea" rows={5} defaultValue={siteInfo?.about?.description || ''} name="description" />
+                </Form.Group>
+                <Row>
+                  <Col><Form.Label>Experience (years)</Form.Label><Form.Control type="number" name="experience" defaultValue={siteInfo?.about?.experience || 1} /></Col>
+                  <Col><Form.Label>Projects Count</Form.Label><Form.Control type="number" name="projects" defaultValue={siteInfo?.about?.projects || 10} /></Col>
+                  <Col><Form.Label>Clients Count</Form.Label><Form.Control type="number" name="clients" defaultValue={siteInfo?.about?.clients || 5} /></Col>
+                </Row>
                 <Button type="submit" className="btn-gradient mt-3">Update About</Button>
               </Form>
             </Card>
@@ -381,7 +387,7 @@ const AdminDashboard = () => {
           </Tab>
         </Tabs>
 
-        {/* Add/Edit Project Modal (unchanged, already working) */}
+        {/* Add/Edit Project Modal */}
         <Modal show={showProjectModal} onHide={handleCloseProjectModal} size="lg" centered>
           <Modal.Header closeButton className="bg-dark text-white">
             <Modal.Title>{editingProject ? '✏️ Edit Project' : '➕ Add New Project'}</Modal.Title>
@@ -403,7 +409,12 @@ const AdminDashboard = () => {
         {/* Message Detail Modal */}
         <Modal show={showMessageModal} onHide={() => setShowMessageModal(false)}>
           <Modal.Header closeButton><Modal.Title>Message from {selectedMessage?.name}</Modal.Title></Modal.Header>
-          <Modal.Body><p><strong>Email:</strong> {selectedMessage?.email}</p><p><strong>Subject:</strong> {selectedMessage?.subject}</p><p><strong>Message:</strong><br/>{selectedMessage?.message}</p><small>Received: {new Date(selectedMessage?.createdAt).toLocaleString()}</small></Modal.Body>
+          <Modal.Body>
+            <p><strong>Email:</strong> {selectedMessage?.email}</p>
+            <p><strong>Subject:</strong> {selectedMessage?.subject}</p>
+            <p><strong>Message:</strong><br/>{selectedMessage?.message}</p>
+            <small>Received: {new Date(selectedMessage?.createdAt).toLocaleString()}</small>
+          </Modal.Body>
           <Modal.Footer><Button variant="secondary" onClick={() => setShowMessageModal(false)}>Close</Button></Modal.Footer>
         </Modal>
       </motion.div>

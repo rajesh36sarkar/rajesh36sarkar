@@ -1,6 +1,6 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Sphere, Box, OrbitControls, Stars } from '@react-three/drei';
+import { Sphere, Box, Stars } from '@react-three/drei';
 
 const RotatingCube = () => {
   const meshRef = useRef();
@@ -45,17 +45,6 @@ const FloatingTorus = () => {
 };
 
 const ThreeBackground = () => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
   return (
     <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1 }}>
       <Canvas camera={{ position: [0, 0, 5] }}>
@@ -65,10 +54,7 @@ const ThreeBackground = () => {
         <RotatingCube />
         <RotatingSphere />
         <FloatingTorus />
-        {/* Only show OrbitControls on desktop */}
-        {!isMobile && (
-          <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.5} />
-        )}
+        {/* ❌ Removed OrbitControls entirely – no draggable slider on any device */}
       </Canvas>
     </div>
   );
