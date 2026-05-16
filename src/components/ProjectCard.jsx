@@ -1,41 +1,73 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { motion } from 'framer-motion';
 import { FaGithub, FaExternalLinkAlt, FaInfoCircle } from 'react-icons/fa';
 import ProjectModal from './ProjectModal';
 
+// Extracted animation variants to avoid reallocation on every render pass
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.4 }
+  }
+};
+
 const ProjectCard = ({ project }) => {
   const [showModal, setShowModal] = useState(false);
 
-  // 1. Memoize modal state controls to protect layout re-render pipelines
-  const handleShowModal = useCallback(() => setShowModal(true), []);
-  const handleCloseModal = useCallback(() => setShowModal(false), []);
+  // Consolidated state controls to protect layout re-render pipelines
+  const toggleModal = useCallback((state) => () => setShowModal(state), []);
+
+  // Compute description text safely 
+  const processedDescription = useMemo(() => {
+    if (!project?.description) return 'No overview provided.';
+    return project.description.length > 100 
+      ? `${project.description.substring(0, 100)}...` 
+      : project.description;
+  }, [project?.description]);
 
   return (
     <>
       <motion.div
-        initial={{ opacity: 0, y: 30 }} // Reduced travel offset for smoother performance
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
+        initial="hidden"
+        whileInView="visible"
+        variants={cardVariants}
         viewport={{ once: true, margin: "-20px" }}
       >
         <Card className="glass-card h-100">
-          <Card.Img 
-            variant="top" 
-            src={project.imageUrl} 
-            alt={project.title || "Project Snapshot"}
-            onClick={handleShowModal}
-            className="card-img-cover" // Extracted styles to CSS rule
-          />
+          <div 
+            role="button"
+            tabIndex={0}
+            onClick={toggleModal(true)}
+            onKeyDown={(e) => e.key === 'Enter' && toggleModal(true)()}
+            className="cursor-pointer overflow-hidden"
+            aria-label={`View details for ${project.title || 'project'}`}
+            aria-haspopup="dialog"
+          >
+            <Card.Img 
+              variant="top" 
+              src={project.imageUrl} 
+              alt={project.title || "Project Snapshot"}
+              className="card-img-cover"
+            />
+          </div>
           
           <Card.Body className="d-flex flex-column">
-            <Card.Title className="fs-4 mb-3 cursor-pointer" onClick={handleShowModal}>
+            <Card.Title 
+              className="fs-4 mb-3 cursor-pointer" 
+              onClick={toggleModal(true)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === 'Enter' && toggleModal(true)()}
+              aria-haspopup="dialog"
+            >
               {project.title}
             </Card.Title>
             
-            {/* Optional chaining protects layout constraints if description string is dropped */}
             <Card.Text className="text-white-50 flex-grow-1">
-              {project.description ? `${project.description.substring(0, 100)}...` : 'No overview provided.'}
+              {processedDescription}
             </Card.Text>
             
             {/* Badges Container */}
@@ -65,8 +97,9 @@ const ProjectCard = ({ project }) => {
                     href={project.githubUrl} 
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={`View ${project.title} source code on GitHub`}
                   >
-                    <FaGithub aria-label="View Source on GitHub" />
+                    <FaGithub />
                   </Button>
                 )}
                 {project.liveUrl && (
@@ -76,13 +109,19 @@ const ProjectCard = ({ project }) => {
                     href={project.liveUrl} 
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={`Launch ${project.title} live site`}
                   >
-                    <FaExternalLinkAlt aria-label="Launch Live Site" />
+                    <FaExternalLinkAlt />
                   </Button>
                 )}
               </div>
               
-              <Button variant="primary" size="sm" onClick={handleShowModal}>
+              <Button 
+                variant="primary" 
+                size="sm" 
+                onClick={toggleModal(true)}
+                aria-haspopup="dialog"
+              >
                 <FaInfoCircle className="me-1" /> Details
               </Button>
             </div>
@@ -92,7 +131,11 @@ const ProjectCard = ({ project }) => {
 
       {/* Conditionally mount modal context wrapper elements to conserve idle rendering tree memory */}
       {showModal && (
-        <ProjectModal show={showModal} onHide={handleCloseModal} project={project} />
+        <ProjectModal 
+          show={showModal} 
+          onHide={toggleModal(false)} 
+          project={project} 
+        />
       )}
     </>
   );
