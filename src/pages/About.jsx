@@ -1,67 +1,88 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Container, Row, Col, ProgressBar, Button } from 'react-bootstrap';
-import { motion, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { getSiteInfo } from '../services/api';
-import { FaCode, FaMobile, FaServer, FaCloud, FaDownload, FaAward, FaGraduationCap, FaCertificate, FaBriefcase, FaLanguage } from 'react-icons/fa';
+import { 
+  FaCode, FaMobile, FaServer, FaCloud, FaDownload, 
+  FaAward, FaGraduationCap, FaCertificate, FaBriefcase, FaLanguage 
+} from 'react-icons/fa';
 import { HiOutlineLightBulb } from 'react-icons/hi';
+
+// 1. Move Static Data OUTSIDE the component to prevent re-creation on every render
+const DEFAULT_SKILLS = [
+  { name: 'JavaScript (ES6+)', level: 88 },
+  { name: 'React.js / Next.js', level: 90 },
+  { name: 'Node.js / Express.js', level: 85 },
+  { name: 'MongoDB / Mongoose', level: 82 },
+  { name: 'Tailwind CSS / Bootstrap', level: 92 },
+  { name: 'RESTful APIs / JWT', level: 85 },
+  { name: 'Git / GitHub', level: 88 },
+  { name: 'SEO / Performance', level: 80 },
+];
+
+const SERVICES = [
+  { icon: <FaCode size={36} />, title: 'Frontend Dev', desc: 'React, Next.js, Tailwind, Bootstrap, Framer Motion' },
+  { icon: <FaServer size={36} />, title: 'Backend Dev', desc: 'Node.js, Express.js, REST APIs, JWT, WebSockets' },
+  { icon: <FaMobile size={36} />, title: 'Responsive Design', desc: 'Mobile-first, cross-browser, PWA ready' },
+  { icon: <FaCloud size={36} />, title: 'DevOps & Tools', desc: 'Git, Docker, Vercel, Netlify, Render, Postman' },
+];
+
+const DEFAULT_ABOUT = "Detail-oriented Full Stack Developer with 2+ years of experience building scalable web applications using the MERN stack, Next.js, and modern frontend technologies. I've successfully delivered eCommerce platforms, digital service portals, and creative portfolio websites. My passion lies in writing clean, maintainable code and creating seamless user experiences.";
+
+// Framer motion variants to avoid rebuilding objects inline
+const fadeInUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+};
 
 const About = () => {
   const [siteInfo, setSiteInfo] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let isMounted = true;
     const fetchInfo = async () => {
       try {
         const res = await getSiteInfo();
-        setSiteInfo(res.data);
+        if (isMounted) setSiteInfo(res.data);
       } catch (error) {
         console.error('Error fetching site info:', error);
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     };
     fetchInfo();
+    return () => { isMounted = false; }; // Cleanup prevents memory leaks
   }, []);
 
-  // Default data
-  const defaultSkills = [
-    { name: 'JavaScript (ES6+)', level: 88 },
-    { name: 'React.js / Next.js', level: 90 },
-    { name: 'Node.js / Express.js', level: 85 },
-    { name: 'MongoDB / Mongoose', level: 82 },
-    { name: 'Tailwind CSS / Bootstrap', level: 92 },
-    { name: 'RESTful APIs / JWT', level: 85 },
-    { name: 'Git / GitHub', level: 88 },
-    { name: 'SEO / Performance', level: 80 },
-  ];
+  // 2. Use Memoization for dynamic fallbacks so it only recalcs when siteInfo changes
+  const { skills, aboutText, experienceYears, projectsCount, clientsCount } = useMemo(() => {
+    return {
+      skills: siteInfo?.skills?.length ? siteInfo.skills.slice(0, 6) : DEFAULT_SKILLS.slice(0, 6),
+      aboutText: siteInfo?.about?.description || DEFAULT_ABOUT,
+      experienceYears: siteInfo?.about?.experience || 2,
+      projectsCount: siteInfo?.about?.projects || 15,
+      clientsCount: siteInfo?.about?.clients || 8
+    };
+  }, [siteInfo]);
 
-  const skills = siteInfo?.skills?.length ? siteInfo.skills : defaultSkills;
-  const aboutText = siteInfo?.about?.description || 
-    "Detail-oriented Full Stack Developer with 2+ years of experience building scalable web applications using the MERN stack, Next.js, and modern frontend technologies. I've successfully delivered eCommerce platforms, digital service portals, and creative portfolio websites. My passion lies in writing clean, maintainable code and creating seamless user experiences.";
-  const experienceYears = siteInfo?.about?.experience || 2;
-  const projectsCount = siteInfo?.about?.projects || 15;
-  const clientsCount = siteInfo?.about?.clients || 8;
-
-  const services = [
-    { icon: <FaCode size={36} />, title: 'Frontend Dev', desc: 'React, Next.js, Tailwind, Bootstrap, Framer Motion' },
-    { icon: <FaServer size={36} />, title: 'Backend Dev', desc: 'Node.js, Express.js, REST APIs, JWT, WebSockets' },
-    { icon: <FaMobile size={36} />, title: 'Responsive Design', desc: 'Mobile-first, cross-browser, PWA ready' },
-    { icon: <FaCloud size={36} />, title: 'DevOps & Tools', desc: 'Git, Docker, Vercel, Netlify, Render, Postman' },
-  ];
-
-  if (loading) return <div className="loader-wrapper"><div className="spinner"></div><p>Loading...</p></div>;
+  if (loading) {
+    return (
+      <div className="loader-wrapper">
+        <div className="spinner"></div>
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <Container className="py-5">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6 }}
-      >
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
+        
         {/* Hero About Section */}
         <div className="text-center mb-5">
           <h1 className="section-title-glow">About Me</h1>
-          <p className="lead text-white-50" style={{ maxWidth: '700px', margin: '0 auto' }}>
+          <p className="lead text-white-50 mx-auto" style={{ maxWidth: '700px' }}>
             Get to know me, my journey, and what drives me to build exceptional digital experiences.
           </p>
         </div>
@@ -78,6 +99,7 @@ const About = () => {
             >
               <h3 className="mb-4">👨‍💻 Who Am I?</h3>
               <p className="text-white-50 lead" style={{ lineHeight: 1.7 }}>{aboutText}</p>
+              
               <Row className="mt-5 text-center">
                 <Col>
                   <div className="stat-icon-sm"><FaBriefcase /></div>
@@ -95,6 +117,7 @@ const About = () => {
                   <p>Happy Clients</p>
                 </Col>
               </Row>
+
               <div className="text-center mt-4">
                 <Button
                   variant="outline-light"
@@ -107,6 +130,7 @@ const About = () => {
               </div>
             </motion.div>
           </Col>
+
           <Col lg={5}>
             <motion.div
               whileInView={{ opacity: 1, scale: 1 }}
@@ -116,17 +140,13 @@ const About = () => {
               className="glass-card p-4"
             >
               <h3 className="mb-4 text-center">⚡ Core Skills</h3>
-              {skills.slice(0, 6).map((skill, idx) => (
-                <div key={idx} className="mb-3">
+              {skills.map((skill, idx) => (
+                <div key={skill.name || idx} className="mb-3">
                   <div className="d-flex justify-content-between mb-1">
                     <span>{skill.name}</span>
                     <span className="text-accent">{skill.level}%</span>
                   </div>
-                  <ProgressBar
-                    now={skill.level}
-                    variant="info"
-                    className="skill-progress"
-                  />
+                  <ProgressBar now={skill.level} variant="info" className="skill-progress" />
                 </div>
               ))}
             </motion.div>
@@ -137,13 +157,13 @@ const About = () => {
         <div className="mt-5">
           <h2 className="section-title-glow">What I Do</h2>
           <Row>
-            {services.map((service, idx) => (
+            {SERVICES.map((service, idx) => (
               <Col lg={3} md={6} key={idx} className="mb-4">
                 <motion.div
-                  whileInView={{ opacity: 1, y: 0 }}
-                  initial={{ opacity: 0, y: 30 }}
-                  transition={{ duration: 0.5, delay: idx * 0.1 }}
-                  viewport={{ once: true }}
+                  variants={fadeInUp}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-50px" }}
                   className="service-card"
                 >
                   <div className="service-icon">{service.icon}</div>
@@ -173,6 +193,7 @@ const About = () => {
               </div>
             </motion.div>
           </Col>
+
           <Col lg={6} className="mb-4">
             <motion.div
               whileInView={{ opacity: 1, x: 0 }}
@@ -185,12 +206,12 @@ const About = () => {
               <div className="timeline-item">
                 <div className="timeline-year">2024 - 2025</div>
                 <h5>Full Stack Development Post Graduate Certification</h5>
-                <p className="text-white-50">Internshala | Specialized in MERN, Next.js, Tailwind</p>
+                <p className="text-white-50">Internshala | Specialized in MERN, JavaScript, DSA, Bootstrap, Tailwind</p>
               </div>
               <div className="timeline-item mt-3">
-                <div className="timeline-year">2023</div>
-                <h5>JavaScript & React Advanced</h5>
-                <p className="text-white-50">FreeCodeCamp / Udemy</p>
+                <div className="timeline-year">2024 - 2025 </div>
+                <h5>Web Development Post Graduate Certification</h5>
+                <p className="text-white-50">Apna Collage | Specialized in JAVA, DSA </p>
               </div>
             </motion.div>
           </Col>
@@ -208,13 +229,13 @@ const About = () => {
             >
               <h3><FaLanguage className="me-2" /> Languages</h3>
               <div className="d-flex flex-wrap justify-content-center gap-3 mt-3">
-                <span className="language-badge">🇧🇩 Bengali (Native)</span>
-                <span className="language-badge">🇬🇧 English (Professional)</span>
-                <span className="language-badge">🇮🇳 Hindi (Fluent)</span>
+                <span className="language-badge">Bengali (Native)</span>
+                <span className="language-badge">English (Professional)</span>
+                <span className="language-badge">Hindi (Fluent)</span>
               </div>
               <hr className="my-4" />
               <h3><HiOutlineLightBulb className="me-2" /> Beyond Coding</h3>
-              <p className="text-white-50">Open Source contributor | Tech blogger | Chess enthusiast | Traveler</p>
+              <p className="text-white-50">Tech Enthusiast | Photographer | Guitarist | Swimmer | Chess Enthusiast | Traveler</p>
             </motion.div>
           </Col>
         </Row>

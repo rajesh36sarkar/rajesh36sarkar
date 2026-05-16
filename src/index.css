@@ -1,3 +1,6 @@
+/* ==========================================================================
+   1. CORE INITIALIZATION & BASE CONFIGURATIONS
+   ========================================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 * {
@@ -6,30 +9,31 @@
   box-sizing: border-box;
 }
 
-html, body, #root {
-  height: 100%;
+html, body {
   width: 100%;
-  margin: 0;
-  padding: 0;
-  position: relative;
-  overflow-x: hidden !important;
+  min-height: 100vh;
   font-family: 'Inter', sans-serif;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: #fff;
+  overflow-x: hidden; 
 }
 
 #root {
   display: flex;
   flex-direction: column;
-  overflow-x: hidden;
   min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
 }
 
 .main-content {
-  flex: 1;
+  flex: 1 0 auto; /* Keeps your footer anchored firmly at the base of small screens */
 }
 
-/* ----- LOADER (Home page initial loading) ----- */
+/* ==========================================================================
+   2. SYSTEM LOADER SYSTEM HANDSHAKES
+   ========================================================================== */
 .loader-wrapper {
   display: flex;
   flex-direction: column;
@@ -42,12 +46,13 @@ html, body, #root {
 .spinner {
   width: 60px;
   height: 60px;
-  border: 4px solid rgba(255,255,255,0.2);
-  border-top: 4px solid #fff;
-  border-right: 4px solid #f9ca24;
+  border: 4px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #fff;
+  border-right-color: #f9ca24;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   margin-bottom: 20px;
+  will-change: transform; /* Protects CPU frame skipping during load-up initialization tasks */
 }
 
 @keyframes spin {
@@ -59,24 +64,28 @@ html, body, #root {
   font-size: 1.2rem;
   letter-spacing: 2px;
   font-weight: 500;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   padding: 8px 24px;
   border-radius: 40px;
   backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
-/* ----- SECTION PADDING ----- */
+/* ==========================================================================
+   3. REUSABLE ATOMIC INTERACTIVE GLASS MODULES
+   ========================================================================== */
 .section-padding {
   padding: 100px 0;
 }
 
-/* ----- GLASS CARD ----- */
 .glass-card {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease-in-out;
+  will-change: transform, box-shadow; /* Prevents painful browser layout recalculations on card hover */
 }
 
 .glass-card:hover {
@@ -84,7 +93,9 @@ html, body, #root {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
-/* ----- BUTTON GRADIENT ----- */
+/* ==========================================================================
+   4. PERFORMANCE BUTTON ACTIONS
+   ========================================================================== */
 .btn-gradient {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border: none;
@@ -92,7 +103,8 @@ html, body, #root {
   padding: 12px 30px;
   border-radius: 50px;
   font-weight: 600;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  will-change: transform, box-shadow;
 }
 
 .btn-gradient:hover {
@@ -101,23 +113,25 @@ html, body, #root {
   color: white;
 }
 
-/* ===== NEW GRADIENT GLOW BUTTON (for hero section) ===== */
 .btn-primary-glow {
   background: linear-gradient(135deg, #667eea, #764ba2);
   border: none;
   padding: 12px 28px;
   border-radius: 50px;
   font-weight: 600;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(102,126,234,0.4);
-}
-.btn-primary-glow:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(102,126,234,0.6);
-  background: linear-gradient(135deg, #764ba2, #667eea);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  will-change: transform, box-shadow;
 }
 
-/* ----- SECTION TITLE (old) ----- */
+.btn-primary-glow:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+}
+
+/* ==========================================================================
+   5. HEADER SPECIFICATIONS (CLEAN ALIGNMENT CONSTRAINTS)
+   ========================================================================== */
 .section-title {
   font-size: 2.5rem;
   font-weight: 700;
@@ -125,6 +139,7 @@ html, body, #root {
   text-align: center;
   position: relative;
 }
+
 .section-title::after {
   content: '';
   position: absolute;
@@ -137,18 +152,18 @@ html, body, #root {
   border-radius: 3px;
 }
 
-/* ===== NEW GLOW SECTION TITLE (for modern pages) ===== */
 .section-title-glow {
   font-size: 2.5rem;
   font-weight: 700;
   text-align: center;
   margin-bottom: 3rem;
   position: relative;
-  display: inline-block;
-  width: auto;
-  left: 50%;
-  transform: translateX(-50%);
+  display: block;
+  width: max-content;
+  margin-left: auto;
+  margin-right: auto; /* Uses clean flex margins instead of manual left 50% shifts */
 }
+
 .section-title-glow::after {
   content: '';
   position: absolute;
@@ -160,7 +175,9 @@ html, body, #root {
   border-radius: 3px;
 }
 
-/* ----- SCROLLBAR ----- */
+/* ==========================================================================
+   6. CANVAS & SCROLLBAR SYSTEM DECORATIONS
+   ========================================================================== */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -172,76 +189,96 @@ html, body, #root {
   border-radius: 10px;
 }
 
-/* ----- PROJECT MODAL STYLES ----- */
 .project-modal .modal-content {
   background: rgba(15, 12, 41, 0.95);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,0.2);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
 }
+
 .project-modal .modal-header,
 .project-modal .modal-footer {
-  border-color: rgba(255,255,255,0.1);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
-/* ----- PREVENT HORIZONTAL SCROLL / SLIDER REMOVAL ----- */
-html, body {
-  overflow-x: hidden !important;
-  width: 100%;
-  position: relative;
-}
-img, .card, .row {
-  max-width: 100%;
-}
 canvas {
   display: block;
   vertical-align: bottom;
-  pointer-events: none;   /* prevents accidental dragging/selection */
+  pointer-events: none; /* Safely allows clicks to bypass the background overlay */
 }
 
-/* ===== HERO SECTION (modern) ===== */
-.hero-section {
+/* ==========================================================================
+   7. UNIFIED STACKED CANVAS INTERACTION VIEWS
+   ========================================================================== */
+.hero-fullscreen-container {
   position: relative;
+  width: 100%;
   min-height: 100vh;
+  overflow: hidden;
   display: flex;
   align-items: center;
-  overflow: hidden;
 }
-.hero-overlay {
+
+.canvas-absolute-layer {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at 20% 50%, rgba(102,126,234,0.2) 0%, rgba(118,75,162,0.1) 100%);
-  z-index: 0;
+  z-index: 1;
+  pointer-events: none; 
 }
-.hero-container {
-  position: relative;
+
+.hero-overlay-shading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(15, 12, 41, 0.2), rgba(15, 12, 41, 0.5));
   z-index: 2;
 }
+
+.z-index-content {
+  position: relative;
+  z-index: 3;
+}
+
+.z-index-content .btn {
+  position: relative;
+  z-index: 10; /* Guarantees mobile touch interactions prioritize your page buttons */
+}
+
+/* ==========================================================================
+   8. HERO SECTION COMPONENTS
+   ========================================================================== */
 .hero-badge {
   display: inline-block;
-  background: rgba(255,255,255,0.15);
+  background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   padding: 6px 16px;
   border-radius: 40px;
   font-size: 0.8rem;
   letter-spacing: 1px;
   margin-bottom: 1.5rem;
-  border: 1px solid rgba(255,255,255,0.3);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
+
 .hero-title {
   font-size: 3.5rem;
   font-weight: 800;
   margin-bottom: 1rem;
 }
+
 .highlight {
   background: linear-gradient(135deg, #f9ca24, #ff6b6b);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
+
 .hero-typewriter {
   font-size: 2rem;
   font-weight: 600;
@@ -249,19 +286,23 @@ canvas {
   color: #f9ca24;
   min-height: 80px;
 }
+
 .hero-description {
   font-size: 1.1rem;
   opacity: 0.9;
   margin-bottom: 2rem;
   line-height: 1.6;
 }
+
 .hero-buttons {
   margin-bottom: 2rem;
 }
+
 .hero-social {
   display: flex;
   gap: 1.2rem;
 }
+
 .hero-social a {
   display: flex;
   align-items: center;
@@ -269,22 +310,25 @@ canvas {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(4px);
-  transition: all 0.3s ease;
+  -webkit-backdrop-filter: blur(4px);
+  transition: transform 0.2s ease, background-color 0.2s ease;
   color: white;
   font-size: 1.2rem;
 }
+
 .hero-social a:hover {
   background: linear-gradient(135deg, #667eea, #764ba2);
   transform: translateY(-3px);
 }
 
-/* Profile Image with Glow */
+/* Profile Section Glow Rules */
 .profile-wrapper {
   position: relative;
   display: inline-block;
 }
+
 .profile-glow {
   position: absolute;
   top: 50%;
@@ -292,29 +336,34 @@ canvas {
   transform: translate(-50%, -50%);
   width: 320px;
   height: 320px;
-  background: radial-gradient(circle, rgba(102,126,234,0.4), transparent);
+  background: radial-gradient(circle, rgba(102, 126, 234, 0.4), transparent 70%);
   border-radius: 50%;
   filter: blur(20px);
   z-index: 0;
 }
+
 .profile-image {
   position: relative;
   width: 300px;
   height: 300px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid rgba(255,255,255,0.8);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  border: 4px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
   z-index: 1;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  will-change: transform;
 }
+
 .profile-image:hover {
   transform: scale(1.02);
 }
+
 .floating-badge {
   position: absolute;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   padding: 6px 14px;
   border-radius: 40px;
   font-size: 0.8rem;
@@ -324,36 +373,39 @@ canvas {
   z-index: 2;
   white-space: nowrap;
 }
-.top-right {
-  top: 10%;
-  right: -10px;
-}
-.bottom-left {
-  bottom: 10%;
-  left: -10px;
-}
 
-/* Stats Section */
+.top-right { top: 10%; right: -10px; }
+.bottom-left { bottom: 10%; left: -10px; }
+
+/* ==========================================================================
+   9. METRIC STATS & DASHBOARD DATA LAYOUTS
+   ========================================================================== */
 .stats-section {
   padding: 60px 0;
-  background: rgba(0,0,0,0.2);
+  background: rgba(0, 0, 0, 0.2);
 }
+
 .stat-card {
-  background: rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 30px 20px;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  will-change: transform;
 }
+
 .stat-card:hover {
   transform: translateY(-5px);
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
 }
+
 .stat-icon {
   font-size: 2.5rem;
   color: #f9ca24;
   margin-bottom: 1rem;
 }
+
 .stat-number {
   font-size: 2.8rem;
   font-weight: 800;
@@ -364,72 +416,75 @@ canvas {
   color: transparent;
 }
 
-/* Skills Section (Home) */
 .skills-section {
   padding: 80px 0;
 }
+
 .skills-container {
-  background: rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 30px;
   padding: 40px;
 }
+
 .skill-item {
   margin-bottom: 25px;
 }
+
 .skill-header {
   display: flex;
   justify-content: space-between;
   margin-bottom: 8px;
   font-weight: 500;
 }
+
 .skill-progress {
   height: 8px;
   border-radius: 10px;
-  background: rgba(255,255,255,0.2);
-}
-.skill-progress .progress-bar {
-  background: linear-gradient(90deg, #667eea, #f9ca24);
-  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.2);
 }
 
-/* Projects Section */
 .projects-section {
   padding: 80px 0;
 }
+
 .btn-glow {
-  transition: all 0.3s ease;
-}
-.btn-glow:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* CTA Section */
+.btn-glow:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
 .cta-section {
   padding: 80px 0;
-  background: rgba(0,0,0,0.3);
+  background: rgba(0, 0, 0, 0.3);
 }
+
 .cta-card {
-  background: linear-gradient(135deg, rgba(102,126,234,0.2), rgba(118,75,162,0.2));
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 40px;
   padding: 60px 40px;
   text-align: center;
-  border: 1px solid rgba(255,255,255,0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
+
 .cta-card h3 {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 1rem;
 }
+
 .cta-card p {
   font-size: 1.1rem;
   opacity: 0.9;
   margin-bottom: 2rem;
 }
 
-/* ===== ADDITIONAL STYLES FOR ABOUT, CONTACT, PROJECTS PAGES ===== */
 .gradient-number {
   font-size: 2.5rem;
   font-weight: 800;
@@ -438,50 +493,61 @@ canvas {
   background-clip: text;
   color: transparent;
 }
+
 .stat-icon-sm {
   font-size: 2rem;
   color: #f9ca24;
   margin-bottom: 0.5rem;
 }
+
 .service-card {
-  background: rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 2rem 1.5rem;
   text-align: center;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
   height: 100%;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  will-change: transform;
 }
+
 .service-card:hover {
   transform: translateY(-8px);
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
   border-color: #f9ca24;
 }
+
 .service-icon {
   font-size: 2.5rem;
   margin-bottom: 1rem;
   color: #f9ca24;
 }
+
 .timeline-item {
   border-left: 2px solid #f9ca24;
   padding-left: 1.2rem;
   margin-top: 1rem;
 }
+
 .timeline-year {
   font-size: 0.8rem;
   color: #f9ca24;
   font-weight: 600;
 }
+
 .language-badge {
-  background: rgba(255,255,255,0.15);
+  background: rgba(255, 255, 255, 0.15);
   padding: 6px 18px;
   border-radius: 40px;
   font-size: 0.9rem;
 }
+
 .contact-method {
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease;
 }
+
 .contact-icon {
   width: 48px;
   height: 48px;
@@ -492,96 +558,29 @@ canvas {
   color: white;
   font-size: 1.2rem;
 }
+
 .custom-input {
-  background: rgba(255,255,255,0.1) !important;
-  border: 1px solid rgba(255,255,255,0.2) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
   color: white !important;
 }
+
 .custom-input:focus {
-  background: rgba(255,255,255,0.15) !important;
+  background: rgba(255, 255, 255, 0.15) !important;
   border-color: #f9ca24 !important;
-  box-shadow: 0 0 0 0.2rem rgba(249,202,36,0.25);
+  box-shadow: 0 0 0 0.2rem rgba(249, 202, 36, 0.25);
 }
+
 .filter-bar {
-  background: rgba(0,0,0,0.3) !important;
+  background: rgba(0, 0, 0, 0.3) !important;
 }
 
-/* ===== MOBILE RESPONSIVENESS (overrides) ===== */
-@media (max-width: 768px) {
-  .section-padding {
-    padding: 60px 0;
-  }
-  .section-title, .section-title-glow {
-    font-size: 2rem;
-  }
-  .glass-card {
-    padding: 1rem !important;
-  }
-  .display-3 {
-    font-size: 2.2rem;
-  }
-  .display-5 {
-    font-size: 1.5rem;
-  }
-  .btn-gradient, .btn-primary-glow {
-    padding: 8px 20px;
-    font-size: 0.9rem;
-  }
-  .spinner {
-    width: 45px;
-    height: 45px;
-  }
-  .loader-text {
-    font-size: 1rem;
-  }
-  .hero-title {
-    font-size: 2.2rem;
-  }
-  .hero-typewriter {
-    font-size: 1.3rem;
-    min-height: 60px;
-  }
-  .profile-image {
-    width: 220px;
-    height: 220px;
-  }
-  .profile-glow {
-    width: 240px;
-    height: 240px;
-  }
-  .floating-badge {
-    font-size: 0.7rem;
-    padding: 4px 10px;
-  }
-  .top-right { top: 5%; right: -5px; }
-  .bottom-left { bottom: 5%; left: -5px; }
-  .stat-number, .gradient-number {
-    font-size: 2rem;
-  }
-  .skills-container {
-    padding: 20px;
-  }
-  .cta-card {
-    padding: 40px 20px;
-  }
-  .cta-card h3 {
-    font-size: 1.5rem;
-  }
-  .service-card {
-    padding: 1.5rem 1rem;
-  }
-  /* Table responsive for admin panel */
-  .table-responsive-stack {
-    display: block;
-    width: 100%;
-    overflow-x: auto;
-  }
-}
-
-/* ===== FIX DROPDOWN (SELECT) BACKGROUND ON DARK THEME ===== */
+/* ==========================================================================
+   10. INTERACTIVE DROPDOWNS & INPUT FORM CONTROLS
+   ========================================================================== */
 .form-select,
 .form-select option {
-  background-color: rgba(0, 0, 0, 0.7) !important;
+  background-color: #1a1633 !important; /* Prevents text blending errors in modern Chromium layouts */
   color: white !important;
   border-color: rgba(255, 255, 255, 0.3) !important;
 }
@@ -591,9 +590,103 @@ canvas {
   border-color: #f9ca24;
 }
 
-/* Ensure input group text and select match */
 .input-group-text {
   background-color: rgba(0, 0, 0, 0.5) !important;
   border-color: rgba(255, 255, 255, 0.2) !important;
   color: white;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   11. MOBILE VIEW RESPONSIVE MEDIA QUERIES
+   ========================================================================== */
+@media (max-width: 768px) {
+  .section-padding {
+    padding: 60px 0;
+  }
+  
+  .section-title, 
+  .section-title-glow {
+    font-size: 2rem;
+  }
+  
+  .glass-card {
+    padding: 1rem !important;
+  }
+  
+  .display-3 { font-size: 2.2rem; }
+  .display-5 { font-size: 1.5rem; }
+  
+  .btn-gradient, 
+  .btn-primary-glow {
+    padding: 8px 20px;
+    font-size: 0.9rem;
+  }
+  
+  .spinner {
+    width: 45px;
+    height: 45px;
+  }
+  
+  .loader-text {
+    font-size: 1rem;
+  }
+  
+  .hero-title {
+    font-size: 2.2rem;
+  }
+  
+  .hero-typewriter {
+    font-size: 1.3rem;
+    min-height: 60px;
+  }
+  
+  .profile-image {
+    width: 220px;
+    height: 220px;
+  }
+  
+  .profile-glow {
+    width: 240px;
+    height: 240px;
+  }
+  
+  .floating-badge {
+    font-size: 0.7rem;
+    padding: 4px 10px;
+  }
+  
+  .top-right { top: 5%; right: -5px; }
+  .bottom-left { bottom: 5%; left: -5px; }
+  
+  .stat-number, 
+  .gradient-number {
+    font-size: 2rem;
+  }
+  
+  .skills-container {
+    padding: 20px;
+  }
+  
+  .cta-card {
+    padding: 40px 20px;
+  }
+  
+  .cta-card h3 {
+    font-size: 1.5rem;
+  }
+  
+  .service-card {
+    padding: 1.5rem 1rem;
+  }
+  
+  .table-responsive-stack {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Forces natural physics momentum swiping on iOS Safari */
+  }
 }

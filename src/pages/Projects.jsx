@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Container, Row, Col, Form, InputGroup } from 'react-bootstrap';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProjectCard from '../components/ProjectCard';
@@ -7,45 +7,60 @@ import { FaSearch, FaFilter } from 'react-icons/fa';
 
 const Projects = () => {
   const [projects, setProjects] = useState([]);
-  const [filteredProjects, setFilteredProjects] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTech, setSelectedTech] = useState('');
-  const [allTechs, setAllTechs] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // 1. Fetch data on component mount with cleanup to prevent memory leaks
   useEffect(() => {
+    let isMounted = true;
+
+    const fetchProjects = async () => {
+      setLoading(true);
+      try {
+        const res = await getProjects();
+        if (isMounted) {
+          setProjects(res.data || []);
+        }
+      } catch (error) {
+        console.error("Failed to fetch projects:", error);
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    };
+
     fetchProjects();
+    return () => { isMounted = false; };
   }, []);
 
-  const fetchProjects = async () => {
-    setLoading(true);
-    try {
-      const res = await getProjects();
-      setProjects(res.data);
-      setFilteredProjects(res.data);
-      const techs = new Set();
-      res.data.forEach(p => p.technologies.forEach(t => techs.add(t)));
-      setAllTechs(Array.from(techs));
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // 2. Compute unique technologies & filtered list cleanly using useMemo
+  const { allTechs, filteredProjects } = useMemo(() => {
+    const techsSet = new Set();
+    
+    // Extract unique technologies from all base projects
+    projects.forEach(p => {
+      if (Array.isArray(p.technologies)) {
+        p.technologies.forEach(t => techsSet.add(t));
+      }
+    });
 
-  useEffect(() => {
-    let filtered = projects;
-    if (searchTerm) {
-      filtered = filtered.filter(p => 
-        p.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        p.description.toLowerCase().includes(searchTerm.toLowerCase())
+    // Run filter passes efficiently
+    const filtered = projects.filter(project => {
+      const matchesSearch = !searchTerm ? true : (
+        project.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        project.description?.toLowerCase().includes(searchTerm.toLowerCase())
       );
-    }
-    if (selectedTech) {
-      filtered = filtered.filter(p => p.technologies.includes(selectedTech));
-    }
-    setFilteredProjects(filtered);
-  }, [searchTerm, selectedTech, projects]);
+
+      const matchesTech = !selectedTech ? true : project.technologies?.includes(selectedTech);
+
+      return matchesSearch && matchesTech;
+    });
+
+    return {
+      allTechs: Array.from(techsSet),
+      filteredProjects: filtered
+    };
+  }, [projects, searchTerm, selectedTech]);
 
   return (
     <Container className="py-5">
@@ -56,10 +71,12 @@ const Projects = () => {
       >
         <div className="text-center mb-5">
           <h1 className="section-title-glow">My Projects</h1>
-          <p className="lead text-white-50">Explore my latest work and side projects. Each one built with passion and purpose.</p>
+          <p className="lead text-white-50">
+            Explore my latest work and side projects. Each one built with passion and purpose.
+          </p>
         </div>
 
-        {/* Animated Filter Bar */}
+        {/* Filter Bar */}
         <motion.div
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -81,6 +98,7 @@ const Projects = () => {
                 />
               </InputGroup>
             </Col>
+            
             <Col md={6} lg={4}>
               <InputGroup>
                 <InputGroup.Text className="bg-transparent border-light text-white">
@@ -91,13 +109,15 @@ const Projects = () => {
                   onChange={(e) => setSelectedTech(e.target.value)}
                   className="bg-transparent text-white border-light"
                 >
-                  <option value="">All Technologies</option>
+                  {/* Kept text dark for default operating system dropdown readability */}
+                  <option value="" className="text-dark">All Technologies</option>
                   {allTechs.map(tech => (
-                    <option key={tech} value={tech}>{tech}</option>
+                    <option key={tech} value={tech} className="text-dark">{tech}</option>
                   ))}
                 </Form.Select>
               </InputGroup>
             </Col>
+
             <Col lg={3} className="text-center text-lg-end">
               <span className="text-white-50">
                 {filteredProjects.length} project{filteredProjects.length !== 1 ? 's' : ''} found
@@ -106,26 +126,29 @@ const Projects = () => {
           </Row>
         </motion.div>
 
+        {/* Content Section */}
         {loading ? (
           <div className="text-center py-5">
             <div className="spinner"></div>
             <p className="mt-3">Loading projects...</p>
           </div>
         ) : (
-          <AnimatePresence>
+          <AnimatePresence mode="wait">
             {filteredProjects.length === 0 ? (
               <motion.div
+                key="empty"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
                 className="text-center py-5 glass-card p-5"
               >
                 <h3>No projects found</h3>
                 <p>Try adjusting your search or filter criteria.</p>
               </motion.div>
             ) : (
-              <Row>
+              <Row key="grid">
                 {filteredProjects.map((project, idx) => (
-                  <Col lg={4} md={6} key={project._id} className="mb-4">
+                  <Col lg={4} md={6} key={project._id || idx} className="mb-4">
                     <ProjectCard project={project} index={idx} />
                   </Col>
                 ))}

@@ -1,25 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
-import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock, FaWhatsapp, FaLinkedin } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock, FaWhatsapp, FaLinkedin, FaPaperPlane } from 'react-icons/fa';
 import axios from 'axios';
+
+// 1. Move Static Data OUTSIDE the component to protect render performance cycles
+const CONTACT_METHODS = [
+  { icon: <FaEnvelope size={26} />, title: 'Email', value: 'rajesh36.sarkar@gmail.com', link: 'mailto:rajesh36.sarkar@gmail.com', color: '#ea4335' },
+  { icon: <FaPhone size={26} />, title: 'Phone', value: '+91 73639 20402', link: 'tel:+917363920402', color: '#34a853' },
+  { icon: <FaWhatsapp size={26} />, title: 'WhatsApp', value: '+91 73639 20402', link: 'https://wa.me/917363920402', color: '#25D366' },
+  { icon: <FaLinkedin size={26} />, title: 'LinkedIn', value: 'rajesh36sarkar', link: 'https://www.linkedin.com/in/rajesh36sarkar/', color: '#0077b5' },
+];
+
+const API_URL = import.meta.env.VITE_API_URL || 'https://rajesh36sarkar-backend.onrender.com/api';
 
 const Contact = () => {
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
-  const { register, handleSubmit, reset } = useForm();
+  
+  const { register, handleSubmit, reset, formState: { errors } } = useForm({
+    mode: 'onTouched' // Validates fields when users click/tap away
+  });
+  
+  const timeoutRef = useRef(null);
+
+  // Clear running alert timers if user changes pages mid-flight
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
 
   const onSubmit = async (data) => {
     setSubmitting(true);
     setError('');
     setSuccess('');
 
-    const apiUrl = import.meta.env.VITE_API_URL || 'https://rajesh36sarkar-backend.onrender.com/api';
-    
     try {
-      const response = await axios.post(`${apiUrl}/contact`, data);
+      const response = await axios.post(`${API_URL}/contact`, data);
       if (response.status === 201) {
         setSuccess('✅ Message sent! I will get back to you soon.');
         reset();
@@ -28,24 +48,18 @@ const Contact = () => {
       }
     } catch (err) {
       console.error('Contact error:', err);
-      // Show a user-friendly message even on 500
-      setError('❌ Failed to send message. The server encountered an error. Please try again later or contact me directly via email.');
+      setError('❌ Failed to send message. Please try again later or contact me directly via email.');
     } finally {
       setSubmitting(false);
-      // Auto-clear messages after 6 seconds
-      setTimeout(() => {
+
+      // Auto-clear notification updates safely using mutable state tracking references
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      timeoutRef.current = setTimeout(() => {
         setSuccess('');
         setError('');
       }, 6000);
     }
   };
-
-  const contactMethods = [
-    { icon: <FaEnvelope size={26} />, title: 'Email', value: 'rajesh36.sarkar@gmail.com', link: 'mailto:rajesh36.sarkar@gmail.com', color: '#ea4335' },
-    { icon: <FaPhone size={26} />, title: 'Phone', value: '+91 73639 20402', link: 'tel:+917363920402', color: '#34a853' },
-    { icon: <FaWhatsapp size={26} />, title: 'WhatsApp', value: '+91 73639 20402', link: 'https://wa.me/917363920402', color: '#25D366' },
-    { icon: <FaLinkedin size={26} />, title: 'LinkedIn', value: 'rajesh36sarkar', link: 'https://www.linkedin.com/in/rajesh36sarkar/', color: '#0077b5' },
-  ];
 
   return (
     <Container className="py-5">
@@ -60,13 +74,15 @@ const Contact = () => {
         </div>
 
         <Row>
+          {/* Informational Channel Side */}
           <Col lg={5} className="mb-4">
             <div className="glass-card p-4 h-100">
               <h3 className="mb-4">Let's Connect</h3>
               <p className="text-white-50 mb-4">
                 Have a project in mind, need a developer, or just want to say hello? Feel free to reach out through any of the channels below.
               </p>
-              {contactMethods.map((method, idx) => (
+              
+              {CONTACT_METHODS.map((method, idx) => (
                 <motion.a
                   key={idx}
                   href={method.link}
@@ -83,6 +99,7 @@ const Contact = () => {
                   </div>
                 </motion.a>
               ))}
+              
               <hr className="my-4" />
               <div className="d-flex align-items-center">
                 <FaMapMarkerAlt size={24} className="me-3 text-primary" />
@@ -101,6 +118,7 @@ const Contact = () => {
             </div>
           </Col>
 
+          {/* Interactive Form Side */}
           <Col lg={7}>
             <motion.div
               className="glass-card p-4"
@@ -109,6 +127,7 @@ const Contact = () => {
               transition={{ delay: 0.2, duration: 0.5 }}
             >
               <h3 className="mb-4">Send a Message</h3>
+              
               {success && (
                 <Alert variant="success" dismissible onClose={() => setSuccess('')}>
                   {success}
@@ -119,30 +138,59 @@ const Contact = () => {
                   {error}
                 </Alert>
               )}
+
               <Form onSubmit={handleSubmit(onSubmit)}>
                 <Row>
                   <Col md={6} className="mb-3">
                     <Form.Label>Your Name *</Form.Label>
-                    <Form.Control type="text" {...register('name', { required: true })} className="custom-input" />
+                    <Form.Control 
+                      type="text" 
+                      {...register('name', { required: 'Name is required' })} 
+                      className={`custom-input ${errors.name ? 'is-invalid' : ''}`} 
+                    />
+                    {errors.name && <div className="invalid-feedback">{errors.name.message}</div>}
                   </Col>
+                  
                   <Col md={6} className="mb-3">
                     <Form.Label>Email Address *</Form.Label>
-                    <Form.Control type="email" {...register('email', { required: true })} className="custom-input" />
+                    <Form.Control 
+                      type="email" 
+                      {...register('email', { 
+                        required: 'Email is required',
+                        pattern: { value: /^\S+@\S+$/i, message: 'Invalid email address' }
+                      })} 
+                      className={`custom-input ${errors.email ? 'is-invalid' : ''}`} 
+                    />
+                    {errors.email && <div className="invalid-feedback">{errors.email.message}</div>}
                   </Col>
                 </Row>
+                
                 <Form.Group className="mb-3">
                   <Form.Label>Subject *</Form.Label>
-                  <Form.Control type="text" {...register('subject', { required: true })} className="custom-input" />
+                  <Form.Control 
+                    type="text" 
+                    {...register('subject', { required: 'Subject is required' })} 
+                    className={`custom-input ${errors.subject ? 'is-invalid' : ''}`} 
+                  />
+                  {errors.subject && <div className="invalid-feedback">{errors.subject.message}</div>}
                 </Form.Group>
+                
                 <Form.Group className="mb-4">
                   <Form.Label>Message *</Form.Label>
-                  <Form.Control as="textarea" rows={5} {...register('message', { required: true })} className="custom-input" />
+                  <Form.Control 
+                    as="textarea" 
+                    rows={5} 
+                    {...register('message', { required: 'Message body cannot be empty' })} 
+                    className={`custom-input ${errors.message ? 'is-invalid' : ''}`} 
+                  />
+                  {errors.message && <div className="invalid-feedback">{errors.message.message}</div>}
                 </Form.Group>
+                
                 <Button type="submit" className="btn-primary-glow w-100" disabled={submitting}>
                   {submitting ? (
                     <>Sending <span className="spinner-border spinner-border-sm ms-2"></span></>
                   ) : (
-                    <>Send Message <FaLinkedin className="ms-2" /></>
+                    <>Send Message <FaPaperPlane className="ms-2" /></>
                   )}
                 </Button>
               </Form>
