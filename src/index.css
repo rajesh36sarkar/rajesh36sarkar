@@ -690,3 +690,119 @@ canvas {
     -webkit-overflow-scrolling: touch; /* Forces natural physics momentum swiping on iOS Safari */
   }
 }
+
+/* =========================
+   Modern Animated Navbar
+========================= */
+
+.modern-logo {
+  font-size: 2rem;
+  letter-spacing: 0.5px;
+  text-decoration: none !important;
+  transition: all 0.4s ease;
+}
+
+/* Rajesh */
+
+.logo-first {
+  background: linear-gradient(
+    135deg,
+    #ffffff,
+    #c4b5fd,
+    #ffffff,
+    #e9d5ff
+  );
+
+  background-size: 300% 300%;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  font-weight: 700;
+  display: inline-block;
+
+  transition: all 0.4s ease;
+}
+
+/* Sarkar */
+
+.logo-last {
+  background: linear-gradient(
+    135deg,
+    #8b5cf6,
+    #ec4899,
+    #a855f7,
+    #ffffff
+  );
+
+  background-size: 300% 300%;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  font-weight: 800;
+  display: inline-block;
+
+  transition: all 0.4s ease;
+}
+
+/* Hover Effects */
+
+.modern-logo:hover .logo-first {
+  transform: scale(1.08);
+
+  filter: drop-shadow(
+    0 0 12px rgba(255,255,255,0.5)
+  );
+}
+
+.modern-logo:hover .logo-last {
+  transform: scale(1.12);
+
+  filter: drop-shadow(
+    0 0 18px rgba(168,85,247,0.8)
+  );
+}
+
+/* Navbar Links */
+
+.navbar-nav .nav-link {
+  color: rgba(255,255,255,0.82) !important;
+  font-weight: 500;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+/* Link Hover */
+
+.navbar-nav .nav-link:hover {
+  color: #ffffff !important;
+  transform: translateY(-2px);
+}
+
+/* Animated Underline */
+
+.navbar-nav .nav-link::after {
+  content: '';
+
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+
+  width: 0%;
+  height: 2px;
+
+  border-radius: 20px;
+
+  background: linear-gradient(
+    90deg,
+    #8b5cf6,
+    #ec4899
+  );
+
+  transition: width 0.35s ease;
+}
+
+.navbar-nav .nav-link:hover::after {
+  width: 100%;
+}

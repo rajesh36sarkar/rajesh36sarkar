@@ -30,8 +30,7 @@ const DEFAULT_SKILLS = [
 const DEFAULT_SOCIAL = {
   github: 'https://github.com/rajesh36sarkar',
   linkedin: 'https://linkedin.com/in/rajesh36sarkar',
-  twitter: 'https://twitter.com/rajesh36sarkar',
-  email: 'mailto:rajesh36.sarkar@gmail.com',
+  twitter: 'https://twitter.com/rajesh36sarkar'
 };
 
 // Framer Rate Stable Counter Component
@@ -192,7 +191,7 @@ const Home = () => {
               >
                 <div className="hero-badge">👋 WELCOME TO MY PORTFOLIO</div>
                 <h1 className="hero-title">
-                  Hi, I'm <span className="highlight">Rajesh Sarkar</span>
+                  Hi, I'm <span className="highlight">Rajesh</span>
                 </h1>
                 <div className="hero-typewriter">
                   <Typewriter
@@ -220,7 +219,6 @@ const Home = () => {
                   <a href={computedData.social.github} target="_blank" rel="noopener noreferrer"><FaGithub /></a>
                   <a href={computedData.social.linkedin} target="_blank" rel="noopener noreferrer"><FaLinkedin /></a>
                   <a href={computedData.social.twitter} target="_blank" rel="noopener noreferrer"><FaTwitter /></a>
-                  <a href={computedData.social.email}><FaEnvelope /></a>
                 </div>
               </motion.div>
             </Col>

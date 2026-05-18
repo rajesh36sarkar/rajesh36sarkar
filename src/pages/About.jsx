@@ -209,7 +209,7 @@ const About = () => {
                 <p className="text-white-50">Internshala | Specialized in MERN, JavaScript, DSA, Bootstrap, Tailwind</p>
               </div>
               <div className="timeline-item mt-3">
-                <div className="timeline-year">2024 - 2025 </div>
+                <div className="timeline-year">2023 - 2024 </div>
                 <h5>Web Development Post Graduate Certification</h5>
                 <p className="text-white-50">Apna Collage | Specialized in JAVA, DSA </p>
               </div>

@@ -7,7 +7,6 @@ import axios from 'axios';
 
 // 1. Move Static Data OUTSIDE the component to protect render performance cycles
 const CONTACT_METHODS = [
-  { icon: <FaEnvelope size={26} />, title: 'Email', value: 'rajesh36.sarkar@gmail.com', link: 'mailto:rajesh36.sarkar@gmail.com', color: '#ea4335' },
   { icon: <FaPhone size={26} />, title: 'Phone', value: '+91 73639 20402', link: 'tel:+917363920402', color: '#34a853' },
   { icon: <FaWhatsapp size={26} />, title: 'WhatsApp', value: '+91 73639 20402', link: 'https://wa.me/917363920402', color: '#25D366' },
   { icon: <FaLinkedin size={26} />, title: 'LinkedIn', value: 'rajesh36sarkar', link: 'https://www.linkedin.com/in/rajesh36sarkar/', color: '#0077b5' },
@@ -21,12 +20,12 @@ const Contact = () => {
   const [error, setError] = useState('');
   
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
-    mode: 'onTouched' // Validates fields when users click/tap away
+    mode: 'onTouched' 
   });
   
   const timeoutRef = useRef(null);
 
-  // Clear running alert timers if user changes pages mid-flight
+  
   useEffect(() => {
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -179,7 +178,7 @@ const Contact = () => {
                   <Form.Label>Message *</Form.Label>
                   <Form.Control 
                     as="textarea" 
-                    rows={5} 
+                    rows={7} 
                     {...register('message', { required: 'Message body cannot be empty' })} 
                     className={`custom-input ${errors.message ? 'is-invalid' : ''}`} 
                   />

@@ -1,20 +1,10 @@
 import React, { useState, useCallback } from 'react';
-import { Navbar, Nav, Container, Button } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const CustomNavbar = () => {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
   const [expanded, setExpanded] = useState(false);
-
-  // 1. Static Callback Hooks to minimize re-renders inside Nav containers
-  const handleLogout = useCallback(() => {
-    logout();
-    navigate('/');
-    setExpanded(false);
-  }, [logout, navigate]);
 
   const handleLinkClick = useCallback(() => {
     setExpanded(false);
@@ -31,50 +21,107 @@ const CustomNavbar = () => {
         expand="lg"
         variant="dark"
         expanded={expanded}
-        onToggle={setExpanded} // Optimized setter mapping shorthand
+        onToggle={setExpanded}
         className="py-3"
       >
         <Container>
-          <Navbar.Brand as={Link} to="/" onClick={handleLinkClick} className="fw-bold fs-3">
-            Portfolio
-          </Navbar.Brand>
-          
+
+          {/* Modern Animated Logo */}
+          <motion.div
+            whileHover={{
+              scale: 1.08,
+              y: -2,
+            }}
+            whileTap={{ scale: 0.96 }}
+            transition={{
+              type: 'spring',
+              stiffness: 300,
+              damping: 15,
+            }}
+          >
+            <Navbar.Brand
+              as={Link}
+              to="/"
+              onClick={handleLinkClick}
+              className="fw-bold fs-3 modern-logo"
+            >
+              <motion.span
+                className="logo-first"
+                animate={{
+                  backgroundPosition: [
+                    '0% 50%',
+                    '100% 50%',
+                    '0% 50%',
+                  ],
+                }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: 'linear',
+                }}
+              >
+                Rajesh
+              </motion.span>
+
+              {' '}
+
+              <motion.span
+                className="logo-last"
+                animate={{
+                  backgroundPosition: [
+                    '100% 50%',
+                    '0% 50%',
+                    '100% 50%',
+                  ],
+                }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: 'linear',
+                }}
+              >
+                Sarkar
+              </motion.span>
+            </Navbar.Brand>
+          </motion.div>
+
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          
+
           <Navbar.Collapse id="basic-navbar-nav">
-            {/* Added container gaps for better responsive performance over individual item margins */}
             <Nav className="ms-auto d-flex align-items-lg-center gap-2 gap-lg-3">
-              <Nav.Link as={Link} to="/" onClick={handleLinkClick}>
+
+              <Nav.Link
+                as={Link}
+                to="/"
+                onClick={handleLinkClick}
+              >
                 Home
               </Nav.Link>
-              <Nav.Link as={Link} to="/projects" onClick={handleLinkClick}>
+
+              <Nav.Link
+                as={Link}
+                to="/projects"
+                onClick={handleLinkClick}
+              >
                 Projects
               </Nav.Link>
-              <Nav.Link as={Link} to="/about" onClick={handleLinkClick}>
+
+              <Nav.Link
+                as={Link}
+                to="/about"
+                onClick={handleLinkClick}
+              >
                 About
               </Nav.Link>
-              <Nav.Link as={Link} to="/contact" onClick={handleLinkClick}>
+
+              <Nav.Link
+                as={Link}
+                to="/contact"
+                onClick={handleLinkClick}
+              >
                 Contact
               </Nav.Link>
-              
-              {user ? (
-                <>
-                  <Nav.Link as={Link} to="/admin/dashboard" onClick={handleLinkClick}>
-                    Dashboard
-                  </Nav.Link>
-                  <Button
-                    variant="outline-light"
-                    onClick={handleLogout}
-                    className="py-1 px-3"
-                  >
-                    Logout
-                  </Button>
-                </>
-              ) : (
-                <Nav.Link as={Link} to="/admin/login" onClick={handleLinkClick}>
-                  Admin
-                </Nav.Link>
-              )}
+
             </Nav>
           </Navbar.Collapse>
         </Container>
