@@ -33,7 +33,18 @@ const AdminDashboard = () => {
   const alertTimeoutRef = useRef(null);
 
   // Purpose-built Isolated Form Controllers
-  const projectForm = useForm();
+  const projectForm = useForm({
+    defaultValues: {
+      title: '',
+      description: '',
+      technologies: '',
+      imageUrl: '',
+      galleryImages: [],
+      liveUrl: '',
+      githubUrl: '',
+      featured: false
+    }
+  });
   const aboutForm = useForm();
   const skillForm = useForm();
   const socialForm = useForm();
@@ -93,7 +104,7 @@ const AdminDashboard = () => {
     setUploading(true);
     try {
       const res = await uploadImage(file);
-      projectForm.setValue('imageUrl', res.data.url);
+      projectForm.setValue('imageUrl', res.data.url, { shouldValidate: true, shouldDirty: true });
       triggerAlert('Project placeholder thumbnail mapped!', 'success');
     } catch (error) {
       triggerAlert('Asset hosting target integration dropped', 'danger');
@@ -117,8 +128,8 @@ const AdminDashboard = () => {
           Authorization: `Bearer ${localStorage.getItem('token')}` 
         }
       });
-      const currentGallery = projectForm.watch('galleryImages') || [];
-      projectForm.setValue('galleryImages', [...currentGallery, ...res.data.urls]);
+      const currentGallery = projectForm.getValues('galleryImages') || [];
+      projectForm.setValue('galleryImages', [...currentGallery, ...res.data.urls], { shouldValidate: true, shouldDirty: true });
       triggerAlert(`${res.data.urls.length} gallery assets stacked successfully`, 'success');
     } catch (error) {
       triggerAlert('Multi-upload synchronization processing drop', 'danger');
@@ -127,13 +138,30 @@ const AdminDashboard = () => {
     }
   };
 
+  // Safe client-side mutation hook for form state arrays
+  const removeGalleryImage = (indexToRemove) => {
+    const currentGallery = projectForm.getValues('galleryImages') || [];
+    const filteredGallery = currentGallery.filter((_, idx) => idx !== indexToRemove);
+    projectForm.setValue('galleryImages', filteredGallery, { shouldValidate: true, shouldDirty: true });
+  };
+
   const onSubmitProject = async (data) => {
     try {
       const techArray = typeof data.technologies === 'string' 
-        ? data.technologies.split(',').map(t => t.trim()) 
+        ? data.technologies.split(',').map(t => t.trim()).filter(Boolean) 
         : data.technologies;
         
-      const projectData = { ...data, technologies: techArray, galleryImages: data.galleryImages || [] };
+      // Ensure galleryImages array references match database expectations exactly
+      const projectData = { 
+        title: data.title,
+        description: data.description,
+        technologies: techArray,
+        imageUrl: data.imageUrl,
+        galleryImages: data.galleryImages || [],
+        liveUrl: data.liveUrl || '',
+        githubUrl: data.githubUrl || '',
+        featured: !!data.featured
+      };
       
       if (editingProject) {
         await updateProject(editingProject._id, projectData);
@@ -164,7 +192,7 @@ const AdminDashboard = () => {
     setEditingProject(project);
     projectForm.setValue('title', project.title);
     projectForm.setValue('description', project.description);
-    projectForm.setValue('technologies', project.technologies.join(', '));
+    projectForm.setValue('technologies', Array.isArray(project.technologies) ? project.technologies.join(', ') : project.technologies);
     projectForm.setValue('imageUrl', project.imageUrl);
     projectForm.setValue('galleryImages', project.galleryImages || []);
     projectForm.setValue('liveUrl', project.liveUrl || '');
@@ -173,10 +201,20 @@ const AdminDashboard = () => {
     setShowProjectModal(true);
   };
 
+  // Explicitly resetting back to clean defaults targets structural leaks
   const handleCloseProjectModal = () => {
     setShowProjectModal(false);
     setEditingProject(null);
-    projectForm.reset();
+    projectForm.reset({
+      title: '',
+      description: '',
+      technologies: '',
+      imageUrl: '',
+      galleryImages: [],
+      liveUrl: '',
+      githubUrl: '',
+      featured: false
+    });
   };
 
   const updateAbout = async (data) => {
@@ -491,22 +529,53 @@ const AdminDashboard = () => {
               <Form.Group className="mb-3"><Form.Label>📌 Title *</Form.Label><Form.Control {...projectForm.register('title')} required /></Form.Group>
               <Form.Group className="mb-3"><Form.Label>📝 Description *</Form.Label><Form.Control as="textarea" rows={4} {...projectForm.register('description')} required /></Form.Group>
               <Form.Group className="mb-3"><Form.Label>⚙️ Technologies (comma separated)</Form.Label><Form.Control {...projectForm.register('technologies')} required /></Form.Group>
+              
               <Form.Group className="mb-3">
                 <Form.Label>🖼️ Thumbnail Image *</Form.Label>
                 <Form.Control {...projectForm.register('imageUrl')} placeholder="Image URL String" required />
                 <Form.Control type="file" onChange={handleImageUpload} className="mt-2" accept="image/*" />
+                {projectForm.watch('imageUrl') && (
+                  <div className="mt-2">
+                    <img src={projectForm.watch('imageUrl')} alt="Thumbnail Preview" className="rounded border border-secondary" style={{ width: '100px', height: '60px', objectFit: 'cover' }} />
+                  </div>
+                )}
               </Form.Group>
+
               <Form.Group className="mb-3">
                 <Form.Label>🖼️ Gallery Images (optional, max 10)</Form.Label>
                 <Form.Control type="file" multiple accept="image/*" onChange={handleGalleryUpload} disabled={uploadingGallery} />
-                {uploadingGallery && <Spinner animation="border" size="sm" className="mt-2" />}
+                {uploadingGallery && <Spinner animation="border" size="sm" className="ms-2 d-inline-block" />}
+                
+                {/* Active Grid preview tracker for gallery collections */}
+                {projectForm.watch('galleryImages')?.length > 0 && (
+                  <div className="d-flex flex-wrap gap-2 mt-3 p-2 border border-secondary rounded bg-black bg-opacity-20">
+                    {projectForm.watch('galleryImages').map((url, idx) => (
+                      <div key={url + idx} className="position-relative" style={{ width: '80px', height: '60px' }}>
+                        <img src={url} alt="Gallery Preview" className="w-100 h-100 rounded object-fit-cover" />
+                        <button
+                          type="button"
+                          onClick={() => removeGalleryImage(idx)}
+                          className="position-absolute top-0 end-0 bg-danger text-white border-0 rounded-circle d-flex align-items-center justify-content-center"
+                          style={{ width: '18px', height: '18px', fontSize: '12px', transform: 'translate(35%, -35%)', lineHeight: '1' }}
+                          title="Remove Image"
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </Form.Group>
+
               <Form.Group className="mb-3"><Form.Label>🌐 Live URL</Form.Label><Form.Control {...projectForm.register('liveUrl')} /></Form.Group>
               <Form.Group className="mb-3"><Form.Label>💻 GitHub URL</Form.Label><Form.Control {...projectForm.register('githubUrl')} /></Form.Group>
               <Form.Group className="mb-3"><Form.Check type="checkbox" label="⭐ Featured Project Workspace" {...projectForm.register('featured')} /></Form.Group>
+              
               <div className="d-flex justify-content-end gap-2 mt-4">
                 <Button variant="secondary" onClick={handleCloseProjectModal}>Cancel</Button>
-                <Button type="submit" className="btn-gradient">Save Project Data</Button>
+                <Button type="submit" className="btn-gradient" disabled={uploading || uploadingGallery}>
+                  {editingProject ? 'Save Changes' : 'Deploy Target'}
+                </Button>
               </div>
             </Form>
           </Modal.Body>

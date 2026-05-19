@@ -1,10 +1,9 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import { Card, Button } from 'react-bootstrap';
-import { motion } from 'framer-motion';
-import { FaGithub, FaExternalLinkAlt, FaInfoCircle } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaGithub, FaExternalLinkAlt, FaInfoCircle, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import ProjectModal from './ProjectModal';
 
-// Extracted animation variants to avoid reallocation on every render pass
 const cardVariants = {
   hidden: { opacity: 0, y: 30 },
   visible: { 
@@ -14,13 +13,53 @@ const cardVariants = {
   }
 };
 
+const imageSliderVariants = {
+  enter: (direction) => ({
+    x: direction > 0 ? '100%' : '-100%',
+    opacity: 0
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+    transition: { x: { type: 'spring', stiffness: 300, damping: 30 }, opacity: { duration: 0.2 } }
+  },
+  exit: (direction) => ({
+    x: direction < 0 ? '100%' : '-100%',
+    opacity: 0,
+    transition: { x: { type: 'spring', stiffness: 300, damping: 30 }, opacity: { duration: 0.2 } }
+  })
+};
+
 const ProjectCard = ({ project }) => {
   const [showModal, setShowModal] = useState(false);
+  const [[page, direction], setPage] = useState([0, 0]);
 
-  // Consolidated state controls to protect layout re-render pipelines
+  // Merges imageUrl and galleryImages smoothly
+  const allImages = useMemo(() => {
+    const imagesArray = [project?.imageUrl, ...(project?.galleryImages || [])];
+    return imagesArray.filter(Boolean);
+  }, [project?.imageUrl, project?.galleryImages]);
+
+  const activeIndex = useMemo(() => {
+    if (allImages.length === 0) return 0;
+    return ((page % allImages.length) + allImages.length) % allImages.length;
+  }, [page, allImages.length]);
+
+  const paginate = useCallback((newDirection) => {
+    setPage(([currentPage]) => [currentPage + newDirection, newDirection]);
+  }, []);
+
+  const handleDragEnd = (event, info) => {
+    const swipeThreshold = 50; 
+    if (info.offset.x < -swipeThreshold) {
+      paginate(1); 
+    } else if (info.offset.x > swipeThreshold) {
+      paginate(-1); 
+    }
+  };
+
   const toggleModal = useCallback((state) => () => setShowModal(state), []);
 
-  // Compute description text safely 
   const processedDescription = useMemo(() => {
     if (!project?.description) return 'No overview provided.';
     return project.description.length > 100 
@@ -35,23 +74,79 @@ const ProjectCard = ({ project }) => {
         whileInView="visible"
         variants={cardVariants}
         viewport={{ once: true, margin: "-20px" }}
+        className="h-100"
       >
         <Card className="glass-card h-100">
-          <div 
-            role="button"
-            tabIndex={0}
-            onClick={toggleModal(true)}
-            onKeyDown={(e) => e.key === 'Enter' && toggleModal(true)()}
-            className="cursor-pointer overflow-hidden"
-            aria-label={`View details for ${project.title || 'project'}`}
-            aria-haspopup="dialog"
-          >
-            <Card.Img 
-              variant="top" 
-              src={project.imageUrl} 
-              alt={project.title || "Project Snapshot"}
-              className="card-img-cover"
-            />
+          
+          {/* Main Card Touch Slider Image Wrapper */}
+          <div className="position-relative overflow-hidden w-100 card-slider-wrapper" style={{ height: '220px' }}>
+            {allImages.length > 0 ? (
+              <>
+                <AnimatePresence initial={false} custom={direction}>
+                  <motion.img
+                    key={page}
+                    src={allImages[activeIndex]}
+                    alt={`${project.title || "Snapshot"} - Slide ${activeIndex + 1}`}
+                    custom={direction}
+                    variants={imageSliderVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    drag="x"
+                    dragConstraints={{ left: 0, right: 0 }}
+                    dragElastic={1}
+                    onDragEnd={handleDragEnd}
+                    className="position-absolute top-0 start-0 w-100 h-100 object-fit-cover cursor-grab"
+                    style={{ 
+                      zIndex: 1,
+                      touchAction: 'pan-y' // FIX: Allows vertical scrolling while unlocking horizontal swiping
+                    }}
+                  />
+                </AnimatePresence>
+
+                {allImages.length > 1 && (
+                  <>
+                    <button 
+                      type="button"
+                      className="slider-nav-btn left-btn"
+                      onClick={(e) => { e.stopPropagation(); paginate(-1); }}
+                      aria-label="Previous image"
+                      style={{ zIndex: 10 }}
+                    >
+                      <FaChevronLeft />
+                    </button>
+                    <button 
+                      type="button"
+                      className="slider-nav-btn right-btn"
+                      onClick={(e) => { e.stopPropagation(); paginate(1); }}
+                      aria-label="Next image"
+                      style={{ zIndex: 10 }}
+                    >
+                      <FaChevronRight />
+                    </button>
+
+                    <div className="slider-dots" style={{ zIndex: 10 }}>
+                      {allImages.map((_, index) => (
+                        <span 
+                          key={index} 
+                          className={`slider-dot ${index === activeIndex ? 'active' : ''}`}
+                          style={{ cursor: 'pointer' }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const newDirection = index > activeIndex ? 1 : -1;
+                            setPage([index, newDirection]);
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </>
+                )}
+              </>
+            ) : (
+              <div className="w-100 h-100 d-flex align-items-center justify-content-center bg-dark text-white-50">
+                No Preview Image Available
+              </div>
+            )}
           </div>
           
           <Card.Body className="d-flex flex-column">
@@ -70,7 +165,6 @@ const ProjectCard = ({ project }) => {
               {processedDescription}
             </Card.Text>
             
-            {/* Badges Container */}
             <div className="mb-3">
               {project.technologies?.slice(0, 3).map((tech) => (
                 <span 
@@ -87,7 +181,6 @@ const ProjectCard = ({ project }) => {
               )}
             </div>
             
-            {/* Action Bar */}
             <div className="d-flex gap-2 justify-content-between align-items-center mt-auto">
               <div className="d-flex gap-2">
                 {project.githubUrl && (
@@ -97,7 +190,7 @@ const ProjectCard = ({ project }) => {
                     href={project.githubUrl} 
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`View ${project.title} source code on GitHub`}
+                    aria-label={`View ${project.title} source code`}
                   >
                     <FaGithub />
                   </Button>
@@ -129,7 +222,6 @@ const ProjectCard = ({ project }) => {
         </Card>
       </motion.div>
 
-      {/* Conditionally mount modal context wrapper elements to conserve idle rendering tree memory */}
       {showModal && (
         <ProjectModal 
           show={showModal} 

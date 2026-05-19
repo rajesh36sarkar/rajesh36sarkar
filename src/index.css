@@ -28,11 +28,11 @@ html, body {
 }
 
 .main-content {
-  flex: 1 0 auto; /* Keeps your footer anchored firmly at the base of small screens */
+  flex: 1 0 auto;
 }
 
 /* ==========================================================================
-   2. SYSTEM LOADER SYSTEM HANDSHAKES
+   2. SYSTEM LOADER 
    ========================================================================== */
 .loader-wrapper {
   display: flex;
@@ -52,7 +52,7 @@ html, body {
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   margin-bottom: 20px;
-  will-change: transform; /* Protects CPU frame skipping during load-up initialization tasks */
+  will-change: transform;
 }
 
 @keyframes spin {
@@ -85,7 +85,7 @@ html, body {
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease-in-out;
-  will-change: transform, box-shadow; /* Prevents painful browser layout recalculations on card hover */
+  will-change: transform, box-shadow;
 }
 
 .glass-card:hover {
@@ -130,7 +130,7 @@ html, body {
 }
 
 /* ==========================================================================
-   5. HEADER SPECIFICATIONS (CLEAN ALIGNMENT CONSTRAINTS)
+   5. HEADER SPECIFICATIONS
    ========================================================================== */
 .section-title {
   font-size: 2.5rem;
@@ -161,7 +161,7 @@ html, body {
   display: block;
   width: max-content;
   margin-left: auto;
-  margin-right: auto; /* Uses clean flex margins instead of manual left 50% shifts */
+  margin-right: auto;
 }
 
 .section-title-glow::after {
@@ -176,7 +176,7 @@ html, body {
 }
 
 /* ==========================================================================
-   6. CANVAS & SCROLLBAR SYSTEM DECORATIONS
+   6. CANVAS & BOOTSTRAP OVERRIDES
    ========================================================================== */
 ::-webkit-scrollbar {
   width: 10px;
@@ -195,6 +195,7 @@ html, body {
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
+  overflow: hidden;
 }
 
 .project-modal .modal-header,
@@ -205,11 +206,11 @@ html, body {
 canvas {
   display: block;
   vertical-align: bottom;
-  pointer-events: none; /* Safely allows clicks to bypass the background overlay */
+  pointer-events: none;
 }
 
 /* ==========================================================================
-   7. UNIFIED STACKED CANVAS INTERACTION VIEWS
+   7. HERO & PROFILE ELEMENT LAYOUTS
    ========================================================================== */
 .hero-fullscreen-container {
   position: relative;
@@ -247,12 +248,9 @@ canvas {
 
 .z-index-content .btn {
   position: relative;
-  z-index: 10; /* Guarantees mobile touch interactions prioritize your page buttons */
+  z-index: 10;
 }
 
-/* ==========================================================================
-   8. HERO SECTION COMPONENTS
-   ========================================================================== */
 .hero-badge {
   display: inline-block;
   background: rgba(255, 255, 255, 0.15);
@@ -323,7 +321,6 @@ canvas {
   transform: translateY(-3px);
 }
 
-/* Profile Section Glow Rules */
 .profile-wrapper {
   position: relative;
   display: inline-block;
@@ -378,7 +375,7 @@ canvas {
 .bottom-left { bottom: 10%; left: -10px; }
 
 /* ==========================================================================
-   9. METRIC STATS & DASHBOARD DATA LAYOUTS
+   8. METRIC STATS & DASHBOARDS
    ========================================================================== */
 .stats-section {
   padding: 60px 0;
@@ -416,9 +413,7 @@ canvas {
   color: transparent;
 }
 
-.skills-section {
-  padding: 80px 0;
-}
+.skills-section { padding: 80px 0; }
 
 .skills-container {
   background: rgba(255, 255, 255, 0.05);
@@ -428,9 +423,7 @@ canvas {
   padding: 40px;
 }
 
-.skill-item {
-  margin-bottom: 25px;
-}
+.skill-item { margin-bottom: 25px; }
 
 .skill-header {
   display: flex;
@@ -445,14 +438,9 @@ canvas {
   background: rgba(255, 255, 255, 0.2);
 }
 
-.projects-section {
-  padding: 80px 0;
-}
+.projects-section { padding: 80px 0; }
 
-.btn-glow {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
+.btn-glow { transition: transform 0.2s ease, box-shadow 0.2s ease; }
 .btn-glow:hover {
   transform: translateY(-3px);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
@@ -544,21 +532,6 @@ canvas {
   font-size: 0.9rem;
 }
 
-.contact-method {
-  transition: transform 0.2s ease;
-}
-
-.contact-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 1.2rem;
-}
-
 .custom-input {
   background: rgba(255, 255, 255, 0.1) !important;
   border: 1px solid rgba(255, 255, 255, 0.2) !important;
@@ -571,16 +544,11 @@ canvas {
   box-shadow: 0 0 0 0.2rem rgba(249, 202, 36, 0.25);
 }
 
-.filter-bar {
-  background: rgba(0, 0, 0, 0.3) !important;
-}
+.filter-bar { background: rgba(0, 0, 0, 0.3) !important; }
 
-/* ==========================================================================
-   10. INTERACTIVE DROPDOWNS & INPUT FORM CONTROLS
-   ========================================================================== */
 .form-select,
 .form-select option {
-  background-color: #1a1633 !important; /* Prevents text blending errors in modern Chromium layouts */
+  background-color: #1a1633 !important;
   color: white !important;
   border-color: rgba(255, 255, 255, 0.3) !important;
 }
@@ -596,26 +564,253 @@ canvas {
   color: white;
 }
 
-.cursor-pointer {
-  cursor: pointer;
+.cursor-pointer { cursor: pointer; }
+
+/* ==========================================================================
+   9. MODERN LOGO & BRAND NAVIGATION SYSTEM
+   ========================================================================== */
+.modern-logo {
+  font-size: 2rem;
+  letter-spacing: 0.5px;
+  text-decoration: none !important;
+  transition: all 0.4s ease;
+}
+
+.logo-first {
+  background: linear-gradient(135deg, #ffffff, #c4b5fd, #ffffff, #e9d5ff);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+  display: inline-block;
+  transition: all 0.4s ease;
+}
+
+.logo-last {
+  background: linear-gradient(135deg, #8b5cf6, #ec4899, #a855f7, #ffffff);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+  display: inline-block;
+  transition: all 0.4s ease;
+}
+
+.modern-logo:hover .logo-first {
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 12px rgba(255,255,255,0.5));
+}
+
+.modern-logo:hover .logo-last {
+  transform: scale(1.12);
+  filter: drop-shadow(0 0 18px rgba(168,85,247,0.8));
+}
+
+.navbar-nav .nav-link {
+  color: rgba(255,255,255,0.82) !important;
+  font-weight: 500;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #ffffff !important;
+  transform: translateY(-2px);
+}
+
+.navbar-nav .nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #8b5cf6, #ec4899);
+  transition: width 0.35s ease;
+}
+
+.navbar-nav .nav-link:hover::after { width: 100%; }
+
+/* ==========================================================================
+   10. INTERACTIVE DASHBOARD CARD DRAG IMAGE SLIDERS (FIXED SWIPE)
+   ========================================================================== */
+.card-slider-wrapper {
+  background-color: rgba(0, 0, 0, 0.15);
+  position: relative;
+  touch-action: pan-y !important; /* Locks horizontal drag axis directly to code bindings */
+  overflow: hidden;
+}
+
+.card-slider-wrapper img {
+  touch-action: pan-y !important;
+  -webkit-user-drag: none !important;
+  user-drag: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
+
+.cursor-grab { cursor: grab !important; }
+.cursor-grab:active { cursor: grabbing !important; }
+
+.slider-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.45);
+  border: none;
+  color: white;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 10;
+}
+
+.slider-nav-btn:hover {
+  background: rgba(0, 0, 0, 0.75);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.left-btn { left: 12px; }
+.right-btn { right: 12px; }
+
+.slider-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 10;
+}
+
+.slider-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transition: all 0.2s ease;
+}
+
+.slider-dot.active {
+  background: #ffffff;
+  transform: scale(1.25);
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
 }
 
 /* ==========================================================================
-   11. MOBILE VIEW RESPONSIVE MEDIA QUERIES
+   11. FIX: DETAILED POPUP MODAL CAROUSEL SWIPE & NAVIGATION ARROWS
+   ========================================================================== */
+.modal-carousel-wrapper {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  touch-action: pan-y !important; /* Blocks mobile layout multi-scrolling bugs */
+}
+
+.modal-carousel-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  touch-action: pan-y !important;
+  -webkit-user-drag: none !important;
+  user-drag: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
+
+/* Glassmorphic Interaction Control Arrows for popup modal */
+.modal-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 20;
+  cursor: pointer;
+}
+
+.modal-nav-btn:hover {
+  background: rgba(0, 0, 0, 0.8);
+  transform: translateY(-50%) scale(1.08);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.modal-nav-btn.left-btn { left: 16px; }
+.modal-nav-btn.right-btn { right: 16px; }
+
+/* Modal Micro-Dot Indicators */
+.modal-slider-dots {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 20;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 6px 12px;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.modal-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-dot:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.modal-dot.active {
+  background: #ffffff;
+  transform: scale(1.25);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+.long-text-wrapper {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   12. RESPONSIVE MEDIA BREAKPOINTS
    ========================================================================== */
 @media (max-width: 768px) {
-  .section-padding {
-    padding: 60px 0;
-  }
+  .section-padding { padding: 60px 0; }
   
   .section-title, 
-  .section-title-glow {
-    font-size: 2rem;
-  }
+  .section-title-glow { font-size: 2rem; }
   
-  .glass-card {
-    padding: 1rem !important;
-  }
+  .glass-card { padding: 1rem !important; }
   
   .display-3 { font-size: 2.2rem; }
   .display-5 { font-size: 1.5rem; }
@@ -626,183 +821,44 @@ canvas {
     font-size: 0.9rem;
   }
   
-  .spinner {
-    width: 45px;
-    height: 45px;
-  }
+  .spinner { width: 45px; height: 45px; }
+  .loader-text { font-size: 1rem; }
   
-  .loader-text {
-    font-size: 1rem;
-  }
+  .hero-title { font-size: 2.2rem; }
+  .hero-typewriter { font-size: 1.3rem; min-height: 60px; }
   
-  .hero-title {
-    font-size: 2.2rem;
-  }
+  .profile-image { width: 220px; height: 220px; }
+  .profile-glow { width: 240px; height: 240px; }
   
-  .hero-typewriter {
-    font-size: 1.3rem;
-    min-height: 60px;
-  }
-  
-  .profile-image {
-    width: 220px;
-    height: 220px;
-  }
-  
-  .profile-glow {
-    width: 240px;
-    height: 240px;
-  }
-  
-  .floating-badge {
-    font-size: 0.7rem;
-    padding: 4px 10px;
-  }
-  
+  .floating-badge { font-size: 0.7rem; padding: 4px 10px; }
   .top-right { top: 5%; right: -5px; }
   .bottom-left { bottom: 5%; left: -5px; }
   
   .stat-number, 
-  .gradient-number {
-    font-size: 2rem;
-  }
+  .gradient-number { font-size: 2rem; }
   
-  .skills-container {
-    padding: 20px;
-  }
+  .skills-container { padding: 20px; }
+  .cta-card { padding: 40px 20px; }
+  .cta-card h3 { font-size: 1.5rem; }
+  .service-card { padding: 1.5rem 1rem; }
   
-  .cta-card {
-    padding: 40px 20px;
+  /* Modal Custom Mobile Image Scale-Downs */
+  .modal-carousel-wrapper {
+    min-height: 230px !important;
   }
-  
-  .cta-card h3 {
-    font-size: 1.5rem;
+  .modal-carousel-img {
+    height: 230px !important;
   }
-  
-  .service-card {
-    padding: 1.5rem 1rem;
+  .modal-nav-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 0.9rem;
   }
-  
+
   .table-responsive-stack {
     display: block;
     width: 100%;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch; /* Forces natural physics momentum swiping on iOS Safari */
+    -webkit-overflow-scrolling: touch;
   }
-}
-
-/* =========================
-   Modern Animated Navbar
-========================= */
-
-.modern-logo {
-  font-size: 2rem;
-  letter-spacing: 0.5px;
-  text-decoration: none !important;
-  transition: all 0.4s ease;
-}
-
-/* Rajesh */
-
-.logo-first {
-  background: linear-gradient(
-    135deg,
-    #ffffff,
-    #c4b5fd,
-    #ffffff,
-    #e9d5ff
-  );
-
-  background-size: 300% 300%;
-
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-
-  font-weight: 700;
-  display: inline-block;
-
-  transition: all 0.4s ease;
-}
-
-/* Sarkar */
-
-.logo-last {
-  background: linear-gradient(
-    135deg,
-    #8b5cf6,
-    #ec4899,
-    #a855f7,
-    #ffffff
-  );
-
-  background-size: 300% 300%;
-
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-
-  font-weight: 800;
-  display: inline-block;
-
-  transition: all 0.4s ease;
-}
-
-/* Hover Effects */
-
-.modern-logo:hover .logo-first {
-  transform: scale(1.08);
-
-  filter: drop-shadow(
-    0 0 12px rgba(255,255,255,0.5)
-  );
-}
-
-.modern-logo:hover .logo-last {
-  transform: scale(1.12);
-
-  filter: drop-shadow(
-    0 0 18px rgba(168,85,247,0.8)
-  );
-}
-
-/* Navbar Links */
-
-.navbar-nav .nav-link {
-  color: rgba(255,255,255,0.82) !important;
-  font-weight: 500;
-  position: relative;
-  transition: all 0.3s ease;
-}
-
-/* Link Hover */
-
-.navbar-nav .nav-link:hover {
-  color: #ffffff !important;
-  transform: translateY(-2px);
-}
-
-/* Animated Underline */
-
-.navbar-nav .nav-link::after {
-  content: '';
-
-  position: absolute;
-  left: 0;
-  bottom: -4px;
-
-  width: 0%;
-  height: 2px;
-
-  border-radius: 20px;
-
-  background: linear-gradient(
-    90deg,
-    #8b5cf6,
-    #ec4899
-  );
-
-  transition: width 0.35s ease;
-}
-
-.navbar-nav .nav-link:hover::after {
-  width: 100%;
 }

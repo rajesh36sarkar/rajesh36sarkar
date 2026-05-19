@@ -287,3 +287,29 @@ html, body {
     border-right-color: var(--border);
   }
 }
+
+/* ==========================================================================
+   8. MOBILE GESTURE ENGINE RECTIFICATIONS (FIXES CAROUSEL SWIPING)
+   ========================================================================== */
+.modal-carousel-wrapper,
+.card-slider-wrapper {
+  touch-action: pan-y !important; /* Permits normal vertical page scrolling, hands horizontal swipe actions to JS */
+}
+
+.modal-carousel-img,
+.card-slider-wrapper img,
+img[draggable] {
+  touch-action: pan-y !important;
+  -webkit-user-drag: none !important; /* Overrides native browser image ghost-dragging */
+  user-drag: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
+
+.cursor-grab { 
+  cursor: grab !important; 
+}
+
+.cursor-grab:active { 
+  cursor: grabbing !important; 
+}
