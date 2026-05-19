@@ -94,13 +94,18 @@ const RotatingSphere = () => {
 
 const FloatingTorus = () => {
   const torusRef = useRef();
+  
   useFrame((state) => {
     if (!torusRef.current) return;
-    const elapsedTime = state.clock.getElapsedTime();
+    
+    // Safely reads elapsed time across different R3F/Three ecosystem versions
+    const elapsedTime = state.timer ? state.timer.getElapsed() : state.clock.getElapsedTime();
+    
     torusRef.current.rotation.x = Math.sin(elapsedTime) * 0.5;
     torusRef.current.rotation.y = Math.cos(elapsedTime) * 0.5;
     torusRef.current.position.y = Math.sin(elapsedTime) * 0.3 + 1.5; // Offset higher to balance navbar
   });
+
   return (
     <mesh ref={torusRef} position={[0, 1.5, -2]}>
       <torusGeometry args={[0.7, 0.18, 12, 64]} />
