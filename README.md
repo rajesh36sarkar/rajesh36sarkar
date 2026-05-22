@@ -38,42 +38,22 @@ I build scalable, responsive, SEO-friendly web applications with modern UI/UX an
 
 # 👨‍💻 About Me
 
-```js
-const rajesh = {
-  role: "MERN Stack Developer",
-  location: "India 🇮🇳",
+I'm a passionate **MERN Stack Developer** focused on building modern, responsive, and SEO-friendly web applications. I enjoy creating scalable full-stack projects with clean UI/UX, smooth animations, and optimized performance.
 
-  skills: [
-    "MongoDB",
-    "Express.js",
-    "React.js",
-    "Node.js",
-    "Next.js",
-    "TypeScript",
-    "Three.js",
-    "Tailwind CSS",
-    "Bootstrap",
-    "Framer Motion",
-    "EJS",
-    "REST APIs"
-  ],
+My core expertise includes **MongoDB, Express.js, React.js, Node.js, Next.js, and TypeScript**. I also work with **Tailwind CSS, Bootstrap, Framer Motion, Three.js, and EJS** to build visually engaging and interactive user experiences.
 
-  passionateAbout: [
-    "Responsive Design",
-    "Modern UI/UX",
-    "SEO Optimization",
-    "Animations & Interactions",
-    "Full Stack Applications"
-  ],
+I love transforming ideas into real-world applications, whether it's a business platform, portfolio website, dashboard, or eCommerce solution.
 
-  currentlyLearning: [
-    "Advanced TypeScript",
-    "Prisma",
-    "Next.js App Router",
-    "System Design"
-  ]
-}
-```
+Currently, I'm exploring **Advanced TypeScript, Prisma, Next.js App Router, and System Design** to improve my development workflow and build more scalable applications.
+
+🚀 Passionate about:
+- Full Stack Web Development
+- Responsive Design
+- Modern UI/UX
+- REST API Development
+- SEO Optimization
+- Animations & Interactive Experiences
+- Performance Optimization
 
 ---
 
@@ -115,13 +95,6 @@ const rajesh = {
 
 ## 🏢 CorpConnect — Corporate Intranet Portal
 
-### 🔗 Live Demo
-https://corpconnect-intranet-portal.vercel.app/login
-
-### 💻 GitHub
-https://github.com/rajesh36sarkar/Corpconnect-intranet-portal.git
-
-### ⚡ Features
 - Employee dashboard
 - Team collaboration
 - Announcement management
