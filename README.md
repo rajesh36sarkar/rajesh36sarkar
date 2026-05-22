@@ -1,78 +1,228 @@
-<!-- Header -->
+<!-- ========================================= -->
+<!--            RAJESH KUMAR SARKAR           -->
+<!-- ========================================= -->
+
 <h1 align="center">Hi 👋, I'm Rajesh Kumar Sarkar</h1>
-<h3 align="center">Full Stack Developer | MERN | Next.js | Tailwind | Problem Solver</h3>
+
+<h3 align="center">
+🚀 MERN Stack Developer | Full Stack Engineer | Creative Frontend Developer
+</h3>
 
 <p align="center">
-  <img src="https://komarev.com/ghpvc/?username=rajesh36sarkar&label=Profile%20views&color=0e75b6&style=flat" alt="profile views" />
-  <a href="https://rajesh36sarkar.netlify.app/" target="_blank">🌐 Portfolio</a> •
-  <a href="https://www.linkedin.com/in/rajesh36sarkar/" target="_blank">💼 LinkedIn</a> •
-  <a href="mailto:rajesh36.sarkar@gmail.com">📧 Email</a>
+I build scalable, responsive, SEO-friendly web applications with modern UI/UX and smooth animations.
 </p>
 
 ---
 
-### 🚀 About Me
+## 🌐 Connect With Me
 
-- 🔭 I’m currently working on **full‑stack web applications** using MERN, Next.js, and Tailwind CSS.
-- 🌱 I’m diving deeper into **TypeScript**, **Prisma**, and **Next.js App Router**.
-- 👯 I’m looking to collaborate on **open‑source projects** and **startup ideas**.
-- 💬 Ask me about **React, Node.js, MongoDB, Tailwind, and deployment (Vercel/Netlify/Render)**.
-- ⚡ Fun fact: I love solving algorithmic puzzles and building 3D animations with Three.js.
+<p align="center">
+  <a href="https://rajesh36sarkar.vercel.app/" target="_blank">
+    <img src="https://img.shields.io/badge/Portfolio-000?style=for-the-badge&logo=vercel&logoColor=white" />
+  </a>
+
+  <a href="https://github.com/rajesh36sarkar" target="_blank">
+    <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github" />
+  </a>
+
+  <a href="https://linkedin.com/in/rajesh36sarkar" target="_blank">
+    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin" />
+  </a>
+
+  <a href="mailto:rajesh36.sarkar@gmail.com">
+    <img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" />
+  </a>
+</p>
 
 ---
+
+# 👨‍💻 About Me
+
+```js
+const rajesh = {
+  role: "MERN Stack Developer",
+  location: "India 🇮🇳",
+
+  skills: [
+    "MongoDB",
+    "Express.js",
+    "React.js",
+    "Node.js",
+    "Next.js",
+    "TypeScript",
+    "Three.js",
+    "Tailwind CSS",
+    "Bootstrap",
+    "Framer Motion",
+    "EJS",
+    "REST APIs"
+  ],
+
+  passionateAbout: [
+    "Responsive Design",
+    "Modern UI/UX",
+    "SEO Optimization",
+    "Animations & Interactions",
+    "Full Stack Applications"
+  ],
+
+  currentlyLearning: [
+    "Advanced TypeScript",
+    "Prisma",
+    "Next.js App Router",
+    "System Design"
+  ]
+}
+```
+
+---
+
+# 🚀 Tech Stack
+
+## 🎨 Frontend
+
+<p>
+  <img src="https://skillicons.dev/icons?i=react,nextjs,ts,js,html,css,tailwind,bootstrap" />
+</p>
+
+## ⚙️ Backend
+
+<p>
+  <img src="https://skillicons.dev/icons?i=nodejs,express,mongodb,mysql" />
+</p>
+
+## 🛠️ Tools & Libraries
+
+<p>
+  <img src="https://skillicons.dev/icons?i=git,github,vercel,netlify,postman,vscode" />
+</p>
+
+### ✨ Additional Skills
+
+- 🎬 Framer Motion
+- 🌌 Three.js
+- 📄 EJS Templates
+- 🔐 JWT Authentication
+- ☁️ Cloudinary
+- 📱 Responsive Design
+- ⚡ SEO Optimization
+- 🔥 API Integration
+- 🚀 Deployment & Hosting
+
+---
+
+# 📌 Featured Projects
+
+## 🏢 CorpConnect — Corporate Intranet Portal
+
+### 🔗 Live Demo
+https://corpconnect-intranet-portal.vercel.app/login
+
+### 💻 GitHub
+https://github.com/rajesh36sarkar/Corpconnect-intranet-portal.git
+
+### ⚡ Features
+- Employee dashboard
+- Team collaboration
+- Announcement management
+- Secure authentication
+- Responsive admin interface
+- Modern UI with Tailwind CSS
 
 ### 🛠️ Tech Stack
-
-| Category | Technologies |
-|----------|--------------|
-| Frontend | React.js, Next.js, TypeScript, Tailwind CSS, Bootstrap, Framer Motion, Three.js |
-| Backend  | Node.js, Express.js, REST APIs, JWT, WebSockets |
-| Database | MongoDB, Mongoose, Prisma (SQL) |
-| Tools & DevOps | Git, GitHub, Postman, Vercel, Netlify, Render, Cloudinary, Nodemailer |
+`React.js` `Node.js` `MongoDB` `Express.js` `Tailwind CSS`
 
 ---
 
-### 📌 Featured Projects
+## ✈️ Padharo — Travel Booking Platform
 
-| Project | Tech Stack | Live Demo |
-|---------|------------|-----------|
-| **Pravasha Enterprise** – Digital Services & eCommerce | Next.js, Tailwind, MongoDB, Stripe | [🔗 Live](https://pravasha-enterprise.vercel.app) |
-| **Padharo** – Travel Booking Platform (MakeMyTrip clone) | MERN, Razorpay, Tailwind | [🔗 Live](https://padharo-travel.vercel.app) |
-| **MyTube** – YouTube clone | MERN, JWT, Multer | [🔗 Live](https://mytube-demo.vercel.app) |
-| **Personal Portfolio** – MERN + Three.js + Admin Panel | MERN, Three.js, Framer Motion, Cloudinary | [🔗 Live](https://rajesh36sarkar.netlify.app) |
+- MERN Stack based travel platform
+- Razorpay payment integration
+- Authentication system
+- Dynamic package management
 
-<details>
-<summary>🔍 View all projects</summary>
-
-- **NswPL** – Stationery & custom printing store (MERN)
-- **Pravasha Enterprise (legacy)** – MERN version
-- More coming soon...
-</details>
+### Tech Used
+`MongoDB` `Express.js` `React.js` `Node.js`
 
 ---
 
-### 📈 GitHub Stats
+## 🎥 Drishyaa TV — OTT Streaming Platform
+
+- Video streaming platform
+- JWT Authentication
+- Cloudinary integration
+- Dynamic content handling
+
+### Tech Used
+`MERN Stack` `Cloudinary` `JWT`
+
+---
+
+## 🎨 Motion Graph — Cinematic Portfolio
+
+- High-performance animated website
+- Cinematic UI/UX
+- GSAP & animation-focused interactions
+
+### Tech Used
+`Bootstrap` `CSS3` `GSAP`
+
+---
+
+# 📊 GitHub Stats
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=rajesh36sarkar&show_icons=true&theme=radical" alt="GitHub stats" width="48%" />
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=rajesh36sarkar&theme=radical" alt="GitHub streak" width="48%" />
+
+<img height="170" src="https://github-readme-stats.vercel.app/api?username=rajesh36sarkar&show_icons=true&theme=tokyonight" />
+
+<img height="170" src="https://github-readme-streak-stats.herokuapp.com/?user=rajesh36sarkar&theme=tokyonight" />
+
 </p>
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=rajesh36sarkar&layout=compact&theme=radical" alt="Top languages" width="45%" />
+<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=rajesh36sarkar&layout=compact&theme=tokyonight" />
 </p>
 
 ---
 
-### 🤝 Let's Connect
+# 🎯 What I Focus On
 
-- Portfolio: [rajesh36sarkar.netlify.app](https://rajesh36sarkar.netlify.app)
-- LinkedIn: [linkedin.com/in/rajesh36sarkar](https://linkedin.com/in/rajesh36sarkar)
-- Email: rajesh36.sarkar@gmail.com
-- WhatsApp: [+91 73639 20402](https://wa.me/917363920402)
+✅ Full Stack MERN Development  
+✅ Responsive Web Applications  
+✅ SEO Friendly Websites  
+✅ Modern UI/UX Design  
+✅ Smooth Animations & Interactions  
+✅ REST API Development  
+✅ Scalable Frontend Architecture  
 
 ---
 
-<p align="center">
-  <i>“Code. Create. Inspire.”</i>
-</p>
+# 📚 Currently Exploring
+
+- Advanced React Patterns
+- TypeScript Best Practices
+- Next.js Full Stack Apps
+- Three.js 3D Experiences
+- Backend Optimization
+- DSA & Problem Solving
+
+---
+
+# 🤝 Open To
+
+- Freelance Projects
+- Full-Time Opportunities
+- Startup Collaborations
+- Open Source Contributions
+
+---
+
+# 💡 Fun Fact
+
+I enjoy creating immersive animated web experiences using Three.js and Framer Motion while continuously improving my DSA & problem-solving skills.
+
+---
+
+<h3 align="center">
+⭐ “Code. Build. Innovate.” ⭐
+</h3>
