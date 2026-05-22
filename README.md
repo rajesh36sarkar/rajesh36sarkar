@@ -2,7 +2,7 @@
 <!--            RAJESH KUMAR SARKAR           -->
 <!-- ========================================= -->
 
-<h1 align="center">Hi 👋, I'm Rajesh Kumar Sarkar</h1>
+<h1 align="center">Hi 👋, I'm Rajesh Sarkar</h1>
 
 <h3 align="center">
 🚀 MERN Stack Developer | Full Stack Engineer | Creative Frontend Developer
