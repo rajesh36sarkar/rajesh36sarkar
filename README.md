@@ -29,9 +29,9 @@ I build scalable, responsive, SEO-friendly web applications with modern UI/UX an
     <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin" />
   </a>
 
-  <a href="mailto:rajesh36.sarkar@gmail.com">
-    <img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" />
-  </a>
+<a href="https://wa.me/917478404020" target="_blank" rel="noopener noreferrer">
+  <img src="https://shields.io" alt="WhatsApp Contact" />
+</a>
 </p>
 
 ---
