@@ -1,59 +1,31 @@
-<!-- ========================================= -->
-<!--            RAJESH KUMAR SARKAR           -->
-<!-- ========================================= -->
+# 👋 Hi, I'm Rajesh Sarkar
 
-<h1 align="center">Hi 👋, I'm Rajesh Sarkar</h1>
-
-<h3 align="center">
-🚀 MERN Stack Developer | Full Stack Engineer | Creative Frontend Developer
-</h3>
+### 🚀 Full Stack Developer | MERN Stack Engineer | Modern Web Application Developer
 
 <p align="center">
-I build scalable, responsive, SEO-friendly web applications with modern UI/UX and smooth animations.
+Building scalable, responsive, and performance-driven web applications with modern UI/UX and robust backend architectures.
 </p>
 
 ---
 
-## 🌐 Connect With Me
+## 👨‍💻 About Me
 
-<p align="center">
-  <a href="https://rajesh36sarkar.vercel.app/" target="_blank">
-    <img src="https://img.shields.io/badge/Portfolio-000?style=for-the-badge&logo=vercel&logoColor=white" />
-  </a>
+I am a **Full Stack Developer** with **1 year 5 months of professional development experience**, currently working on production-level web applications and managing projects independently from development to deployment.
 
-  <a href="https://github.com/rajesh36sarkar" target="_blank">
-    <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github" />
-  </a>
+I hold a **Bachelor of Arts (B.A.)** degree and completed a **Full Stack Development Program from Internshala**. Over the past year, I have worked on multiple client and company projects, handling both frontend and backend development while delivering scalable and user-friendly solutions.
 
-  <a href="https://linkedin.com/in/rajesh36sarkar" target="_blank">
-    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin" />
-  </a>
+My expertise lies in building modern web applications using the **MERN Stack**, creating responsive user interfaces, developing secure APIs, integrating third-party services, and optimizing application performance.
 
-<a href="https://wa.me/917478404020" target="_blank" rel="noopener noreferrer">
-  <img src="https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" alt="WhatsApp" />
-</a>
-</p>
+I enjoy transforming business requirements into real-world digital products with clean code, modern design principles, and efficient architecture.
 
----
+### 🎯 Professional Highlights
 
-# 👨‍💻 About Me
-
-I'm a passionate **MERN Stack Developer** focused on building modern, responsive, and SEO-friendly web applications. I enjoy creating scalable full-stack projects with clean UI/UX, smooth animations, and optimized performance.
-
-My core expertise includes **MongoDB, Express.js, React.js, Node.js, Next.js, and TypeScript**. I also work with **Tailwind CSS, Bootstrap, Framer Motion, Three.js, and EJS** to build visually engaging and interactive user experiences.
-
-I love transforming ideas into real-world applications, whether it's a business platform, portfolio website, dashboard, or eCommerce solution.
-
-Currently, I'm exploring **Advanced TypeScript, Prisma, Next.js App Router, and System Design** to improve my development workflow and build more scalable applications.
-
-🚀 Passionate about:
-- Full Stack Web Development
-- Responsive Design
-- Modern UI/UX
-- REST API Development
-- SEO Optimization
-- Animations & Interactive Experiences
-- Performance Optimization
+* 💼 Full-time Full Stack Developer at Dailyork
+* 🚀 1+ year of professional development experience
+* 🏗️ Independently handling end-to-end project development
+* 🌐 Experience building business platforms, portals, dashboards, booking systems, and eCommerce solutions
+* 🔧 Strong focus on performance optimization and scalable architecture
+* 🤝 Experience working with clients and production applications
 
 ---
 
@@ -61,33 +33,61 @@ Currently, I'm exploring **Advanced TypeScript, Prisma, Next.js App Router, and 
 
 ## 🎨 Frontend
 
-<p>
-  <img src="https://skillicons.dev/icons?i=react,nextjs,ts,js,html,css,tailwind,bootstrap" />
-</p>
+✅ Expert
+
+* HTML5
+* CSS3
+* JavaScript (ES6+)
+* React.js
+* Next.js
+* Tailwind CSS
+* Bootstrap
+
+✅ Good
+
+* Redux Toolkit
+* Zustand
+* Framer Motion
+* GSAP
+* Three.js
+
+---
 
 ## ⚙️ Backend
 
-<p>
-  <img src="https://skillicons.dev/icons?i=nodejs,express,mongodb,mysql" />
-</p>
+✅ Expert
 
-## 🛠️ Tools & Libraries
+* Node.js
+* Express.js
+* MongoDB
+* REST APIs
+* JWT Authentication
 
-<p>
-  <img src="https://skillicons.dev/icons?i=git,github,vercel,netlify,postman,vscode" />
-</p>
+✅ Good
 
-### ✨ Additional Skills
+* PostgreSQL
+* MySQL
+* Prisma
+* Firebase
+* Socket.io
 
-- 🎬 Framer Motion
-- 🌌 Three.js
-- 📄 EJS Templates
-- 🔐 JWT Authentication
-- ☁️ Cloudinary
-- 📱 Responsive Design
-- ⚡ SEO Optimization
-- 🔥 API Integration
-- 🚀 Deployment & Hosting
+---
+
+## 🛠️ Tools & Platforms
+
+✅ Expert
+
+* Git
+* GitHub
+* Postman
+* Vercel
+* Netlify
+
+✅ Good
+
+* Docker
+* AWS
+* Linux
 
 ---
 
@@ -95,107 +95,117 @@ Currently, I'm exploring **Advanced TypeScript, Prisma, Next.js App Router, and 
 
 ## 🏢 CorpConnect — Corporate Intranet Portal
 
-- Employee dashboard
-- Team collaboration
-- Announcement management
-- Secure authentication
-- Responsive admin interface
-- Modern UI with Tailwind CSS
+A modern corporate management platform designed to streamline employee collaboration, announcements, and internal communication.
 
-### 🛠️ Tech Stack
-`React.js` `Node.js` `MongoDB` `Express.js` `Tailwind CSS`
+**Tech Stack:** React.js, Node.js, Express.js, MongoDB, Tailwind CSS
 
 ---
 
 ## ✈️ Padharo — Travel Booking Platform
 
-- MERN Stack based travel platform
-- Razorpay payment integration
-- Authentication system
-- Dynamic package management
+A full-featured travel booking application with authentication, dynamic package management, and secure payment integration.
 
-### Tech Used
-`MongoDB` `Express.js` `React.js` `Node.js`
+**Tech Stack:** MongoDB, Express.js, React.js, Node.js
 
 ---
 
 ## 🎥 Drishyaa TV — OTT Streaming Platform
 
-- Video streaming platform
-- JWT Authentication
-- Cloudinary integration
-- Dynamic content handling
+Video streaming platform with secure authentication, media management, and scalable backend architecture.
 
-### Tech Used
-`MERN Stack` `Cloudinary` `JWT`
+**Tech Stack:** MERN Stack, JWT, Cloudinary
 
 ---
 
-## 🎨 Motion Graph — Cinematic Portfolio
+## 🎨 Motion Graph — Creative Portfolio Platform
 
-- High-performance animated website
-- Cinematic UI/UX
-- GSAP & animation-focused interactions
+High-performance animation-focused portfolio website with modern interactions and engaging visual experiences.
 
-### Tech Used
-`Bootstrap` `CSS3` `GSAP`
+**Tech Stack:** GSAP, Bootstrap, CSS3
 
 ---
 
-# 📊 GitHub Stats
+## 🛒 Netai Stationery
 
-<p align="center">
-
-<img height="170" src="https://github-readme-stats.vercel.app/api?username=rajesh36sarkar&show_icons=true&theme=tokyonight" />
-
-<img height="170" src="https://github-readme-streak-stats.herokuapp.com/?user=rajesh36sarkar&theme=tokyonight" />
-
-</p>
-
-<p align="center">
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=rajesh36sarkar&layout=compact&theme=tokyonight" />
-</p>
+Business-focused web application developed to manage products, orders, and customer interactions with a responsive user experience.
 
 ---
 
-# 🎯 What I Focus On
+## 🌊 Pravaaha
 
-✅ Full Stack MERN Development  
-✅ Responsive Web Applications  
-✅ SEO Friendly Websites  
-✅ Modern UI/UX Design  
-✅ Smooth Animations & Interactions  
-✅ REST API Development  
-✅ Scalable Frontend Architecture  
+Custom web solution focused on delivering modern user experience, responsive design, and optimized performance.
 
 ---
 
-# 📚 Currently Exploring
+## 💼 Local Job Platform
 
-- Advanced React Patterns
-- TypeScript Best Practices
-- Next.js Full Stack Apps
-- Three.js 3D Experiences
-- Backend Optimization
-- DSA & Problem Solving
+A job portal platform connecting employers and job seekers through an easy-to-use and scalable system.
+
+---
+
+# 💼 Professional Experience
+
+### Full Stack Developer | Dailyork
+
+* Developing and maintaining production-level web applications.
+* Building scalable frontend and backend solutions.
+* Managing projects independently from planning to deployment.
+* Integrating APIs, authentication systems, and third-party services.
+* Collaborating with teams to deliver business-focused solutions.
+* Optimizing application performance and user experience.
+
+---
+
+# 🎯 Current Focus
+
+✅ Full Stack Application Development
+
+✅ MERN Stack Architecture
+
+✅ Modern UI/UX Development
+
+✅ Performance Optimization
+
+✅ API Design & Integration
+
+✅ Scalable Web Solutions
+
+✅ Clean Code & Best Practices
+
+---
+
+# 📚 Currently Learning
+
+* Data Structures & Algorithms (DSA)
+* System Design
+* TypeScript
+* Advanced Next.js
+* PostgreSQL
+* Docker
+* AWS Cloud Services
+* AI Integration
+* DevOps Fundamentals
+* Java
 
 ---
 
 # 🤝 Open To
 
-- Freelance Projects
-- Full-Time Opportunities
-- Startup Collaborations
-- Open Source Contributions
+* Full Stack Developer Opportunities
+* MERN Stack Developer Roles
+* Software Engineer Positions
+* Remote Opportunities
+* Freelance Projects
+* Startup Collaborations
 
 ---
 
 # 💡 Fun Fact
 
-I enjoy creating immersive animated web experiences using Three.js and Framer Motion while continuously improving my DSA & problem-solving skills.
+I enjoy building complete products from scratch, combining modern UI/UX with scalable backend systems, and continuously exploring new technologies to improve development efficiency and user experience.
 
 ---
 
 <h3 align="center">
-⭐ “Code. Build. Innovate.” ⭐
+⭐ Building Modern Web Experiences That Solve Real Problems ⭐
 </h3>
